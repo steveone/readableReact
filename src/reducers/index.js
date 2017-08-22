@@ -14,31 +14,43 @@ function categories (state = {}, action) {
   switch (action.type) {
     case ADD_CATEGORIES :
       return [
-        ...state,
         action.categories
             ]
     default :
-      return initialCategory
+      return state
   }
 }
 
 
-function post (state = {}, action) {
+function post (state = initialPosts, action) {
+  const { id, author, text,category} = action
   switch (action.type) {
     case ADD_POST :
-      return [
-        ...state, {
-          id: action.id,
-          text: action.text,
-          author:action.author,
-          category:action.category
-          }
-        ]
+      return {
+        ...state,
+        [id] : { id,
+            author,
+            text,
+            category
+
+          //[comments]: comments,
+        }
+      }
     case REMOVE_POST :
-      return [
-        ...state.slice(action.id-1),
-        ...state.slice(action.id+1)
-      ]
+    console.log("Action on this state")
+//    console.log(action)
+    console.log(state)
+    console.log("After state")
+    /*  return {
+        ...state,
+
+      }*/
+        return Object.keys(state)
+    .filter(key => key !== action.id)
+    .reduce((result, current) => {
+      result[current] = state[current];
+      return result;
+  }, {});
     default :
       return state
   }
@@ -47,7 +59,7 @@ function post (state = {}, action) {
 
 
 const initialPosts = {
-    id: null,
+    /*id: null,
     author: null,
     text: null,
     category:null,
@@ -55,10 +67,10 @@ const initialPosts = {
       id: null,
       text: null,
       author:null
-    }
+    }*/
 
 }
-
+/*
 function postAction (state = initialPosts, action) {
   const { id, author, text,category} = action
   switch (action.type) {
@@ -75,7 +87,7 @@ function postAction (state = initialPosts, action) {
           //[comments]: comments,
         }
       }
-    case REMOVE_POST :
+  /* case REMOVE_POST :
       return {
         state,
         [post.id]: {
@@ -87,9 +99,9 @@ function postAction (state = initialPosts, action) {
       return state
   }
 }
-
+*/
 export default combineReducers({
   post,
-  postAction,
+  //postAction,
   categories,
 })

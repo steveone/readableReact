@@ -4,7 +4,7 @@ import '../App.css';
 import{ Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import { addPost, removePost, getCategories } from '../actions'
-
+import uniqid from 'uniqid'
 
 
 class ShowAll extends Component {
@@ -26,11 +26,11 @@ render(props) {
 console.log(posts)
   return (
    <div className="showAll">
-    <Button bsSize="small" bsStyle="primary">ShowAll</Button>
+    <Button bsSize="small" bsStyle="primary" key={uniqid()}>ShowAll</Button>
     <ButtonToolbar>
      <ButtonGroup vertical>
     {categories.map((cur,val,arry)=> {
-      return <Button bsSize="small" bsStyle="primary" key={Date.now()}
+      return <Button bsSize="small" bsStyle="primary" key={uniqid()}
       id = {val}
         onClick={() => this.sendToConsole({val})}
       >{cur}</Button>
@@ -48,7 +48,7 @@ Object.keys(posts).map((cur,val,arry) => {
         console.log(id + text + author + category)
          return <div key={'d'+id}>
                 {text} <br/> {author} <br/> {category} <br/>
-                <Button bsSize="small" bsStyle="primary" key={Date.now()}
+                <Button bsSize="small" bsStyle="primary" key={uniqid()}
                 id = {id}
                   onClick={() => this.props.removePost(stateKey)}
                 >Delete</Button>
