@@ -30,7 +30,7 @@ console.log(posts)
     <ButtonToolbar>
      <ButtonGroup vertical>
     {categories.map((cur,val,arry)=> {
-      return <Button bsSize="small" bsStyle="primary" key={val}
+      return <Button bsSize="small" bsStyle="primary" key={Date.now()}
       id = {val}
         onClick={() => this.sendToConsole({val})}
       >{cur}</Button>
@@ -41,13 +41,16 @@ console.log(posts)
      </ButtonToolbar>
      {
 Object.keys(posts).map((cur,val,arry) => {
+        console.log(val);
+        const stateKey = cur;
+        console.log("stateKey " + stateKey)
         const {id,text,author,category} = posts[cur]
         console.log(id + text + author + category)
-         return <div key={id}>
+         return <div key={'d'+id}>
                 {text} <br/> {author} <br/> {category} <br/>
-                <Button bsSize="small" bsStyle="primary" key={val}
+                <Button bsSize="small" bsStyle="primary" key={Date.now()}
                 id = {id}
-                  onClick={() => this.props.removePost({id})}
+                  onClick={() => this.props.removePost(stateKey)}
                 >Delete</Button>
               </div>
      })}

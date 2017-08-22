@@ -16,7 +16,8 @@ export function addPost ({ id, author, text,category }) {
   }
 }
 
-export function removePost ({ id }) {
+export function removePost ( id ) {
+  console.log("Remove_Post " + id)
   return {
     type: REMOVE_POST,
     id,

@@ -34,6 +34,11 @@ function post (state = {}, action) {
           category:action.category
           }
         ]
+    case REMOVE_POST :
+      return [
+        ...state.slice(action.id-1),
+        ...state.slice(action.id+1)
+      ]
     default :
       return state
   }
@@ -72,10 +77,10 @@ function postAction (state = initialPosts, action) {
       }
     case REMOVE_POST :
       return {
-        ...state,
-        [post]: {
+        state,
+        [post.id]: {
           ...state[post],
-          [post]: null,
+          [post.id]: null,
         }
       }
     default :

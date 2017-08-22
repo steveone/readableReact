@@ -27,8 +27,8 @@ class App extends Component {
     <Route path="/createEdit" render={() =>
           <div>category go to
             create Edit
-            <Button type="submit" onClick={() =>  {this.props.addPost({id:3,author:'steve',text:'whtever',category:'react'})}} bsSize="small" bsStyle="primary">Create Post</Button>
-            <Button type="submit" onClick={() =>  {this.props.addPost({id:4,author:'steve',text:'whtever',category:'redux'})}} bsSize="small" bsStyle="primary">Create Post</Button>
+            <Button type="submit" onClick={() =>  {this.props.addPost({id:Date.now(),author:'steve',text:'whtever',category:'react'})}} bsSize="small" bsStyle="primary">Create Post</Button>
+            <Button type="submit" onClick={() =>  {this.props.addPost({id:Date.now(),author:'steve',text:'whtever',category:'redux'})}} bsSize="small" bsStyle="primary">Create Post</Button>
 
           </div>
           } />
