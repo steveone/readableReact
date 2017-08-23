@@ -4,6 +4,8 @@ import {
   ADD_POST,
   REMOVE_POST,
   ADD_CATEGORIES,
+  UPDATE_POST,
+  SUBMIT_POST
 } from '../actions'
 
 /*const initialCategory = {
@@ -21,6 +23,27 @@ function categories (state = {}, action) {
   }
 }
 
+const blankPost = {
+  'title': "",
+  'author': "",
+  'category': "",
+}
+
+function writingPost (state = blankPost, action)
+{
+  const {author, text, category} = action
+  switch(action.type){
+    case UPDATE_POST:
+        return{
+        ...state,
+        category,
+        author,
+        text
+        }
+    case SUBMIT_POST: return state;
+    default: return state;
+  }
+}
 
 function post (state = {}, action) {
   const { id, author, text,category} = action
@@ -37,14 +60,6 @@ function post (state = {}, action) {
         }
       }
     case REMOVE_POST :
-    console.log("Action on this state")
-//    console.log(action)
-    console.log(state)
-    console.log("After state")
-    /*  return {
-        ...state,
-
-      }*/
         return Object.keys(state)
     .filter(key => key !== action.id)
     .reduce((result, current) => {
@@ -102,6 +117,6 @@ function postAction (state = initialPosts, action) {
 */
 export default combineReducers({
   post,
-  //postAction,
+  writingPost,
   categories,
 })

@@ -6,23 +6,32 @@ import{
         FormGroup,
         FormControl,
         Form,
-        //controlID,
         ControlLabel,
         //SplitButton,
         Button,
         //ButtonToolbar,
         //ButtonGroup
+        //ControlID
       } from 'react-bootstrap';
 import { connect } from 'react-redux'
-import { addPost, removePost, getCategories } from '../actions'
+import { updatePost, addPost, removePost, getCategories } from '../actions'
 import uniqid from 'uniqid'
 
+let loaded=false;
 
 class CreateEdit extends Component {
 
   sendToConsole(e) {
     console.log(e)
   }
+
+  updateSelect(field, value){
+       if (loaded) {
+         console.log("select changed " + field + " " + value)
+         this.props.updatePost({category: value})
+       }
+       else console.log("not changed")
+     }
 
 
 render(props) {
@@ -34,31 +43,36 @@ render(props) {
   if (this.props.posts){
     posts = this.props.posts
     }
-console.log(posts)
+//console.log(posts)
   return (
    <div className="showAll">
    <Form>
-   <FormGroup controlID="Entry">
-   <ControlLabel>Data Entry Form</ControlLabel>
-   <FormGroup>
+   <FormGroup key={uniqid()}>
+   <ControlLabel key={uniqid()}>Data Entry Form</ControlLabel>
+   <FormGroup key={uniqid()}>
    <ControlLabel>Select Category</ControlLabel>
-    <FormControl componentClass="select">
+    <FormControl key={uniqid()} id="select1" componentClass="select"
+    onChange={(e) => this.updateSelect('select',e.target.value)}
+    //onChange={this.props.updatePost({author:'', title: '', category: ''})}
+    >
     {categories.map((cur,val,arry)=> {
-      return <option value={cur}>{cur}</option>
+      return <option value={cur} key={uniqid()}>{cur}</option>
     })}
      </FormControl>
      </FormGroup>
      <ControlLabel>Title</ControlLabel>
         <FormControl type="text"
+          key={uniqid()}
           value=""
           placeholder="Enter Title"
-          onChange={console.log("changed")}
+        //  onChange={updatePost({title: this.value})}
         />
       </FormGroup>
       <FormGroup>
         <ControlLabel>Author</ControlLabel>
         <FormControl type="text"
           value=""
+          key={uniqid}
           placeholder="Authors Name"
           onChange={console.log("changed author")}
         />
@@ -85,10 +99,13 @@ Object.keys(posts).map((cur,val,arry) => {
    </div>
    );}
 
+
+
 componentDidMount() {
 //  console.log("componentdidmount")
   this.props.getCat()
   console.log("got cats")
+  loaded = true;
   }
 
 componentDidUpdate(prevProps, prevState) {
@@ -101,7 +118,9 @@ componentDidUpdate(prevProps, prevState) {
 function mapStateToProps(state,props){
   return {
     posts: state.post,
-    categories: state.categories[0]
+    categories: state.categories[0],
+    writingPost: state.writingPost,
+
 //    state
   }
 }
@@ -114,6 +133,7 @@ function mapDispatchToProps(dispatch) {
     addPost: (data) => dispatch(addPost(data)),
     removePost: (data) => dispatch(removePost(data)),
     getCat: (data) => dispatch(getCategories(data)),
+    updatePost: (data) => dispatch(updatePost(data)),
   }
 }
 

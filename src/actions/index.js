@@ -4,7 +4,18 @@ export const ADD_POST = 'ADD_POST'
 export const REMOVE_POST = 'REMOVE_POST'
 export const ADD_CATEGORY = 'ADD_CATEGORY'
 export const ADD_CATEGORIES = 'ADD_CATEGORIES'
+export const UPDATE_POST = 'UPDATE_POST'
+export const SUBMIT_POST = 'SUBMIT_POST'
 
+
+export function updatePost ({author, text, category}) {
+  return {
+    type: UPDATE_POST,
+    author,
+    text,
+    category
+  }
+}
 
 export function addPost ({ id, author, text,category }) {
   return {
