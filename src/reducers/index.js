@@ -6,9 +6,9 @@ import {
   ADD_CATEGORIES,
 } from '../actions'
 
-const initialCategory = {
+/*const initialCategory = {
   category: null
-}
+}*/
 
 function categories (state = {}, action) {
   switch (action.type) {
@@ -22,7 +22,7 @@ function categories (state = {}, action) {
 }
 
 
-function post (state = initialPosts, action) {
+function post (state = {}, action) {
   const { id, author, text,category} = action
   switch (action.type) {
     case ADD_POST :
@@ -58,7 +58,7 @@ function post (state = initialPosts, action) {
 
 
 
-const initialPosts = {
+/*const initialPosts = {
     /*id: null,
     author: null,
     text: null,
@@ -67,9 +67,9 @@ const initialPosts = {
       id: null,
       text: null,
       author:null
-    }*/
+    }
 
-}
+}*/
 /*
 function postAction (state = initialPosts, action) {
   const { id, author, text,category} = action

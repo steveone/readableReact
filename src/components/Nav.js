@@ -18,7 +18,7 @@ class Nav extends Component {
         <Button bsSize="small" bsStyle="info" key={uniqid()}>Post Detail</Button>
       </LinkContainer>
       <LinkContainer to="/createEdit">
-        <Button bsSize="small" bsStyle="warning" key={uniqid()}>Create Edit</Button>
+          <Button bsSize="small" bsStyle="warning" key={uniqid()}>Create Edit</Button>
       </LinkContainer>
         </ButtonGroup>
     </ButtonToolbar>

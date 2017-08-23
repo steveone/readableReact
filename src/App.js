@@ -6,7 +6,7 @@ import ShowAll from './components/ShowAll'
 import{ Button } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import { addPost, removePost } from './actions'
-
+import CreateEdit from './components/CreateEdit'
 
 class App extends Component {
   render() {
@@ -24,9 +24,10 @@ class App extends Component {
           PostDetail
           </div>
         } />
-    <Route path="/createEdit" render={() =>
-          <div>category go to
-            create Edit
+    <Route exact path="/createEdit" render={() =>
+          <div>
+          <CreateEdit/>
+          <br />
             <Button type="submit" onClick={() =>  {this.props.addPost({id:Date.now(),author:'steve',text:'whtever',category:'react'})}} bsSize="small" bsStyle="primary">Create Post</Button>
             <Button type="submit" onClick={() =>  {this.props.addPost({id:Date.now(),author:'steve',text:'whtever',category:'redux'})}} bsSize="small" bsStyle="primary">Create Post</Button>
 

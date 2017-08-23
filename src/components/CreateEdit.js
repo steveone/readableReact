@@ -1,13 +1,24 @@
 import React, { Component } from 'react';
 //import { BrowserRouter, Route, Switch} from 'react-router-dom'
 import '../App.css';
-import{ Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
+import{
+        //MenuItem,
+        FormGroup,
+        FormControl,
+        Form,
+        //controlID,
+        ControlLabel,
+        //SplitButton,
+        Button,
+        //ButtonToolbar,
+        //ButtonGroup
+      } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import { addPost, removePost, getCategories } from '../actions'
 import uniqid from 'uniqid'
 
 
-class ShowAll extends Component {
+class CreateEdit extends Component {
 
   sendToConsole(e) {
     console.log(e)
@@ -26,19 +37,36 @@ render(props) {
 console.log(posts)
   return (
    <div className="showAll">
-    <Button bsSize="small" bsStyle="primary" key={uniqid()}>ShowAll</Button>
-    <ButtonToolbar>
-     <ButtonGroup vertical>
+   <Form>
+   <FormGroup controlID="Entry">
+   <ControlLabel>Data Entry Form</ControlLabel>
+   <FormGroup>
+   <ControlLabel>Select Category</ControlLabel>
+    <FormControl componentClass="select">
     {categories.map((cur,val,arry)=> {
-      return <Button bsSize="small" bsStyle="primary" key={uniqid()}
-      id = {val}
-        onClick={() => this.sendToConsole({val})}
-      >{cur}</Button>
-
-
+      return <option value={cur}>{cur}</option>
     })}
-     </ButtonGroup>
-     </ButtonToolbar>
+     </FormControl>
+     </FormGroup>
+     <ControlLabel>Title</ControlLabel>
+        <FormControl type="text"
+          value=""
+          placeholder="Enter Title"
+          onChange={console.log("changed")}
+        />
+      </FormGroup>
+      <FormGroup>
+        <ControlLabel>Author</ControlLabel>
+        <FormControl type="text"
+          value=""
+          placeholder="Authors Name"
+          onChange={console.log("changed author")}
+        />
+      </FormGroup>
+      <Button bsSize="small" bsStyle="primary" key={uniqid()}
+        onClick={() => console.log("submit button hit")}//this.props.removePost(stateKey)}
+      >Submit Post</Button>
+     </Form>
      {
 Object.keys(posts).map((cur,val,arry) => {
         console.log(val);
@@ -60,6 +88,7 @@ Object.keys(posts).map((cur,val,arry) => {
 componentDidMount() {
 //  console.log("componentdidmount")
   this.props.getCat()
+  console.log("got cats")
   }
 
 componentDidUpdate(prevProps, prevState) {
@@ -90,7 +119,7 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps)(ShowAll)
+  mapDispatchToProps)(CreateEdit)
 
 
 //export default showAll
