@@ -25,11 +25,27 @@ class CreateEdit extends Component {
     console.log(e)
   }
 
-  updateSelect(field, value){
+  updateField(field, value,e){
        if (loaded) {
+         e.preventDefault()
          console.log("select changed " + field + " " + value)
-         this.props.updatePost({category: value})
-       }
+         const {category, text,author} = this.props.writingPost
+        switch (field) {
+          case 'select' : this.props.updatePost(
+              {category: value,
+               text,
+               author
+              })
+              break
+          case 'text': this.props.updatePost(
+              {category,
+               text: value,
+               author
+              })
+              break
+          default: break;
+        }
+      }
        else console.log("not changed")
      }
 
@@ -47,12 +63,12 @@ render(props) {
   return (
    <div className="showAll">
    <Form>
-   <FormGroup key={uniqid()}>
+   <FormGroup key={1}>
    <ControlLabel key={uniqid()}>Data Entry Form</ControlLabel>
    <FormGroup key={uniqid()}>
    <ControlLabel>Select Category</ControlLabel>
-    <FormControl key={uniqid()} id="select1" componentClass="select"
-    onChange={(e) => this.updateSelect('select',e.target.value)}
+    <FormControl key={2} id="select1" componentClass="select"
+    onChange={(e) => this.updateField('select',e.target.value)}
     //onChange={this.props.updatePost({author:'', title: '', category: ''})}
     >
     {categories.map((cur,val,arry)=> {
@@ -60,11 +76,12 @@ render(props) {
     })}
      </FormControl>
      </FormGroup>
-     <ControlLabel>Title</ControlLabel>
+     <ControlLabel>Text</ControlLabel>
         <FormControl type="text"
-          key={uniqid()}
-          value=""
-          placeholder="Enter Title"
+          key={3}
+          value={this.props.writingPost.text}
+          onChange={(e) => this.updateField('text',e.target.value,e)}
+          placeholder="Enter Text"
         //  onChange={updatePost({title: this.value})}
         />
       </FormGroup>
