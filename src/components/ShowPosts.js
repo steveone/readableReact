@@ -3,68 +3,57 @@ import React, { Component } from 'react';
 import '../App.css';
 import{ Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux'
-import { addPost, removePost, getPosts, getCategories } from '../actions'
+import { addPost, removePost, getPosts } from '../actions'
 import uniqid from 'uniqid'
 
-class ShowAll extends Component {
+class ShowPosts extends Component {
 
   sendToConsole(e) {
     console.log(e)
   }
 
-
 render(props) {
-  let categories = []
-  if (this.props.categories) {
-      categories = this.props.categories
-    }
   let posts = []
-  if (this.props.post){
-    posts = this.props.post
+  if (this.props.posts){
+    posts = this.props.posts
     }
-console.log("next is posts")
 console.log(posts)
   return (
-
    <div className="showAll">
     <Button bsSize="small" bsStyle="primary" key={uniqid()}>ShowAll</Button>
     <ButtonToolbar>
      <ButtonGroup vertical>
-    {categories.map((cur,val,arry)=> {
-      return <Button bsSize="small" bsStyle="primary" key={uniqid()}
+    {posts.map((cur,val,arry)=> {
+
+      return  <Button bsSize="small" bsStyle="primary" key={uniqid()}
       id = {val}
-        onClick={() => this.sendToConsole({val})}>{cur}</Button>
+        onClick={() => this.sendToConsole({val})}
+      >{cur}</Button>
+
     })}
      </ButtonGroup>
      </ButtonToolbar>
-     <ButtonToolbar>
-      <ButtonGroup vertical>
      {
-posts.map((cur,val,arry) => {
-  console.log(val);
-  const stateKey = cur;
-  console.log("stateKey " + stateKey)
-  const {id,timestamp,title,body} = posts[cur]
-  console.log(id + timestamp + title + body)
-   return <div key={'d'+ id}>
-          {timestamp} <br/> {title} <br/> {body} <br/>
-          <Button bsSize="small" bsStyle="primary" key={uniqid()}
-          id = {'c' + id}
-            onClick={() => this.props.removePost(id)}
-          >Delete {id}</Button>
-        </div>
-
-
-})}
-</ButtonGroup>
-</ButtonToolbar>
+Object.keys(posts).map((cur,val,arry) => {
+        console.log(val);
+        const stateKey = cur;
+        console.log("stateKey " + stateKey)
+        const {id,text,author,category} = posts[cur]
+        console.log(id + text + author + category)
+         return <div key={'d'+id}>
+                {text} <br/> {author} <br/> {category} <br/>
+                <Button bsSize="small" bsStyle="primary" key={uniqid()}
+                id = {id}
+                  onClick={() => this.props.removePost(stateKey)}
+                >Delete {id}</Button>
+              </div>
+     })}
    </div>
    );}
 
 componentDidMount() {
 //  console.log("componentdidmount")
   this.props.getPosts()
-  this.props.getCategories()
   }
 
 componentDidUpdate(prevProps, prevState) {
@@ -76,7 +65,7 @@ componentDidUpdate(prevProps, prevState) {
 
 function mapStateToProps(state,props){
   return {
-    posts: state.post,
+    posts: state.post[0],
     categories: state.categories[0]
 //    state
   }
@@ -90,13 +79,12 @@ function mapDispatchToProps(dispatch) {
     addPost: (data) => dispatch(addPost(data)),
     removePost: (data) => dispatch(removePost(data)),
     getPosts: (data) => dispatch(getPosts(data)),
-    getCategories: (data) => dispatch(getCategories(data)),
   }
 }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps)(ShowAll)
+  mapDispatchToProps)(ShowPosts)
 
 
 //export default showAll

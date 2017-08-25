@@ -14,7 +14,7 @@ import{
         //ControlID
       } from 'react-bootstrap';
 import { connect } from 'react-redux'
-import { updatePost, addPost, removePost, getCategories } from '../actions'
+import { updatePost, addPost, removePost, getCategories, getPosts } from '../actions'
 import uniqid from 'uniqid'
 
 let loaded=false;
@@ -74,6 +74,14 @@ render(props) {
     {categories.map((cur,val,arry)=> {
       return <option value={cur} key={uniqid()}>{cur}</option>
     })}
+
+    {categories.map((cur,val,arry)=> {
+      console.log("trying to get posts for " + cur);
+      getPosts(cur)
+      return true
+    })}
+
+
      </FormControl>
      </FormGroup>
      <ControlLabel>Text</ControlLabel>
@@ -151,6 +159,7 @@ function mapDispatchToProps(dispatch) {
     removePost: (data) => dispatch(removePost(data)),
     getCat: (data) => dispatch(getCategories(data)),
     updatePost: (data) => dispatch(updatePost(data)),
+    getPosts: (data) => {dispatch(getPosts(data))},
   }
 }
 

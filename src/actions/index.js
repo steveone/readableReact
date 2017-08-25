@@ -1,4 +1,5 @@
-import getCategoriesFromAPI from '../utils/apiConnector'
+import getCategoriesFromAPI from '../utils/getCategories'
+import getPostsFromAPI from '../utils/getPosts'
 
 export const ADD_POST = 'ADD_POST'
 export const REMOVE_POST = 'REMOVE_POST'
@@ -44,6 +45,27 @@ export function categoriesReturned(categories) {
   }
 }
 
+
+export function postsReturned(posts) {
+  console.log("posts are next");
+  console.log(posts)
+  return {
+    type: 'ADD_POST',
+    posts
+  }
+}
+
+export const getPosts = (posts) => dispatch =>(
+  getPostsFromAPI(posts)
+  //.getCategories()
+  .then(posts => dispatch(postsReturned(
+    {posts}
+    //posts.reduce((ret,cur,index, array) => {return ret.concat(cur)},[])
+        )
+      )
+    )
+  )
+
 //export const getCategories = () => getCategoriesFromAPI()
 
 export const getCategories = () => dispatch =>(
@@ -51,10 +73,7 @@ export const getCategories = () => dispatch =>(
   //.getCategories()
   .then(categories => dispatch(categoriesReturned(
     categories.reduce((ret,cur,index, array) => {return ret.concat(cur)},[])
-    )
-  )
-    //console.log(categories))
-    //receiveCategories(categories))
-  //dispatch(receiveCategories(categories)))
+        )
+      )
     )
   )

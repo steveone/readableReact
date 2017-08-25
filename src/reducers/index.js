@@ -47,6 +47,7 @@ function writingPost (state = blankPost, action)
 
 function post (state = {}, action) {
   const { id, author, text,category} = action
+  console.log(action)
   switch (action.type) {
     case ADD_POST :
       return {
