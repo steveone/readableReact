@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch} from 'react-router-dom'
 import './App.css';
 import Nav from './components/Nav';
-import ShowAll from './components/ShowAll'
+//import ShowAll from './components/ShowAll'
 import{ Button } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import { addPost, removePost } from './actions'
@@ -10,6 +10,18 @@ import CreateEdit from './components/CreateEdit'
 import ShowPosts from './components/ShowPosts'
 
 class App extends Component {
+
+
+componentDidUpdate(prevProps, prevState) {
+    // One possible fix...
+    console.log("Component did update in app.js")
+  }
+
+  shouldComponentUpdate(prevProps, prevState){
+    console.log("should component update")
+    return true
+  }
+
   render() {
     return (
    <BrowserRouter>
