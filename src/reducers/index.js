@@ -50,10 +50,9 @@ function post (state = {}, action) {
   //const { id, author, body, title} = action
   console.log(action.type)
   switch (action.type) {
-    case ADD_POST :
+    case ADD_POST:
       return {
-        ...state,
-        ...[action.posts]
+      ...[state],...action.posts
         /*[id] : { id,
             author,
             body,
