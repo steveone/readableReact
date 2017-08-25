@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import '../App.css';
 import{ Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux'
-import { addPost, removePost, getPosts } from '../actions'
+import { addPost, removePost, getPosts, getCategories } from '../actions'
 import uniqid from 'uniqid'
 
 class ShowPosts extends Component {
@@ -14,45 +14,44 @@ class ShowPosts extends Component {
 
 render(props) {
   let posts = []
-  console.log("in render props")
-  console.log (this.props.posts)
+  let categories = []
   if (this.props.posts){
     posts = this.props.posts
-    console.log("we set posts to")
-    console.log(posts)
+  }
+  if (this.props.categories){
+    categories = this.props.categories
     }
-console.log(posts)
+
+//console.log(this.props.posts)
+//console.log(this.props.categories)
+  
   return (
+    
    <div className="showAll">
     <Button bsSize="small" bsStyle="primary" key={uniqid()}>ShowAll</Button>
     <ButtonToolbar>
      <ButtonGroup vertical>
-{/*    {posts.map((cur,val,arry)=> {
+    {categories && Object.keys(categories).map((cur,val,arry) => {
+         const {name} = categories[cur]
+         return <div key={'d'+cur}>
+                <Button bsSize="small" bsStyle="primary" key={uniqid()}
+                id = {'c'+ cur}
+                  onClick={() => this.props.removePost(cur)}
+                >{name}</Button>
+              </div>
+     }
+   )}
 
-      return  <Button bsSize="small" bsStyle="primary" key={uniqid()}
-      id = {val}
-        onClick={() => this.sendToConsole({val})}
-      >{cur}</Button>
-
-    })}*/}
      </ButtonGroup>
      </ButtonToolbar>
      {
       
 posts && Object.keys(posts).map((cur,val,arry) => {
-  //posts.map((cur,val,arry) => {
-        console.log("val is")
-        console.log(val);
-        const stateKey = cur;
-        console.log("stateKey " + stateKey + " " + cur)
-        console.log(posts)
-        const {id,body, title,category} = posts[cur]
-        console.log(posts)
-        console.log(`${id}  body + title  + category`)
-         return <div key={'d'+id}>
+  const {id,body, title,category} = posts[cur]
+         return <div key={'e'+id}>
                 {body} <br/> {title} <br/> {category} <br/>
                 <Button bsSize="small" bsStyle="primary" key={uniqid()}
-                id = {id}
+                id = {'rp' + id}
                   onClick={() => this.props.removePost(cur)}
                 >Delete {id}</Button>
               </div>
@@ -63,6 +62,7 @@ posts && Object.keys(posts).map((cur,val,arry) => {
 componentDidMount() {
   console.log("componentdidmount")
   this.props.getPosts()
+  this.props.getCategories()
   }
 
 componentDidUpdate(prevProps, prevState) {
@@ -87,7 +87,7 @@ componentDidUpdate(prevProps, prevState) {
 const mapStateToProps = ((state) => (
   {
    posts: state.post,
-
+   categories: state.categories,
 }));
 
 function mapDispatchToProps(dispatch) {
@@ -95,6 +95,7 @@ function mapDispatchToProps(dispatch) {
     addPost: (data) => dispatch(addPost(data)),
     removePost: (data) => dispatch(removePost(data)),
     getPosts: (data) => dispatch(getPosts(data)),
+    getCategories: (data) => dispatch(getCategories(data)),
   }
 }
 
