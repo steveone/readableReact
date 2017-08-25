@@ -30,7 +30,7 @@ export function addPost ({ id, author, body, title }) {
 }
 
 export function removePost ( id ) {
-  console.log("Remove_Post " + id)
+  //console.log("Remove_Post " + id)
   return {
     type: REMOVE_POST,
     id,
@@ -40,7 +40,9 @@ export function removePost ( id ) {
 
 
 export function categoriesReturned(categories) {
-  return {
+  //console.log("in categories returned")
+  //console.log(categories)
+    return {
     type: 'ADD_CATEGORIES',
     categories
   }
@@ -48,8 +50,8 @@ export function categoriesReturned(categories) {
 
 
 export function postsReturned(posts) {
-  console.log("posts are next");
-  console.log(posts)
+  //console.log("posts are next");
+  //console.log(posts)
   return {
     type: 'ADD_POST',
     posts
@@ -72,8 +74,10 @@ export const getPosts = (posts) => dispatch =>(
 export const getCategories = () => dispatch =>(
   getCategoriesFromAPI()
   //.getCategories()
+  //.then(categories => (console.log(categories)))
   .then(categories => dispatch(categoriesReturned(
-    categories.reduce((ret,cur,index, array) => {return ret.concat(cur)},[])
+    categories
+    //categories.reduce((ret,cur,index, array) => {return ret.concat(cur)},[])
         )
       )
     )
