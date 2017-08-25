@@ -7,6 +7,7 @@ import{ Button } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import { addPost, removePost } from './actions'
 import CreateEdit from './components/CreateEdit'
+import ShowPosts from './components/ShowPosts'
 
 class App extends Component {
   render() {
@@ -34,7 +35,7 @@ class App extends Component {
           </div>
           } />
     <Route exact path="/" render={() =>
-      <ShowAll/>
+      <ShowPosts/>
     		} />
         </Switch>
         </div>

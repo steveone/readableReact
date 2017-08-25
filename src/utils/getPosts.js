@@ -7,11 +7,13 @@ export const getPostsFromAPI = () => //console.log("Asddddd")
             }
  return fetch('http://localhost:5001/posts', { headers })
      .then(res => res.json())
-     .then(( posts) => posts.reduce((ret, elem) =>  (
+     .then (posts => posts)
+/*     .then(( posts) => posts.reduce((ret, elem) =>  (
 //       console.log(elem[index].name +  elem[index].path)
 //        console.log(data)
       ret.concat(elem.id)
     ),[]))
+    */
   //   .error(error => console.log("error"))
 
 }

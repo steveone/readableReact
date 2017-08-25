@@ -9,22 +9,23 @@ export const UPDATE_POST = 'UPDATE_POST'
 export const SUBMIT_POST = 'SUBMIT_POST'
 
 
-export function updatePost ({author, text, category}) {
+export function updatePost ({author, body, title, id}) {
   return {
     type: UPDATE_POST,
     author,
-    text,
-    category
+    body,
+    title,
+    id
   }
 }
 
-export function addPost ({ id, author, text,category }) {
+export function addPost ({ id, author, body, title }) {
   return {
     type: ADD_POST,
-    id,
     author,
-    text,
-    category
+    id,
+    body,
+    title
   }
 }
 
@@ -59,7 +60,7 @@ export const getPosts = (posts) => dispatch =>(
   getPostsFromAPI(posts)
   //.getCategories()
   .then(posts => dispatch(postsReturned(
-    {posts}
+    posts
     //posts.reduce((ret,cur,index, array) => {return ret.concat(cur)},[])
         )
       )

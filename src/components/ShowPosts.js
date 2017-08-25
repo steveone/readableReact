@@ -16,6 +16,8 @@ render(props) {
   let posts = []
   if (this.props.posts){
     posts = this.props.posts
+    console.log("we set posts to")
+    console.log(posts)
     }
 console.log(posts)
   return (
@@ -23,28 +25,30 @@ console.log(posts)
     <Button bsSize="small" bsStyle="primary" key={uniqid()}>ShowAll</Button>
     <ButtonToolbar>
      <ButtonGroup vertical>
-    {posts.map((cur,val,arry)=> {
+{/*    {posts.map((cur,val,arry)=> {
 
       return  <Button bsSize="small" bsStyle="primary" key={uniqid()}
       id = {val}
         onClick={() => this.sendToConsole({val})}
       >{cur}</Button>
 
-    })}
+    })}*/}
      </ButtonGroup>
      </ButtonToolbar>
      {
 Object.keys(posts).map((cur,val,arry) => {
+        console.log("val is")
         console.log(val);
         const stateKey = cur;
         console.log("stateKey " + stateKey)
-        const {id,text,author,category} = posts[cur]
-        console.log(id + text + author + category)
+        const {id,body, title,category} = posts[cur]
+        console.log(posts)
+        console.log(`${id}  body + title  + category`)
          return <div key={'d'+id}>
-                {text} <br/> {author} <br/> {category} <br/>
+                {body} <br/> {title} <br/> {category} <br/>
                 <Button bsSize="small" bsStyle="primary" key={uniqid()}
                 id = {id}
-                  onClick={() => this.props.removePost(stateKey)}
+                  onClick={() => this.props.removePost(cur)}
                 >Delete {id}</Button>
               </div>
      })}

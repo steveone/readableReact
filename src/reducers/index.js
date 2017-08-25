@@ -46,23 +46,25 @@ function writingPost (state = blankPost, action)
 }
 
 function post (state = {}, action) {
-  const { id, author, text,category} = action
-  console.log(action)
+  console.log("i reducer")
+  //const { id, author, body, title} = action
+  console.log(action.type)
   switch (action.type) {
     case ADD_POST :
       return {
         ...state,
-        [id] : { id,
+        ...[action.posts]
+        /*[id] : { id,
             author,
-            text,
-            category
+            body,
+            title
 
           //[comments]: comments,
-        }
+        }*/
       }
     case REMOVE_POST :
         return Object.keys(state)
-    .filter(key => key !== action.id)
+    .filter(id => id !== action.id)
     .reduce((result, current) => {
       result[current] = state[current];
       return result;
