@@ -12,16 +12,7 @@ import {
   category: null
 }*/
 
-function categories (state = {}, action) {
-  switch (action.type) {
-    case ADD_CATEGORIES :
-      return [
-        action.categories
-            ]
-    default :
-      return state
-  }
-}
+
 
 const blankPost = {
   'title': "",
@@ -42,6 +33,20 @@ function writingPost (state = blankPost, action)
         }
     case SUBMIT_POST: return state;
     default: return state;
+  }
+}
+
+
+function categories (state = {}, action) {
+  //const {categories} = action
+  console.log("in categoires reducer")
+  console.log(action)
+  switch (action.type) {
+    case ADD_CATEGORIES :
+      return {...[state],...action.categories
+      }
+    default :
+      return state
   }
 }
 
