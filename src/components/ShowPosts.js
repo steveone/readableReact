@@ -14,6 +14,8 @@ class ShowPosts extends Component {
 
 render(props) {
   let posts = []
+  console.log("in render props")
+  console.log (this.props.posts)
   if (this.props.posts){
     posts = this.props.posts
     console.log("we set posts to")
@@ -36,11 +38,14 @@ console.log(posts)
      </ButtonGroup>
      </ButtonToolbar>
      {
-Object.keys(posts).map((cur,val,arry) => {
+      
+posts && Object.keys(posts).map((cur,val,arry) => {
+  //posts.map((cur,val,arry) => {
         console.log("val is")
         console.log(val);
         const stateKey = cur;
-        console.log("stateKey " + stateKey)
+        console.log("stateKey " + stateKey + " " + cur)
+        console.log(posts)
         const {id,body, title,category} = posts[cur]
         console.log(posts)
         console.log(`${id}  body + title  + category`)
@@ -56,7 +61,7 @@ Object.keys(posts).map((cur,val,arry) => {
    );}
 
 componentDidMount() {
-//  console.log("componentdidmount")
+  console.log("componentdidmount")
   this.props.getPosts()
   }
 
@@ -67,16 +72,23 @@ componentDidUpdate(prevProps, prevState) {
 
 }
 
-function mapStateToProps(state,props){
+/*function mapStateToProps(state,props){
+  console.log("state is going to be")
+  console.log(state)
+  console.log(state.post)
   return {
-    posts: state.post[0],
+    post:  posts,
     categories: state.categories[0]
 //    state
   }
 }
+*/
 
+const mapStateToProps = ((state) => (
+  {
+   posts: state.post,
 
-
+}));
 
 function mapDispatchToProps(dispatch) {
   return{
