@@ -5,7 +5,8 @@ import {
   REMOVE_POST,
   ADD_CATEGORIES,
   UPDATE_POST,
-  SUBMIT_POST
+  SUBMIT_POST,
+  CHANGE_VOTE
 } from '../actions'
 
 /*const initialCategory = {
@@ -22,14 +23,14 @@ const blankPost = {
 
 function writingPost (state = blankPost, action)
 {
-  const {author, text, category} = action
+  const {author, category,body } = action
   switch(action.type){
     case UPDATE_POST:
         return{
         ...state,
         category,
         author,
-        text
+        body
         }
     case SUBMIT_POST: return state;
     default: return state;
@@ -67,12 +68,26 @@ function post (state = {}, action) {
         }*/
       }
     case REMOVE_POST :
-        return Object.keys(state)
-    .filter(id => id !== action.id)
-    .reduce((result, current) => {
-      result[current] = state[current];
-      return result;
-  }, {});
+    console.log("in remove post reducer")
+        let retVal = Object.keys(state).map( (item, index) => {
+          console.log(state[index].id)
+          console.log(action.id)
+          if(state[index].id !== action.id) {
+            // this one isn't changing so return it
+              return state[index];
+        }
+        //we want to mark this one deleted = true
+        else
+          {
+            state[index].deleted = true
+              return state[index]
+        }
+    });
+    console.log("retval is")
+    console.log(retVal)
+    return {...[state],...retVal}
+
+  
     default :
       return state
   }
@@ -80,48 +95,6 @@ function post (state = {}, action) {
 
 
 
-/*const initialPosts = {
-    /*id: null,
-    author: null,
-    text: null,
-    category:null,
-    comments: {
-      id: null,
-      text: null,
-      author:null
-    }
-
-}*/
-/*
-function postAction (state = initialPosts, action) {
-  const { id, author, text,category} = action
-  switch (action.type) {
-    case ADD_POST :
-      return {
-        ...state,
-        [post]: {
-          ...state, post: {
-            id,
-            author,
-            text,
-            category
-          }
-          //[comments]: comments,
-        }
-      }
-  /* case REMOVE_POST :
-      return {
-        state,
-        [post.id]: {
-          ...state[post],
-          [post.id]: null,
-        }
-      }
-    default :
-      return state
-  }
-}
-*/
 export default combineReducers({
   post,
   writingPost,

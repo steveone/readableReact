@@ -27,7 +27,7 @@ class CreateEdit extends Component {
 
   updateField(field, value,e){
        if (loaded) {
-         e.preventDefault()
+        // e.preventDefault()
          console.log("select changed " + field + " " + value)
          const {category, text,author} = this.props.writingPost
         switch (field) {
@@ -37,9 +37,9 @@ class CreateEdit extends Component {
                author
               })
               break
-          case 'text': this.props.updatePost(
+          case 'body': this.props.updatePost(
               {category,
-               text: value,
+               body: value,
                author
               })
               break
@@ -71,15 +71,14 @@ render(props) {
     onChange={(e) => this.updateField('select',e.target.value)}
     //onChange={this.props.updatePost({author:'', title: '', category: ''})}
     >
-    {categories.map((cur,val,arry)=> {
-      return <option value={cur} key={uniqid()}>{cur}</option>
+    {categories && Object.keys(categories).map((cur,val,arry) => {
+      console.log("in select cat")
+      console.log(categories[cur])
+      const {name} = categories[cur]
+      return <option value={name} key={cur}>{name}</option>
     })}
 
-    {categories.map((cur,val,arry)=> {
-      console.log("trying to get posts for " + cur);
-      getPosts(cur)
-      return true
-    })}
+
 
 
      </FormControl>
@@ -88,8 +87,8 @@ render(props) {
         <FormControl type="text"
           key={3}
           value={this.props.writingPost.text}
-          onChange={(e) => this.updateField('text',e.target.value,e)}
-          placeholder="Enter Text"
+          onChange={(e) => this.updateField('body',e.target.value,e)}
+          placeholder="Enter body"
         //  onChange={updatePost({title: this.value})}
         />
       </FormGroup>
@@ -131,6 +130,7 @@ componentDidMount() {
   this.props.getCat()
   console.log("got cats")
   loaded = true;
+
   }
 
 componentDidUpdate(prevProps, prevState) {
@@ -143,7 +143,7 @@ componentDidUpdate(prevProps, prevState) {
 function mapStateToProps(state,props){
   return {
     posts: state.post,
-    categories: state.categories[0],
+    categories: state.categories,
     writingPost: state.writingPost,
 
 //    state

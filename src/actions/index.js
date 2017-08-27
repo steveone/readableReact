@@ -1,5 +1,8 @@
 import getCategoriesFromAPI from '../utils/getCategories'
 import getPostsFromAPI from '../utils/getPosts'
+import deletePostFromAPI from '../utils/deletePost'
+import changeVoteFromAPI from '../utils/changeVote'
+
 
 export const ADD_POST = 'ADD_POST'
 export const REMOVE_POST = 'REMOVE_POST'
@@ -9,23 +12,28 @@ export const UPDATE_POST = 'UPDATE_POST'
 export const SUBMIT_POST = 'SUBMIT_POST'
 
 
-export function updatePost ({author, body, title, id}) {
+export function updatePost ({author, body, title, id,category}) {
   return {
     type: UPDATE_POST,
     author,
     body,
     title,
-    id
+    id,
+    category
   }
 }
 
-export function addPost ({ id, author, body, title }) {
+export function addPost ({ id, timestamp,title,body,author,category,voteScore,deleted }) {
   return {
     type: ADD_POST,
-    author,
     id,
+    timestamp,
+    title,
     body,
-    title
+    author,
+    category,
+    voteScore
+    ,deleted
   }
 }
 
@@ -58,16 +66,38 @@ export function postsReturned(posts) {
   }
 }
 
-export const getPosts = (posts) => dispatch =>(
-  getPostsFromAPI(posts)
-  //.getCategories()
-  .then(posts => dispatch(postsReturned(
-    posts
-    //posts.reduce((ret,cur,index, array) => {return ret.concat(cur)},[])
+
+
+
+  export const changeVote = (id) => dispatch =>(
+    changeVoteFromAPI(id)
+    //need to finish update post in state
+    /*.then(posts => dispatch(changeVotePost(
+      id
+          )
+        )
+      )*/
+    )
+
+
+export const deletePost = (id) => dispatch =>(
+  deletePostFromAPI(id)
+  .then(posts => dispatch(removePost(
+    id
         )
       )
     )
   )
+
+  export const getPosts = (posts) => dispatch =>(
+    getPostsFromAPI(posts)
+    .then(posts => dispatch(postsReturned(
+      posts
+      //posts.reduce((ret,cur,index, array) => {return ret.concat(cur)},[])
+          )
+        )
+      )
+    )
 
 //export const getCategories = () => getCategoriesFromAPI()
 

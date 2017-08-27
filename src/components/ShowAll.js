@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import '../App.css';
 import{ Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux'
-import { addPost, removePost, getPosts, getCategories } from '../actions'
+import { addPost, removePost, getPosts, getCategories, deletePost } from '../actions'
 import uniqid from 'uniqid'
 
 class ShowAll extends Component {
@@ -44,10 +44,11 @@ posts.map((cur,val,arry) => {
   console.log(val);
   const stateKey = cur;
   console.log("stateKey " + stateKey)
-  const {id,timestamp,title,body} = posts[cur]
+  const {id, timestamp,title,body,author,category,voteScore,deleted } = posts[cur]
   console.log(id + timestamp + title + body)
    return <div key={'d'+ id}>
           {timestamp} <br/> {title} <br/> {body} <br/>
+          {voteScore} <br/> {deleted} <br/> {author <br/}
           <Button bsSize="small" bsStyle="primary" key={uniqid()}
           id = {'c' + id}
             onClick={() => this.props.removePost(id)}
@@ -65,6 +66,7 @@ componentDidMount() {
 //  console.log("componentdidmount")
   this.props.getPosts()
   this.props.getCategories()
+  this.props.deletePost()
   }
 
 componentDidUpdate(prevProps, prevState) {
@@ -88,9 +90,10 @@ function mapStateToProps(state,props){
 function mapDispatchToProps(dispatch) {
   return{
     addPost: (data) => dispatch(addPost(data)),
-    removePost: (data) => dispatch(removePost(data)),
+    removePost: (data) => dispatch(deletePost(data)),
     getPosts: (data) => dispatch(getPosts(data)),
     getCategories: (data) => dispatch(getCategories(data)),
+
   }
 }
 

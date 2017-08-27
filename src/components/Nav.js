@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import{ Button, ButtonToolbar, ButtonGroup} from 'react-bootstrap';
+import{  ButtonToolbar, ButtonGroup} from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import uniqid from 'uniqid';
 
@@ -9,16 +9,16 @@ class Nav extends Component {
    <ButtonToolbar>
     <ButtonGroup vertical>
       <LinkContainer to="/">
-        <Button bsSize="small" bsStyle="primary" key={uniqid()}>Home</Button>
+        <a key={uniqid()}>Home </a>
       </LinkContainer>
       <LinkContainer  to="/category">
-        <Button bsSize="small" bsStyle="success" key={uniqid()}>Category</Button>
+        <a key={uniqid()}>Category </a>
       </LinkContainer>
       <LinkContainer to="/postDetail">
-        <Button bsSize="small" bsStyle="info" key={uniqid()}>Post Detail</Button>
+        <a key={uniqid()}>Post Detail </a>
       </LinkContainer>
       <LinkContainer to="/createEdit">
-          <Button bsSize="small" bsStyle="warning" key={uniqid()}>Create Edit</Button>
+          <a key={uniqid()}>Create Edit </a>
       </LinkContainer>
         </ButtonGroup>
     </ButtonToolbar>

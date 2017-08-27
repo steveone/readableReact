@@ -22,3 +22,54 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.smallDisplay{
+  font-size:0.9em;
+  margin-left:20px;
+  font-style: italic;
+}
+
+.showAll{
+  float:left;
+  text-align:left;
+  position:relative;
+  margin-left:10px;
+}
+
+.post{
+  position:relative;
+  width:90%;
+  min-height:20px;
+  margin: 10px;
+  vertical-align: top;
+  float:left;
+}
+
+.leftPost{
+  float:left;
+  margin-right: 20px;
+}
+
+.rightPost{
+  margin-left: 20px;
+}
+
+.postDisplay{
+  vertical-align:center;
+  text-align:left
+}
+
+.postDisplayleft{
+  float:left;
+  margin-right:20px;
+}
+
+.displayBody{
+  margin-left: 70px;
+}
+
+.title{
+  font-weight:bold;
+  font-size: 1.1em;
+  color:blue;
+}

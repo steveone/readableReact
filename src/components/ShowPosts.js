@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-//import { BrowserRouter, Route, Switch} from 'react-router-dom'
+//import { Link} from 'react-router-dom'
 import '../App.css';
-import{ Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
+//import{ Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux'
-import { addPost, removePost, getPosts, getCategories } from '../actions'
+import { addPost, getPosts, getCategories, deletePost, changeVote } from '../actions'
 import uniqid from 'uniqid'
+import { FaChevronUp, FaChevronDown, FaCut} from 'react-icons/lib/fa'
 
 class ShowPosts extends Component {
 
@@ -24,37 +25,47 @@ render(props) {
 
 //console.log(this.props.posts)
 //console.log(this.props.categories)
-  
+
   return (
-    
+
    <div className="showAll">
-    <Button bsSize="small" bsStyle="primary" key={uniqid()}>ShowAll</Button>
-    <ButtonToolbar>
-     <ButtonGroup vertical>
+   Show Categories:
+    <a key={uniqid()}> All, </a>
     {categories && Object.keys(categories).map((cur,val,arry) => {
          const {name} = categories[cur]
-         return <div key={'d'+cur}>
-                <Button bsSize="small" bsStyle="primary" key={uniqid()}
+         return (<a key={uniqid()}
                 id = {'c'+ cur}
                   onClick={() => this.props.removePost(cur)}
-                >{name}</Button>
-              </div>
+                >{name}, </a>)
+
      }
    )}
 
-     </ButtonGroup>
-     </ButtonToolbar>
      {
-      
-posts && Object.keys(posts).map((cur,val,arry) => {
-  const {id,body, title,category} = posts[cur]
-         return <div key={'e'+id}>
-                {body} <br/> {title} <br/> {category} <br/>
-                <Button bsSize="small" bsStyle="primary" key={uniqid()}
-                id = {'rp' + id}
-                  onClick={() => this.props.removePost(cur)}
-                >Delete {id}</Button>
-              </div>
+
+posts && Object.keys(posts)
+.filter(post => posts[post].deleted !== true)
+.map((cur,val,arry) => {
+  const {id,title,body,author,category,voteScore } = posts[cur]
+         return <div className='post' key={'e'+id}>
+                  <div className='leftPost'>
+                    <div className='upPost'>
+                      <a onClick={() => this.props.changeVote([id,"upVote"])}><FaChevronUp/> </a>
+                        {voteScore}
+                      <a onClick={() => this.props.changeVote([id,"downVote"])}><FaChevronDown/></a>
+                    <br />
+                    <a onClick={() => this.props.removePost(id)}><FaCut /></a>
+                    </div>
+                  </div>
+                  <div className='postDisplay'>
+                    <span className='title'> {title} </span>
+                    <span className='smallDisplay'>Category: {category}</span>
+                    <br/>
+                    <span className='displayBody'>{body} - {author}</span>
+
+                  </div>
+                </div>
+
      })}
    </div>
    );}
@@ -69,6 +80,7 @@ componentDidUpdate(prevProps, prevState) {
     // One possible fix...
     console.log("Component did update")
   }
+
 
 }
 
@@ -93,9 +105,10 @@ const mapStateToProps = ((state) => (
 function mapDispatchToProps(dispatch) {
   return{
     addPost: (data) => dispatch(addPost(data)),
-    removePost: (data) => dispatch(removePost(data)),
     getPosts: (data) => dispatch(getPosts(data)),
     getCategories: (data) => dispatch(getCategories(data)),
+    removePost: (data) => dispatch(deletePost(data)),
+    changeVote: (data) => dispatch(changeVote(data)),
   }
 }
 
