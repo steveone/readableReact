@@ -41,10 +41,11 @@ render(props) {
      }
    )}
 
-     {
 
+{
 posts && Object.keys(posts)
 .filter(post => posts[post].deleted !== true)
+.sort((a,b)=> posts[a].voteScore < posts[b].voteScore)
 .map((cur,val,arry) => {
   const {id,title,body,author,category,voteScore } = posts[cur]
          return <div className='post' key={'e'+id}>
@@ -61,7 +62,7 @@ posts && Object.keys(posts)
                     <span className='title'> {title} </span>
                     <span className='smallDisplay'>Category: {category}</span>
                     <br/>
-                    <span className='displayBody'>{body} - {author}</span>
+                    <span className='displayBody'>{body} <br />author: {author}</span>
 
                   </div>
                 </div>

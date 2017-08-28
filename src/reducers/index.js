@@ -40,8 +40,6 @@ function writingPost (state = blankPost, action)
 
 function categories (state = {}, action) {
   //const {categories} = action
-  console.log("in categoires reducer")
-  console.log(action)
   switch (action.type) {
     case ADD_CATEGORIES :
       return {...[state],...action.categories
@@ -52,9 +50,7 @@ function categories (state = {}, action) {
 }
 
 function post (state = {}, action) {
-  console.log("i reducer")
-  //const { id, author, body, title} = action
-  console.log(action.type)
+  let retVal = null
   switch (action.type) {
     case ADD_POST:
       return {
@@ -68,11 +64,8 @@ function post (state = {}, action) {
         }*/
       }
     case REMOVE_POST :
-    console.log("in remove post reducer")
-        let retVal = Object.keys(state).map( (item, index) => {
-          console.log(state[index].id)
-          console.log(action.id)
-          if(state[index].id !== action.id) {
+        retVal = Object.keys(state).map( (item, index) => {
+            if(state[index].id !== action.id) {
             // this one isn't changing so return it
               return state[index];
         }
@@ -83,15 +76,33 @@ function post (state = {}, action) {
               return state[index]
         }
     });
-    console.log("retval is")
-    console.log(retVal)
+      return {...[state],...retVal}
+
+
+    case CHANGE_VOTE :
+      const scoreChange = (action.vote === 'upVote') ? 1 : -1
+        retVal = Object.keys(state).map( (item, index) => {
+            if(state[index].id !== action.id) {
+            // this one isn't changing so return it
+              return state[index];
+        }
+        //vote Score changed on this one so update
+        else
+          {
+              state[index].voteScore += scoreChange
+              return state[index]
+        }
+    });
     return {...[state],...retVal}
 
-  
+
+
     default :
       return state
   }
 }
+
+
 
 
 

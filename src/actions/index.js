@@ -8,6 +8,7 @@ export const ADD_POST = 'ADD_POST'
 export const REMOVE_POST = 'REMOVE_POST'
 export const ADD_CATEGORY = 'ADD_CATEGORY'
 export const ADD_CATEGORIES = 'ADD_CATEGORIES'
+export const CHANGE_VOTE = 'UPDATE_POST'
 export const UPDATE_POST = 'UPDATE_POST'
 export const SUBMIT_POST = 'SUBMIT_POST'
 
@@ -66,17 +67,24 @@ export function postsReturned(posts) {
   }
 }
 
-
+export function changeVotePost (data) {
+  const [ id, vote ] = data
+  return {
+    type: UPDATE_POST,
+    id,
+    vote,
+  }
+}
 
 
   export const changeVote = (id) => dispatch =>(
     changeVoteFromAPI(id)
     //need to finish update post in state
-    /*.then(posts => dispatch(changeVotePost(
+    .then(posts => dispatch(changeVotePost(
       id
           )
         )
-      )*/
+      )
     )
 
 
