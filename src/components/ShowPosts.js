@@ -5,7 +5,8 @@ import '../App.css';
 import { connect } from 'react-redux'
 import { addPost, getPosts, getCategories, deletePost, changeVote } from '../actions'
 import uniqid from 'uniqid'
-import { FaChevronUp, FaChevronDown, FaCut} from 'react-icons/lib/fa'
+//import { FaChevronUp, FaChevronDown, FaCut} from 'react-icons/lib/fa'
+import Post from './Post'
 
 class ShowPosts extends Component {
 
@@ -47,32 +48,15 @@ posts && Object.keys(posts)
 .filter(post => posts[post].deleted !== true)
 .sort((a,b)=> posts[a].voteScore < posts[b].voteScore)
 .map((cur,val,arry) => {
-  const {id,title,body,author,category,voteScore } = posts[cur]
-         return <div className='post' key={'e'+id}>
-                  <div className='leftPost'>
-                    <div className='upPost'>
-                      <a onClick={() => this.props.changeVote([id,"upVote"])}><FaChevronUp/> </a>
-                        {voteScore}
-                      <a onClick={() => this.props.changeVote([id,"downVote"])}><FaChevronDown/></a>
-                    <br />
-                    <a onClick={() => this.props.removePost(id)}><FaCut /></a>
-                    </div>
-                  </div>
-                  <div className='postDisplay'>
-                    <span className='title'> {title} </span>
-                    <span className='smallDisplay'>Category: {category}</span>
-                    <br/>
-                    <span className='displayBody'>{body} <br />author: {author}</span>
-
-                  </div>
-                </div>
-
-     })}
-   </div>
-   );}
+  const {id} = posts[cur];
+  return  <Post key={'p' + id} id={id}/>
+   })
+}
+</div>
+)}
 
 componentDidMount() {
-  console.log("componentdidmount")
+  console.log("componentdidmount Post")
   this.props.getPosts()
   this.props.getCategories()
   }
@@ -109,7 +93,7 @@ function mapDispatchToProps(dispatch) {
     getPosts: (data) => dispatch(getPosts(data)),
     getCategories: (data) => dispatch(getCategories(data)),
     removePost: (data) => dispatch(deletePost(data)),
-    changeVote: (data) => dispatch(changeVote(data)),
+    changeVote: (data) => dispatch(changeVote(data))
   }
 }
 
