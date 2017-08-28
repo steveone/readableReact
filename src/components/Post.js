@@ -4,7 +4,7 @@ import '../App.css';
 //import{ Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import {  getCategories, getPosts, deletePost, changeVote } from '../actions'
-//import uniqid from 'uniqid'
+import uniqid from 'uniqid'
 import { FaChevronUp, FaChevronDown, FaCut} from 'react-icons/lib/fa'
 
 class Post extends Component {
@@ -15,16 +15,17 @@ class Post extends Component {
 
 render(props) {
   let posts = []
-  let showPost = []
   if (this.props.posts){
-    console.log(posts)
-    posts = this.props.post
-//    post = this.props.post[this.props.id]
-    console.log(posts)
-    console.log("got post")
-  //  showPost = (posts && Object.keys(posts).filter(post => posts[post].id === this.props.id))
+    posts = this.props.posts
   }
-  const {id,title,body,author,category,voteScore } = showPost
+
+return (
+  <div key={uniqid()}>
+  {
+  (posts && Object.keys(posts)
+    .filter(post => posts[post].id === this.props.id)
+    .map((cur,val,arry) => {
+    const {id,title,body,author,category,voteScore } = posts[cur]
          return <div className='post' key={'e'+id}>
                   <div className='leftPost'>
                     <div className='upPost'>
@@ -44,8 +45,11 @@ render(props) {
                   </div>
                 </div>
 
-
-   }
+    })
+  )
+  }
+  </div>
+)}
 
 componentDidMount() {
   console.log("componentdidmount Posts")
@@ -80,6 +84,3 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps)(Post)
-
-
-//export default showAll
