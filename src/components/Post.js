@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import '../App.css';
 //import{ Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux'
-import {  getCategories, getPosts, deletePost, changeVote } from '../actions'
+import {  getCategories, getPosts, deletePost, changeVote, editPost } from '../actions'
 import uniqid from 'uniqid'
-import { FaChevronUp, FaChevronDown, FaCut} from 'react-icons/lib/fa'
+import { FaChevronUp, FaChevronDown, FaCut, FaPencil} from 'react-icons/lib/fa'
 
 class Post extends Component {
 
@@ -37,6 +37,7 @@ return (
                     </div>
                   </div>
                   <div className='postDisplay'>
+                    <a onClick={() => this.props.editPost(id)}><FaPencil /></a>
                     <span className='title'> {title} </span>
                     <span className='smallDisplay'>Category: {category}</span>
                     <br/>
@@ -69,7 +70,8 @@ componentDidUpdate(prevProps, prevState) {
 const mapStateToProps = ((state,ownProps) => (
   {
    posts: state.post,
-   id: ownProps.id
+   id: ownProps.id,
+   currentlyEditing: state.editing
 }));
 
 function mapDispatchToProps(dispatch) {
@@ -78,6 +80,7 @@ function mapDispatchToProps(dispatch) {
     changeVote: (data) => dispatch(changeVote(data)),
     getPosts: (data) => dispatch(getPosts(data)),
     getCategories: (data) => dispatch(getCategories(data)),
+    editPost: (data) => dispatch(editPost(data)),
   }
 }
 
