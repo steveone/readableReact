@@ -13,14 +13,48 @@ export const UPDATE_POST = 'UPDATE_POST'
 export const SUBMIT_POST = 'SUBMIT_POST'
 export const START_EDIT = 'START_EDIT'
 export const END_EDIT = 'END_EDIT'
+export const UPDATE_EDIT = 'UPDATE_EDIT'
+export const CANCEL_EDIT = 'CANCEL_EDIT'
+export const SAVE_EDIT = 'SAVE_EDIT'
 
 
-export function setEditPost ({id}) {
-  console.log("in reducer set edit post")
-  console.log(id)
+
+export function cancelEdit (id) {
+    console.log("in canceled it")
+    console.log(id)
+      return {
+        type: CANCEL_EDIT,
+        id
+        }
+}
+
+//TODO: this needs to update the server and the reducer needs fixing
+export function saveEdit (id) {
+    console.log("in save it")
+    console.log(id)
+      return {
+        type: SAVE_EDIT,
+        id
+        }
+}
+
+export function updateEditField (id, title, body) {
+    console.log("in updateditfield")
+    console.log(id + " " + title + " " + body)
+      return {
+        type: UPDATE_EDIT,
+        id,
+        title,
+        body
+        }
+}
+
+export function setEditPost (id,title,body) {
   return {
     type: START_EDIT,
     id,
+    title,
+    body
     }
 }
 
@@ -97,12 +131,10 @@ export function changeVotePost (data) {
   }
 }
 
-  export const editPost = (id) => {
-    console.log("Adfad")
-    console.log(id)
-    return setEditPost({id})
+  export const editPost = (id,title,body) => {
+    return setEditPost(id,title,body)
   }
-  
+
 
   export const changeVote = (id) => dispatch =>(
     changeVoteFromAPI(id)

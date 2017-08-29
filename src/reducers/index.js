@@ -9,6 +9,9 @@ import {
   CHANGE_VOTE,
   START_EDIT,
   END_EDIT,
+  UPDATE_EDIT,
+  CANCEL_EDIT,
+  SAVE_EDIT
 } from '../actions'
 
 /*const initialCategory = {
@@ -45,18 +48,49 @@ const currentlyEditing = {
   }
 
 function editing(state={},action){
-  console.log("in editing")
-  console.log(action)
+  //const {id,title,body} = action
+  let retVal = null
+  console.log("in editing reducer")
   switch (action.type) {
     case START_EDIT:
        return {
         ...state,
-        currentlyEditing : action.id
+        ...action.id
         }
+    case UPDATE_EDIT:
+          return {
+        ...state,
+        ...action.id
+        }
+    case CANCEL_EDIT:
+              return {
+            ...state,
+            id:null,
+            title:null,
+            body:null
+            }
+    case SAVE_EDIT:
+    const {id} = action
+    console.log("save edit")
+          retVal = Object.keys(state).map( (item, index) => {
+          if(state[index].id !== id) {
+          // this one isn't changing so return it
+            return state[index];
+      }
+      //vote Score changed on this one so update
+      else
+        {
+            state[index].title = editing.title
+            state[index].body = editing.body
+            return state[index]
+      }
+  });
+  return {...[state],...retVal}
+  
     case END_EDIT:
       return {
         ...[state],
-        currentlyEditing:""
+        editing:""
       }
     default: return state
 }

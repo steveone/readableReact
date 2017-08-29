@@ -27,7 +27,7 @@ class CreateEdit extends Component {
 
   updateField(field, value,e){
        if (loaded) {
-        // e.preventDefault()
+         //e.preventDefault()
          console.log("select changed " + field + " " + value)
          const {category, text,author} = this.props.writingPost
         switch (field) {
@@ -130,7 +130,6 @@ componentDidMount() {
   this.props.getCat()
   console.log("got cats")
   loaded = true;
-
   }
 
 componentDidUpdate(prevProps, prevState) {
