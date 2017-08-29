@@ -6,7 +6,9 @@ import {
   ADD_CATEGORIES,
   UPDATE_POST,
   SUBMIT_POST,
-  CHANGE_VOTE
+  CHANGE_VOTE,
+  START_EDIT,
+  END_EDIT,
 } from '../actions'
 
 /*const initialCategory = {
@@ -20,6 +22,8 @@ const blankPost = {
   'author': "",
   'category': "",
 }
+
+
 
 function writingPost (state = blankPost, action)
 {
@@ -37,8 +41,28 @@ function writingPost (state = blankPost, action)
   }
 }
 
+const currentlyEditing = {
+  }
 
-function categories (state = {}, action) {
+function editing(state={},action){
+  console.log("in editing")
+  console.log(action)
+  switch (action.type) {
+    case START_EDIT:
+       return {
+        ...state,
+        currentlyEditing : action.id
+        }
+    case END_EDIT:
+      return {
+        ...[state],
+        currentlyEditing:""
+      }
+    default: return state
+}
+}
+
+function categories (state = currentlyEditing, action) {
   //const {categories} = action
   switch (action.type) {
     case ADD_CATEGORIES :
@@ -110,4 +134,5 @@ export default combineReducers({
   post,
   writingPost,
   categories,
+  editing,
 })
