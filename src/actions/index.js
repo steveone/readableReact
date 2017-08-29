@@ -2,6 +2,7 @@ import getCategoriesFromAPI from '../utils/getCategories'
 import getPostsFromAPI from '../utils/getPosts'
 import deletePostFromAPI from '../utils/deletePost'
 import changeVoteFromAPI from '../utils/changeVote'
+import saveEditFromAPI from '../utils/saveEdit'
 
 
 export const ADD_POST = 'ADD_POST'
@@ -29,9 +30,7 @@ export function cancelEdit (id) {
 }
 
 //TODO: this needs to update the server and the reducer needs fixing
-export function saveEdit (id) {
-    console.log("in save it")
-    console.log(id)
+export function saveEditReducer ({id}) {
       return {
         type: SAVE_EDIT,
         id
@@ -145,6 +144,19 @@ export function changeVotePost (data) {
         )
       )
     )
+
+    export const saveEdit = (state) => dispatch =>(
+      //save state to server and get new state/posts
+      saveEditFromAPI(state)
+      //cancel edit now that we have saved to server
+      .then(posts => dispatch(cancelEdit({id: "dd"})))
+      //store new posts with updates in state
+      .then(posts => dispatch(postsReturned(
+        state
+            )
+          )
+        )
+      )
 
 
 export const deletePost = (id) => dispatch =>(

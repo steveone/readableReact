@@ -50,7 +50,8 @@ const currentlyEditing = {
 function editing(state={},action){
   //const {id,title,body} = action
   let retVal = null
-  console.log("in editing reducer")
+//  console.log("in editing reducer")
+//  console.log(state)
   switch (action.type) {
     case START_EDIT:
        return {
@@ -69,23 +70,6 @@ function editing(state={},action){
             title:null,
             body:null
             }
-    case SAVE_EDIT:
-    const {id} = action
-    console.log("save edit")
-          retVal = Object.keys(state).map( (item, index) => {
-          if(state[index].id !== id) {
-          // this one isn't changing so return it
-            return state[index];
-      }
-      //vote Score changed on this one so update
-      else
-        {
-            state[index].title = editing.title
-            state[index].body = editing.body
-            return state[index]
-      }
-  });
-  return {...[state],...retVal}
   
     case END_EDIT:
       return {
@@ -122,6 +106,8 @@ function post (state = {}, action) {
         }*/
       }
     case REMOVE_POST :
+       console.log("remove post")
+       console.log (state)
         retVal = Object.keys(state).map( (item, index) => {
             if(state[index].id !== action.id) {
             // this one isn't changing so return it

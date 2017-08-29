@@ -89,7 +89,7 @@ return (
                         <br />author: {author}</span>
                       {(id === currentlyEditing) ?
                         <ButtonToolbar>
-                         <Button bsStyle="primary" onClick={(e)=>this.props.saveEdit({id})}>Save</Button>
+                         <Button bsStyle="primary" onClick={(e)=>this.props.saveEdit({id,editingTitle,editingBody})}>Save</Button>
                          <Button bsStyle="primary" onClick={(e)=>this.props.cancelEdit({id})}>Revert</Button>
                         </ButtonToolbar>
                        : <br />
