@@ -11,6 +11,27 @@ export const ADD_CATEGORIES = 'ADD_CATEGORIES'
 export const CHANGE_VOTE = 'UPDATE_POST'
 export const UPDATE_POST = 'UPDATE_POST'
 export const SUBMIT_POST = 'SUBMIT_POST'
+export const START_EDIT = 'START_EDIT'
+export const END_EDIT = 'END_EDIT'
+
+
+export function setEditPost ({id}) {
+  console.log("in reducer set edit post")
+  console.log(id)
+  return {
+    type: START_EDIT,
+    id,
+    }
+}
+
+//TODO: need to add save to server and update data
+export function endEditPost ({id,saveCancel}) {
+  return {
+    type: START_EDIT,
+    id,
+    saveCancel
+    }
+}
 
 
 export function updatePost ({author, body, title, id,category}) {
@@ -76,6 +97,12 @@ export function changeVotePost (data) {
   }
 }
 
+  export const editPost = (id) => {
+    console.log("Adfad")
+    console.log(id)
+    return setEditPost({id})
+  }
+  
 
   export const changeVote = (id) => dispatch =>(
     changeVoteFromAPI(id)
