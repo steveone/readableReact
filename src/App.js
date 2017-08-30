@@ -5,7 +5,7 @@ import Nav from './components/Nav';
 //import ShowAll from './components/ShowAll'
 import{ Button } from 'react-bootstrap';
 import { connect } from 'react-redux'
-import { addPost, removePost } from './actions'
+import { setCategory, addPost, removePost } from './actions'
 import CreateEdit from './components/CreateEdit'
 import ShowPosts from './components/ShowPosts'
 
@@ -22,16 +22,13 @@ componentDidUpdate(prevProps, prevState) {
     return true
   }
 
-  render() {
+  render(props) {
     return (
    <BrowserRouter>
    <div className="App">
     <Nav/>
     <Switch>
-    <Route path="/category" render={() =>
-      <div>category go to Home
-      </div>
-  		} />
+    <Route path="/:category" component={Category}/>
     <Route path="/postDetail" render={() =>
           <div>
           PostDetail
@@ -56,17 +53,23 @@ componentDidUpdate(prevProps, prevState) {
   }
 }
 
-function mapStateToProps({posts}){
-  return {
-    posts
-  }
+
+const Category = ({ match },props) => {
+  return <ShowPosts/>
 }
+
+const mapStateToProps = ((state) => (
+  {
+   posts: state.post,
+   categories: state.categories,
+}));
 
 
 function mapDispatchToProps(dispatch) {
   return{
     addPost: (data) => dispatch(addPost(data)),
-    removePost: (data) => dispatch(removePost(data))
+    removePost: (data) => dispatch(removePost(data)),
+    setCategory: (data) => dispatch(setCategory(data))
   }
 }
 

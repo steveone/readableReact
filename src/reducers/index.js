@@ -11,7 +11,7 @@ import {
   END_EDIT,
   UPDATE_EDIT,
   CANCEL_EDIT,
-  SAVE_EDIT
+//  SAVE_EDIT
 } from '../actions'
 
 /*const initialCategory = {
@@ -49,7 +49,6 @@ const currentlyEditing = {
 
 function editing(state={},action){
   //const {id,title,body} = action
-  let retVal = null
 //  console.log("in editing reducer")
 //  console.log(state)
   switch (action.type) {
@@ -70,7 +69,7 @@ function editing(state={},action){
             title:null,
             body:null
             }
-  
+
     case END_EDIT:
       return {
         ...[state],

@@ -7,6 +7,7 @@ import { addPost, getPosts, getCategories, deletePost, changeVote } from '../act
 import uniqid from 'uniqid'
 //import { FaChevronUp, FaChevronDown, FaCut} from 'react-icons/lib/fa'
 import Post from './Post'
+import { withRouter} from 'react-router-dom'
 
 class ShowPosts extends Component {
 
@@ -17,18 +18,22 @@ class ShowPosts extends Component {
 render(props) {
   let posts = []
   let categories = []
+  let showCategory = []
   if (this.props.posts){
     posts = this.props.posts
   }
   if (this.props.categories){
     categories = this.props.categories
     }
+  /*if (this.props.showCategory){
+    showCategory = this.props.showCategory
+  }*/
+  showCategory = (this.props.showCategory) ? this.props.showCategory : 'all'
 
 //console.log(this.props.posts)
 //console.log(this.props.categories)
 
   return (
-
    <div className="showAll">
    Show Categories:
     <a key={uniqid()}> All, </a>
@@ -46,6 +51,7 @@ render(props) {
 {
 posts && Object.keys(posts)
 .filter(post => posts[post].deleted !== true)
+.filter(post => {return ((posts[post].category === showCategory) || (showCategory === 'all'))})
 .sort((a,b)=> posts[a].voteScore < posts[b].voteScore)
 .map((cur,val,arry) => {
   const {id} = posts[cur];
@@ -81,10 +87,11 @@ componentDidUpdate(prevProps, prevState) {
 }
 */
 
-const mapStateToProps = ((state) => (
+const mapStateToProps = ((state,ownProps) => (
   {
    posts: state.post,
    categories: state.categories,
+   showCategory: ownProps.match.params.category
 }));
 
 function mapDispatchToProps(dispatch) {
@@ -97,9 +104,9 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
-  mapDispatchToProps)(ShowPosts)
+  mapDispatchToProps)(ShowPosts))
 
 
 //export default showAll

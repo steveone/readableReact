@@ -17,7 +17,7 @@ export const END_EDIT = 'END_EDIT'
 export const UPDATE_EDIT = 'UPDATE_EDIT'
 export const CANCEL_EDIT = 'CANCEL_EDIT'
 export const SAVE_EDIT = 'SAVE_EDIT'
-
+export const SET_CATEGORY = 'SET_CATEGORY'
 
 
 export function cancelEdit (id) {
@@ -134,6 +134,16 @@ export function changeVotePost (data) {
     return setEditPost(id,title,body)
   }
 
+  export function setDisplayCategory (category) {
+  return {
+    type: SET_CATEGORY,
+    category
+    }
+  }
+
+  export const setCategory = (category) => {
+    return setDisplayCategory(category)
+  }
 
   export const changeVote = (id) => dispatch =>(
     changeVoteFromAPI(id)
