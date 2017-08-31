@@ -7,7 +7,7 @@ import { addPost, getPosts, getCategories, deletePost, changeVote } from '../act
 import uniqid from 'uniqid'
 //import { FaChevronUp, FaChevronDown, FaCut} from 'react-icons/lib/fa'
 import Post from './Post'
-import { withRouter} from 'react-router-dom'
+import { Link, withRouter} from 'react-router-dom'
 
 class ShowPosts extends Component {
 
@@ -36,14 +36,17 @@ render(props) {
   return (
    <div className="showAll">
    Show Categories:
-    <a key={uniqid()}> All, </a>
+    <Link to="/"> All, </Link>
     {categories && Object.keys(categories).map((cur,val,arry) => {
          const {name} = categories[cur]
-         return (<a key={uniqid()}
+         const link = `/${name}`
+         return (
+  <Link to={link} className="close-search">{name}, </Link>
+)
+           /*<a key={uniqid()}
                 id = {'c'+ cur}
                   onClick={() => this.props.removePost(cur)}
-                >{name}, </a>)
-
+                >{name}, </a>)*/
      }
    )}
 

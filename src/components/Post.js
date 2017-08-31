@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import { Link} from 'react-router-dom'
+import { Link} from 'react-router-dom'
 import '../App.css';
 //import{ Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux'
@@ -52,6 +52,8 @@ return (
     .filter(post => posts[post].id === this.props.id)
     .map((cur,val,arry) => {
     const {id,title,body,author,category,voteScore } = posts[cur]
+    const link = `/${category}/${id}`
+
          return <div className='post' key={'e'+id}>
                   <div className='leftPost'>
                     <div className='upPost'>
@@ -72,7 +74,7 @@ return (
                         value={editingTitle}
                         onChange={(e) => this.updateField('title',e.target.value)}
                         placeholder="Enter body"
-                      /> : title
+                      /> : <Link to={link} className="close-search">{title}</Link>
                     }</span>
                     <span className='smallDisplay'>Category: {category}</span>
                     <br/>
