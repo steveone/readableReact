@@ -30,7 +30,7 @@
 }
 
 .showAll{
-  float:left;
+  /*float:left;*/
   text-align:left;
   position:relative;
   margin-left:10px;
@@ -39,15 +39,20 @@
 .post{
   position:relative;
   width:90%;
-  min-height:20px;
+  min-height: 40px;
   margin: 10px;
   vertical-align: top;
   float:left;
 }
 
+.author{
+  margin-left:20px;
+}
+
 .leftPost{
   float:left;
   margin-right: 20px;
+  min-height: 70px;
 }
 
 .rightPost{
@@ -65,7 +70,9 @@
 }
 
 .displayBody{
-  margin-left: 70px;
+  margin-left: 20px;
+  text-align:left;
+  width: 80%;
 }
 
 .title{
