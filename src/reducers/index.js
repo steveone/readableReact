@@ -11,6 +11,10 @@ import {
   END_EDIT,
   UPDATE_EDIT,
   CANCEL_EDIT,
+  ADD_COMMENT,
+  REMOVE_COMMENT,
+  UPDATE_COMMENT,
+  CHANGE_COMMENT_VOTE
 //  SAVE_EDIT
 } from '../actions'
 
@@ -147,6 +151,58 @@ function post (state = {}, action) {
   }
 }
 
+function comments (state = {}, action) {
+  let retVal = null
+  switch (action.type) {
+    case ADD_COMMENT:
+      return {
+      ...[state],...action.comments
+        /*[id] : { id,
+            author,
+            body,
+            title
+
+          //[comments]: comments,
+        }*/
+      }
+    case REMOVE_COMMENT :
+       console.log("remove comment")
+       console.log (state)
+        retVal = Object.keys(state).map( (item, index) => {
+            if(state[index].id !== action.id) {
+            // this one isn't changing so return it
+              return state[index];
+        }
+        //we want to mark this one deleted = true
+        else
+          {
+            state[index].deleted = true
+              return state[index]
+        }
+    });
+      return {...[state],...retVal}
+
+
+    case CHANGE_COMMENT_VOTE :
+      const scoreChange = (action.vote === 'upVote') ? 1 : -1
+        retVal = Object.keys(state).map( (item, index) => {
+            if(state[index].id !== action.id) {
+            // this one isn't changing so return it
+              return state[index];
+        }
+        //vote Score changed on this one so update
+        else
+          {
+              state[index].voteScore += scoreChange
+              return state[index]
+        }
+    });
+    return {...[state],...retVal}
+
+    default :
+      return state
+  }
+}
 
 
 

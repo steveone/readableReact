@@ -3,7 +3,7 @@ import { Link} from 'react-router-dom'
 import '../App.css';
 //import{ Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux'
-import {  saveEdit, cancelEdit, getCategories, getPosts, deletePost, changeVote, editPost, updateEditField } from '../actions'
+import {  getComments, saveEdit, cancelEdit, getCategories, getPosts, deletePost, changeVote, editPost, updateEditField } from '../actions'
 //import uniqid from 'uniqid'
 import { FaChevronUp, FaChevronDown, FaCut, FaPencil} from 'react-icons/lib/fa'
 import{
@@ -200,6 +200,7 @@ componentDidMount() {
   console.log("componentdidmount Posts")
   this.props.getPosts()
   this.props.getCategories()
+  this.props.getComments('ddd')
   loaded = true;
   }
 
@@ -231,6 +232,7 @@ function mapDispatchToProps(dispatch) {
     updateEditField: (data) => dispatch(updateEditField(data)),
     cancelEdit: (data) => dispatch(cancelEdit(data)),
     saveEdit: (data) => dispatch(saveEdit(data)),
+    getComments: (data) => dispatch(getComments(data)),
   }
 }
 

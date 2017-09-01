@@ -3,6 +3,7 @@ import getPostsFromAPI from '../utils/getPosts'
 import deletePostFromAPI from '../utils/deletePost'
 import changeVoteFromAPI from '../utils/changeVote'
 import saveEditFromAPI from '../utils/saveEdit'
+import getCommentsFromAPI from '../utils/getComments'
 
 
 export const ADD_POST = 'ADD_POST'
@@ -18,7 +19,10 @@ export const UPDATE_EDIT = 'UPDATE_EDIT'
 export const CANCEL_EDIT = 'CANCEL_EDIT'
 export const SAVE_EDIT = 'SAVE_EDIT'
 export const SET_CATEGORY = 'SET_CATEGORY'
-
+export const ADD_COMMENT = 'ADD_COMMENT'
+export const REMOVE_COMMENT = 'REMOVE_COMMENT'
+export const UPDATE_COMMENT = 'UPDATE_COMMENT'
+export const CHANGE_COMMENT_VOTE = 'CHANGE_COMMENT_VOTE'
 
 export function cancelEdit (id) {
     console.log("in canceled it")
@@ -116,6 +120,15 @@ export function categoriesReturned(categories) {
 }
 
 
+export function commentsReturned(posts) {
+  //console.log("posts are next");
+  //console.log(posts)
+  return {
+    type: 'ADD_COMMENT',
+    posts
+  }
+}
+
 export function postsReturned(posts) {
   //console.log("posts are next");
   //console.log(posts)
@@ -188,6 +201,16 @@ export const deletePost = (id) => dispatch =>(
         )
       )
     )
+
+    export const getComments = (comments) => dispatch =>(
+      getCommentsFromAPI(comments)
+      .then(comments => dispatch(commentsReturned(
+        comments
+        //posts.reduce((ret,cur,index, array) => {return ret.concat(cur)},[])
+            )
+          )
+        )
+      )
 
 //export const getCategories = () => getCategoriesFromAPI()
 
