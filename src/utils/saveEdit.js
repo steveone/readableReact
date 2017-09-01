@@ -1,8 +1,8 @@
 export const saveEditFromAPI = (data) => //console.log("Asddddd")
 
 {
-  const {id,editingTitle,editingBody} = data
-  const output = {id,title:editingTitle,body:editingBody}
+  const {id,title,body,category,author} = data
+  const output = {id,title,body,category,author}
   const headers = {
             Authorization: 'Bearer hello',
             "Content-Type": "application/json"

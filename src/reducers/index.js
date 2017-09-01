@@ -67,7 +67,9 @@ function editing(state={},action){
             ...state,
             id:null,
             title:null,
-            body:null
+            body:null,
+            category:null,
+            author:null,
             }
 
     case END_EDIT:

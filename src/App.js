@@ -28,6 +28,7 @@ componentDidUpdate(prevProps, prevState) {
    <div className="App">
     <Nav/>
     <Switch>
+    <Route path="/:category/:postId" component={Category}/>
     <Route path="/:category" component={Category}/>
     <Route path="/postDetail" render={() =>
           <div>

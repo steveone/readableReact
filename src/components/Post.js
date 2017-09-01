@@ -8,10 +8,10 @@ import {  saveEdit, cancelEdit, getCategories, getPosts, deletePost, changeVote,
 import { FaChevronUp, FaChevronDown, FaCut, FaPencil} from 'react-icons/lib/fa'
 import{
         //MenuItem,
-        //FormGroup,
+        FormGroup,
         FormControl,
         //Form,
-        //ControlLabel,
+        ControlLabel,
         //SplitButton,
         Button,
         ButtonToolbar,
@@ -36,6 +36,8 @@ render(props) {
   let currentlyEditing = []
   let editingTitle = ""
   let editingBody = ""
+  let editingCategory = ""
+  let editingAuthor = ""
   if (this.props.posts){
     posts = this.props.posts
   }
@@ -43,7 +45,14 @@ render(props) {
     currentlyEditing = this.props.editing.id
     editingTitle = this.props.editing.title
     editingBody = this.props.editing.body
+    editingCategory = this.props.editing.category
+    editingAuthor = this.props.editing.author
   }
+
+  let categories = []
+  if (this.props.categories){
+    categories = this.props.categories
+    }
 
 return (
   <div key='postDisplay'>
@@ -65,7 +74,7 @@ return (
                     </div>
                   </div>
                   <div className='postDisplay'>
-                    <a onClick={() => this.props.editPost({id,title,body})}><FaPencil /></a>
+                    <a onClick={() => this.props.editPost({id,title,body,category,author})}><FaPencil /></a>
                     <span className='title'>
 
                     {(id === currentlyEditing) ?
@@ -76,10 +85,42 @@ return (
                         placeholder="Enter body"
                       /> : <Link to={link} className="close-search">{title}</Link>
                     }</span>
-                    <span className='smallDisplay'>Category: {category}</span>
-                    <span className="author">author: {author}</span>
+                    <span className='smallDisplay'>Category:
+
+                    {(id === currentlyEditing) ?
+                      <FormGroup>
+                    <ControlLabel>Select Category</ControlLabel>
+                     <FormControl key={2} id="select1" componentClass="select"
+                     onChange={(e) => this.updateField('category',e.target.value)}
+                     //onChange={this.props.updatePost({author:'', title: '', category: ''})}
+                     >
+                     {categories && Object.keys(categories).map((cur,val,arry) => {
+                       console.log("in select cat")
+                       console.log(categories[cur])
+                       const {name} = categories[cur]
+                       return <option value={name} key={cur}>{name}</option>
+                     })}
+
+                          </FormControl>
+                          </FormGroup>
+                      :   category
+                    }
+
+                    </span>
+                    <span className="author">author:
+
+                    {(id === currentlyEditing) ?
+                      <FormControl componentClass="textarea"
+                        key='renderBody'
+                        value={editingAuthor}
+                        onChange={(e) => this.updateField('author',e.target.value)}
+                        placeholder="Enter author"
+                        />
+                      : author
+                      }
+                    </span>
                     <br/>
-                    
+
                       {(id === currentlyEditing) ?
                         <FormControl componentClass="textarea"
                           key='renderBody'
@@ -89,12 +130,12 @@ return (
                           />
                         : body
                         }
-                        
-                        
-                        
+
+
+
                       {(id === currentlyEditing) ?
                         <ButtonToolbar>
-                         <Button bsStyle="primary" onClick={(e)=>this.props.saveEdit({id,editingTitle,editingBody})}>Save</Button>
+                         <Button bsStyle="primary" onClick={(e)=>this.props.saveEdit({id,title:editingTitle,body:editingBody,category:editingCategory,author:editingAuthor})}>Save</Button>
                          <Button bsStyle="primary" onClick={(e)=>this.props.cancelEdit({id})}>Revert</Button>
                         </ButtonToolbar>
                        : <br />
@@ -113,20 +154,40 @@ updateField(field, value,e){
      if (this.props.editing) {
       // e.preventDefault()
        console.log("select changed " + field + " " + value)
-       const {id,title,body} = this.props.editing
+       const {id,title,body,category,author} = this.props.editing
       switch (field) {
         case 'body' : this.props.updateEditField(
             {id,
              title,
-             body : value
+             body : value,
+             category,
+             author
             })
             break
         case 'title': this.props.updateEditField(
             {id,
              title: value,
-             body
+             body,
+             category,
+             author
             })
             break
+        case 'category': this.props.updateEditField(
+            {id,
+             title,
+             body,
+             category: value,
+             author
+                })
+            break
+            case 'author': this.props.updateEditField(
+                {id,
+                 title,
+                 body,
+                 category,
+                 author:value
+                    })
+                break
         default: break;
       }
     }
@@ -155,7 +216,9 @@ const mapStateToProps = ((state,ownProps) => (
   {
    posts: state.post,
    id: ownProps.id,
-   editing: state.editing
+   editing: state.editing,
+   categories: state.categories,
+
 }));
 
 function mapDispatchToProps(dispatch) {

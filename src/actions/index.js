@@ -37,23 +37,27 @@ export function saveEditReducer ({id}) {
         }
 }
 
-export function updateEditField (id, title, body) {
+export function updateEditField (id, title, body,category,author) {
     console.log("in updateditfield")
     console.log(id + " " + title + " " + body)
       return {
         type: UPDATE_EDIT,
         id,
         title,
-        body
+        body,
+        category,
+        author
         }
 }
 
-export function setEditPost (id,title,body) {
+export function setEditPost (id,title,body,category,author) {
   return {
     type: START_EDIT,
     id,
     title,
-    body
+    body,
+    category,
+    author
     }
 }
 
@@ -130,8 +134,8 @@ export function changeVotePost (data) {
   }
 }
 
-  export const editPost = (id,title,body) => {
-    return setEditPost(id,title,body)
+  export const editPost = (id,title,body,category) => {
+    return setEditPost(id,title,body,category)
   }
 
   export function setDisplayCategory (category) {
@@ -161,11 +165,8 @@ export function changeVotePost (data) {
       //cancel edit now that we have saved to server
       .then(posts => dispatch(cancelEdit({id: "dd"})))
       //store new posts with updates in state
-      .then(posts => dispatch(postsReturned(
-        state
-            )
-          )
-        )
+      .then(posts => dispatch(updatePost(state)))
+      .then(posts => dispatch(getPosts(state)))
       )
 
 
