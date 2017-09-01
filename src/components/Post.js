@@ -77,9 +77,10 @@ return (
                       /> : <Link to={link} className="close-search">{title}</Link>
                     }</span>
                     <span className='smallDisplay'>Category: {category}</span>
+                    <span className="author">author: {author}</span>
                     <br/>
-                    <span className='displayBody'>
-                      {(id === currentlyEditing)?
+                    
+                      {(id === currentlyEditing) ?
                         <FormControl componentClass="textarea"
                           key='renderBody'
                           value={editingBody}
@@ -88,7 +89,9 @@ return (
                           />
                         : body
                         }
-                        <br />author: {author}</span>
+                        
+                        
+                        
                       {(id === currentlyEditing) ?
                         <ButtonToolbar>
                          <Button bsStyle="primary" onClick={(e)=>this.props.saveEdit({id,editingTitle,editingBody})}>Save</Button>

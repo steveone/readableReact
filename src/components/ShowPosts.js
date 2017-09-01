@@ -18,17 +18,19 @@ class ShowPosts extends Component {
 render(props) {
   let posts = []
   let categories = []
+  //let postId = []
   let showCategory = []
+  let showPosts = []
   if (this.props.posts){
     posts = this.props.posts
   }
   if (this.props.categories){
     categories = this.props.categories
     }
-  /*if (this.props.showCategory){
-    showCategory = this.props.showCategory
-  }*/
+  
+  showPosts = (this.props.postId) ? this.props.postId : 'all'  
   showCategory = (this.props.showCategory) ? this.props.showCategory : 'all'
+  console.log(showPosts)
 
 //console.log(this.props.posts)
 //console.log(this.props.categories)
@@ -41,7 +43,7 @@ render(props) {
          const {name} = categories[cur]
          const link = `/${name}`
          return (
-  <Link to={link} className="close-search">{name}, </Link>
+  <Link to={link} className="close-search" key={uniqid()}>{name}, </Link>
 )
            /*<a key={uniqid()}
                 id = {'c'+ cur}
@@ -55,6 +57,7 @@ render(props) {
 posts && Object.keys(posts)
 .filter(post => posts[post].deleted !== true)
 .filter(post => {return ((posts[post].category === showCategory) || (showCategory === 'all'))})
+.filter(post => {return ((posts[post].id === showPosts) || (showPosts === 'all'))})
 .sort((a,b)=> posts[a].voteScore < posts[b].voteScore)
 .map((cur,val,arry) => {
   const {id} = posts[cur];
@@ -94,7 +97,8 @@ const mapStateToProps = ((state,ownProps) => (
   {
    posts: state.post,
    categories: state.categories,
-   showCategory: ownProps.match.params.category
+   showCategory: ownProps.match.params.category,
+   postId: ownProps.match.params.postId
 }));
 
 function mapDispatchToProps(dispatch) {
