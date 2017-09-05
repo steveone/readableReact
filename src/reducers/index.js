@@ -14,7 +14,8 @@ import {
   ADD_COMMENT,
   REMOVE_COMMENT,
   UPDATE_COMMENT,
-  CHANGE_COMMENT_VOTE
+  CHANGE_COMMENT_VOTE,
+  CLEAR_COMMENTS,
 //  SAVE_EDIT
 } from '../actions'
 
@@ -143,9 +144,6 @@ function post (state = {}, action) {
         }
     });
     return {...[state],...retVal}
-
-
-
     default :
       return state
   }
@@ -153,10 +151,12 @@ function post (state = {}, action) {
 
 function comments (state = {}, action) {
   let retVal = null
+  //console.log("in comments reducer")
+  //console.log(action)
   switch (action.type) {
     case ADD_COMMENT:
       return {
-      ...[state],...action.comments
+      ...[state],...action.comments.comments
         /*[id] : { id,
             author,
             body,
@@ -165,9 +165,17 @@ function comments (state = {}, action) {
           //[comments]: comments,
         }*/
       }
+    case UPDATE_COMMENT:
+    const {id,body,author} = action
+          return{
+          ...state,
+          id,
+          body,
+          author,
+          }
     case REMOVE_COMMENT :
-       console.log("remove comment")
-       console.log (state)
+    //   console.log("remove comment")
+    //   console.log (state)
         retVal = Object.keys(state).map( (item, index) => {
             if(state[index].id !== action.id) {
             // this one isn't changing so return it
@@ -199,6 +207,12 @@ function comments (state = {}, action) {
     });
     return {...[state],...retVal}
 
+    case CLEAR_COMMENTS :
+  //  console.log ("in clear comments, state is")
+  //  console.log(state)
+        return {
+          ...[state],...[null]
+        }
     default :
       return state
   }
@@ -212,4 +226,5 @@ export default combineReducers({
   writingPost,
   categories,
   editing,
+  comments,
 })

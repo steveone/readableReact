@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import {  getComments, saveEdit, cancelEdit, getCategories, getPosts, deletePost, changeVote, editPost, updateEditField } from '../actions'
 //import uniqid from 'uniqid'
 import { FaChevronUp, FaChevronDown, FaCut, FaPencil} from 'react-icons/lib/fa'
+import Comments from './Comments'
 import{
         //MenuItem,
         FormGroup,
@@ -120,7 +121,6 @@ return (
                       }
                     </span>
                     <br/>
-
                       {(id === currentlyEditing) ?
                         <FormControl componentClass="textarea"
                           key='renderBody'
@@ -130,9 +130,6 @@ return (
                           />
                         : body
                         }
-
-
-
                       {(id === currentlyEditing) ?
                         <ButtonToolbar>
                          <Button bsStyle="primary" onClick={(e)=>this.props.saveEdit({id,title:editingTitle,body:editingBody,category:editingCategory,author:editingAuthor})}>Save</Button>
@@ -141,6 +138,7 @@ return (
                        : <br />
                      }
                   </div>
+                  {this.props.id && <Comments id = {this.props.id}/>}
                 </div>
 
     })
@@ -153,7 +151,7 @@ updateField(field, value,e){
    if (loaded) {
      if (this.props.editing) {
       // e.preventDefault()
-       console.log("select changed " + field + " " + value)
+    //    console.log("select changed " + field + " " + value)
        const {id,title,body,category,author} = this.props.editing
       switch (field) {
         case 'body' : this.props.updateEditField(
@@ -197,16 +195,20 @@ updateField(field, value,e){
 }
 
 componentDidMount() {
-  console.log("componentdidmount Posts")
+//  console.log("componentdidmount Posts")
   this.props.getPosts()
   this.props.getCategories()
-  this.props.getComments('ddd')
+  if (this.props.id){
+    console.log("id for posts getComments " + this.props.id)
+     this.props.getComments(this.props.id)
+     }
   loaded = true;
+
   }
 
 componentDidUpdate(prevProps, prevState) {
     // One possible fix...
-    console.log("Component did update Post")
+//    console.log("Component did update Post")
   }
 
 
@@ -219,7 +221,7 @@ const mapStateToProps = ((state,ownProps) => (
    id: ownProps.id,
    editing: state.editing,
    categories: state.categories,
-
+   comments: state.comments,
 }));
 
 function mapDispatchToProps(dispatch) {

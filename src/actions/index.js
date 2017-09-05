@@ -23,6 +23,7 @@ export const ADD_COMMENT = 'ADD_COMMENT'
 export const REMOVE_COMMENT = 'REMOVE_COMMENT'
 export const UPDATE_COMMENT = 'UPDATE_COMMENT'
 export const CHANGE_COMMENT_VOTE = 'CHANGE_COMMENT_VOTE'
+export const CLEAR_COMMENTS = 'CLEAR_COMMENTS'
 
 export function cancelEdit (id) {
     console.log("in canceled it")
@@ -120,12 +121,17 @@ export function categoriesReturned(categories) {
 }
 
 
-export function commentsReturned(posts) {
-  //console.log("posts are next");
-  //console.log(posts)
+export function commentsReturned(comments) {
   return {
     type: 'ADD_COMMENT',
-    posts
+    comments
+  }
+}
+
+export function clearComments(comments) {
+  return {
+    type: 'CLEAR_COMMENTS',
+    comments
   }
 }
 
@@ -204,6 +210,7 @@ export const deletePost = (id) => dispatch =>(
 
     export const getComments = (comments) => dispatch =>(
       getCommentsFromAPI(comments)
+      .then(comments => dispatch(clearComments(comments)))
       .then(comments => dispatch(commentsReturned(
         comments
         //posts.reduce((ret,cur,index, array) => {return ret.concat(cur)},[])

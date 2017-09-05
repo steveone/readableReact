@@ -1,7 +1,7 @@
 export const getCategoriesFromAPI = () => //console.log("Asddddd")
 
 {
-  console.log("fetching categories")
+//  console.log("fetching categories")
   const headers = {
             'Authorization': 'Bearer hello',
             }

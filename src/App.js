@@ -14,11 +14,11 @@ class App extends Component {
 
 componentDidUpdate(prevProps, prevState) {
     // One possible fix...
-    console.log("Component did update in app.js")
+//    console.log("Component did update in app.js")
   }
 
   shouldComponentUpdate(prevProps, prevState){
-    console.log("should component update")
+  //  console.log("should component update")
     return true
   }
 

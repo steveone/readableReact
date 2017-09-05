@@ -27,10 +27,10 @@ render(props) {
   if (this.props.categories){
     categories = this.props.categories
     }
-  
-  showPosts = (this.props.postId) ? this.props.postId : 'all'  
+
+  showPosts = (this.props.postId) ? this.props.postId : 'all'
   showCategory = (this.props.showCategory) ? this.props.showCategory : 'all'
-  console.log(showPosts)
+//  console.log(showPosts)
 
 //console.log(this.props.posts)
 //console.log(this.props.categories)
@@ -75,7 +75,7 @@ componentDidMount() {
 
 componentDidUpdate(prevProps, prevState) {
     // One possible fix...
-    console.log("Component did update")
+//    console.log("Component did update")
   }
 
 
