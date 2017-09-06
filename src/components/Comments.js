@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
-import { Link} from 'react-router-dom'
+//import { Link} from 'react-router-dom'
 import '../App.css';
 //import{ Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import {  getComments, saveEdit, cancelEdit, getCategories, getPosts, deletePost, changeVote, editPost, updateEditField } from '../actions'
 //import uniqid from 'uniqid'
-import { FaChevronUp, FaChevronDown, FaCut, FaPencil} from 'react-icons/lib/fa'
+//import { FaChevronUp, FaChevronDown, FaCut, FaPencil} from 'react-icons/lib/fa'
 import{
         //MenuItem,
-        FormGroup,
-        FormControl,
+        //FormGroup,
+        //FormControl,
         //Form,
-        ControlLabel,
+        //ControlLabel,
         //SplitButton,
-        Button,
-        ButtonToolbar,
+        //Button,
+        //ButtonToolbar,
         //ButtonGroup
         //ControlID
       } from 'react-bootstrap';
@@ -32,15 +32,20 @@ class Comments extends Component {
 
 
 render(Comments) {
-  let posts = []
+  let id = ""
+  let comments = null
   let currentlyEditing = []
   let editingTitle = ""
   let editingBody = ""
   let editingCategory = ""
   let editingAuthor = ""
-  if (this.props.posts){
-    posts = this.props.posts
+  if (this.props.comments){
+    comments = this.props.comments
   }
+  if (this.props.id){
+    let id = this.props.id
+  }
+
   if (this.props.editing){
     currentlyEditing = this.props.editing.id
     editingTitle = this.props.editing.title
@@ -53,11 +58,23 @@ render(Comments) {
   if (this.props.categories){
     categories = this.props.categories
     }
-
 return (
   <div>
-  In Comments
+  {
+  (comments && id && Object.keys(comments)
+  //.filter(comment => comments[comment].id === this.props.id)
+  .filter(comment => comments[comment].deleted !== true)
+    //comments[comment].deleted !== true)
+  .reduce(total => {
+    total +=1
+  },0))
+  }
+  <div>
+{/*TODO: returns 1 when no comments so needs fixing*/}
+  {Object.keys(comments).length} comments
   </div>
+  </div>
+
 )}
 
 updateField(field, value,e){

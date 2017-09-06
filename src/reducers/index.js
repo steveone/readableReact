@@ -33,6 +33,7 @@ const blankPost = {
 
 
 
+
 function writingPost (state = blankPost, action)
 {
   const {author, category,body } = action
@@ -150,7 +151,7 @@ function post (state = {}, action) {
 }
 
 function comments (state = {}, action) {
-  let retVal = null
+  let retVal = state
   //console.log("in comments reducer")
   //console.log(action)
   switch (action.type) {
