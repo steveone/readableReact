@@ -16,6 +16,7 @@ import {
   UPDATE_COMMENT,
   CHANGE_COMMENT_VOTE,
   CLEAR_COMMENTS,
+  UPDATE_POST_COMMENT_COUNT,
 //  SAVE_EDIT
 } from '../actions'
 
@@ -112,6 +113,25 @@ function post (state = {}, action) {
           //[comments]: comments,
         }*/
       }
+    case UPDATE_POST_COMMENT_COUNT :
+
+    console.log ("update post comment count")
+    console.log(action)
+     retVal = Object.keys(state).map( (item, index) => {
+         if(state[index].id === action.id) {
+         // this one isn't changing so return it
+           state[index].commentCount = action.count
+           console.log(state)
+           return state[index]
+     }
+     //we want to mark this one deleted = true
+     else
+       {
+           return state[index]
+     }
+ });
+   return {...[state],...retVal}
+
     case REMOVE_POST :
        console.log("remove post")
        console.log (state)

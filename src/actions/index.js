@@ -24,6 +24,7 @@ export const REMOVE_COMMENT = 'REMOVE_COMMENT'
 export const UPDATE_COMMENT = 'UPDATE_COMMENT'
 export const CHANGE_COMMENT_VOTE = 'CHANGE_COMMENT_VOTE'
 export const CLEAR_COMMENTS = 'CLEAR_COMMENTS'
+export const UPDATE_POST_COMMENT_COUNT = 'UPDATE_POST_COMMENT_COUNT'
 
 export function cancelEdit (id) {
     console.log("in canceled it")
@@ -109,6 +110,13 @@ export function removePost ( id ) {
   }
 }
 
+export function addCommentCountToPost(id,count) {
+  return {
+    type: UPDATE_POST_COMMENT_COUNT,
+    id,
+    count
+  }
+}
 
 
 export function categoriesReturned(categories) {
@@ -210,6 +218,20 @@ export const deletePost = (id) => dispatch =>(
 
     export const getComments = (comments) => dispatch =>(
       getCommentsFromAPI(comments)
+      .then(comments => {
+        if (comments.length > 0) {
+        console.log(comments);
+        let parentId = null
+        //need to adjust in case comments are deleted
+        let count = comments.length
+        parentId = comments[0].parentId
+        console.log(parentId)
+        console.log(count)
+        dispatch(addCommentCountToPost(parentId,count))
+
+      }
+        //dispatch(addCommentCountToPost(comments))
+      })
       .then(comments => dispatch(clearComments(comments)))
       .then(comments => dispatch(commentsReturned(
         comments

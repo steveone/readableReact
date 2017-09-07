@@ -61,7 +61,7 @@ return (
   (posts && Object.keys(posts)
     .filter(post => posts[post].id === this.props.id)
     .map((cur,val,arry) => {
-    const {id,title,body,author,category,voteScore } = posts[cur]
+    const {id,title,body,author,category,voteScore,commentCount } = posts[cur]
     const link = `/${category}/${id}`
 
          return <div className='post' key={'e'+id}>
@@ -140,6 +140,8 @@ return (
                   </div>
                   {/*this.props.id && <Comments id = {this.props.id}/>*/}
                   {<Comments id = {id}/>} {id}
+                  <br />
+                  There are {(commentCount) ? commentCount : 0 } comments
                 </div>
 
     })
