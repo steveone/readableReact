@@ -32,42 +32,21 @@ class Comments extends Component {
 
 
 render(Comments) {
-  let id = ""
-  let comments = null
-  let currentlyEditing = []
-  let editingTitle = ""
-  let editingBody = ""
-  let editingCategory = ""
-  let editingAuthor = ""
-  if (this.props.comments){
+  let comments = []
+if (this.props.comments){
     comments = this.props.comments
   }
-  if (this.props.id){
-    let id = this.props.id
-  }
 
-  if (this.props.editing){
-    currentlyEditing = this.props.editing.id
-    editingTitle = this.props.editing.title
-    editingBody = this.props.editing.body
-    editingCategory = this.props.editing.category
-    editingAuthor = this.props.editing.author
-  }
-
-  let categories = []
-  if (this.props.categories){
-    categories = this.props.categories
-    }
 return (
   <div>
   {
-  (comments && id && Object.keys(comments)
-  //.filter(comment => comments[comment].id === this.props.id)
-  .filter(comment => comments[comment].deleted !== true)
-    //comments[comment].deleted !== true)
-  .reduce(total => {
-    total +=1
-  },0))
+  (comments && Object.keys(comments)
+  .filter((comment) => comments[comment] !== null && comments[comment].deleted !== true)
+  .reduce((total,comment) => {
+    total = (comments[comment] !== null) ? total+=1 : total;
+    return total
+  },0)
+)
   }
   <div>
 {/*TODO: returns 1 when no comments so needs fixing*/}
