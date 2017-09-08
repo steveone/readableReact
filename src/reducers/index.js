@@ -172,10 +172,12 @@ function post (state = {}, action) {
 
 function comments (state = {}, action) {
   let retVal = state
-  //console.log("in comments reducer")
+  console.log("in comments reducer")
   //console.log(action)
   switch (action.type) {
     case ADD_COMMENT:
+    console.log("in add_comment")
+    console.log(action)
       return {
       ...state,...action.comments
         /*[id] : { id,

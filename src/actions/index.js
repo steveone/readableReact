@@ -221,7 +221,7 @@ export const deletePost = (id) => dispatch =>(
 
     export const getComments = (comments) => dispatch =>(
       getCommentsFromAPI(comments)
-      .then(comments => {
+      /*.then(comments => {
         if (comments.length > 0) {
         console.log(comments);
         let parentId = null
@@ -234,6 +234,7 @@ export const deletePost = (id) => dispatch =>(
       }
         //dispatch(addCommentCountToPost(comments))
       })
+      */
     //  .then(comments => dispatch(clearComments(comments)))
       .then(comments => dispatch(commentsReturned(
         comments

@@ -1,4 +1,4 @@
-//import getComments from '../utils/getComments'
+import getComments from '../utils/getComments'
 
 export const getPostsFromAPI = () => //console.log("Asddddd")
 
@@ -11,15 +11,13 @@ export const getPostsFromAPI = () => //console.log("Asddddd")
      .then(res => res.json())
      .then (posts => posts)
      .then(posts => posts.map((data,index,item) => {
-       //getComments(data.id);
+       console.log("in posts, thinking about getting comments for " + data.id)
+       getComments(data.id).then(comments =>
+         {data.comments = comments
+          data.commentCount = comments.length
+         })
+
        return data}))
-/*     .then(( posts) => posts.reduce((ret, elem) =>  (
-//       console.log(elem[index].name +  elem[index].path)
-//        console.log(data)
-      ret.concat(elem.id)
-    ),[]))
-    */
-  //   .error(error => console.log("error"))
 
 }
 

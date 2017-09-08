@@ -7,7 +7,7 @@ export const getCommentsFromAPI = (data) => //console.log("Asddddd")
   //remove hard coded comment id and set {id} back to const
   //id = '8xf0y6ziyjabvozdd253nd'
 //  const output = {id}
-//  console.log("getting comments for " + id)
+  console.log("getting comments for " + id)
   const headers = {
             Authorization: 'Bearer hello',
             "Content-Type": "application/json"

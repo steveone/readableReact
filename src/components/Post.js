@@ -61,7 +61,9 @@ return (
   (posts && Object.keys(posts)
     .filter(post => posts[post].id === this.props.id)
     .map((cur,val,arry) => {
-    const {id,title,body,author,category,voteScore,commentCount } = posts[cur]
+    const {id,title,body,author,category,voteScore,commentCount} = posts[cur]
+    console.log(posts[cur])
+    console.log("comment count is " + commentCount)
     const link = `/${category}/${id}`
 
          return <div className='post' key={'e'+id}>
@@ -141,7 +143,7 @@ return (
                   {/*this.props.id && <Comments id = {this.props.id}/>*/}
                   {<Comments id = {id}/>} {id}
                   <br />
-                  There are {(commentCount) ? commentCount : 0 } comments
+                  There are {commentCount} comments
                 </div>
 
     })
@@ -199,13 +201,13 @@ updateField(field, value,e){
 
 componentDidMount() {
 //  console.log("componentdidmount Posts")
-  this.props.getPosts()
+/*  this.props.getPosts()
   this.props.getCategories()
   if (this.props.id){
     console.log("id for posts getComments " + this.props.id)
      this.props.getComments(this.props.id)
      }
-  loaded = true;
+*/  loaded = true;
 
   }
 
@@ -217,8 +219,6 @@ if (this.props.id){
   //this.props.getComments(this.props.id)
    }
   }
-
-
 }
 
 
@@ -228,7 +228,7 @@ const mapStateToProps = ((state,ownProps) => (
    id: ownProps.id,
    editing: state.editing,
    categories: state.categories,
-   comments: state.comments,
+   //comments: state.comments,
 }));
 
 function mapDispatchToProps(dispatch) {

@@ -53,7 +53,7 @@ return (
   }
   <div>
 {/*TODO: returns 1 when no comments so needs fixing*/}
-  {Object.keys(comments).length} comments
+  {this.props.posts.commentCount} comments
   </div>
   </div>
 
@@ -126,15 +126,24 @@ componentDidUpdate(prevProps, prevState) {
     // One possible fix...
 //    console.log("Component did update Post")
    //this.props.getComments(this.props.id)
-   /*console.log("we updated comments")
+   console.log("we updated comments")
    if (this.props.id){
      console.log("id for posts getComments " + this.props.id)
      //this.props.getComments(this.props.id)
-   }*/
+   }
+  }
+
+  componentWillMount() {
+    if (this.props.id){
+      console.log("id for posts getComments " + this.props.id)
+  //    this.props.getComments(this.props.id)
+    }
   }
 
 
 }
+
+
 
 
 const mapStateToProps = ((state,ownProps) => (

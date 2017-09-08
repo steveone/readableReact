@@ -67,7 +67,8 @@ posts && Object.keys(posts)
 </div>
 )}
 
-componentDidMount() {
+
+componentWillMount() {
   console.log("componentdidmount Post")
   this.props.getPosts()
   this.props.getCategories()
@@ -77,21 +78,8 @@ componentDidUpdate(prevProps, prevState) {
     // One possible fix...
 //    console.log("Component did update")
   }
-
-
 }
 
-/*function mapStateToProps(state,props){
-  console.log("state is going to be")
-  console.log(state)
-  console.log(state.post)
-  return {
-    post:  posts,
-    categories: state.categories[0]
-//    state
-  }
-}
-*/
 
 const mapStateToProps = ((state,ownProps) => (
   {
