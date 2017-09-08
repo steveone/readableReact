@@ -103,6 +103,7 @@ function post (state = {}, action) {
   let retVal = null
   switch (action.type) {
     case ADD_POST:
+    console.log("Adding post")
       return {
       ...[state],...action.posts
         /*[id] : { id,
@@ -114,7 +115,6 @@ function post (state = {}, action) {
         }*/
       }
     case UPDATE_POST_COMMENT_COUNT :
-
     console.log ("update post comment count")
     console.log(action)
      retVal = Object.keys(state).map( (item, index) => {
@@ -177,7 +177,7 @@ function comments (state = {}, action) {
   switch (action.type) {
     case ADD_COMMENT:
       return {
-      ...[state],...action.comments.comments
+      ...state,...action.comments
         /*[id] : { id,
             author,
             body,

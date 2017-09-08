@@ -212,6 +212,10 @@ componentDidMount() {
 componentDidUpdate(prevProps, prevState) {
     // One possible fix...
 //    console.log("Component did update Post")
+if (this.props.id){
+  console.log("id for posts getComments " + this.props.id)
+  //this.props.getComments(this.props.id)
+   }
   }
 
 

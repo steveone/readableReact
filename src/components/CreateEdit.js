@@ -79,8 +79,6 @@ render(props) {
     })}
 
 
-
-
      </FormControl>
      </FormGroup>
      <ControlLabel>Text</ControlLabel>

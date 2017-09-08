@@ -89,6 +89,8 @@ export function updatePost ({author, body, title, id,category}) {
 }
 
 export function addPost ({ id, timestamp,title,body,author,category,voteScore,deleted }) {
+  console.log("in add post function")
+  console.log(id)
   return {
     type: ADD_POST,
     id,
@@ -101,6 +103,7 @@ export function addPost ({ id, timestamp,title,body,author,category,voteScore,de
     ,deleted
   }
 }
+
 
 export function removePost ( id ) {
   //console.log("Remove_Post " + id)
@@ -144,7 +147,7 @@ export function clearComments(comments) {
 }
 
 export function postsReturned(posts) {
-  //console.log("posts are next");
+  console.log("posts are next");
   //console.log(posts)
   return {
     type: 'ADD_POST',
@@ -228,11 +231,10 @@ export const deletePost = (id) => dispatch =>(
         console.log(parentId)
         console.log(count)
         dispatch(addCommentCountToPost(parentId,count))
-
       }
         //dispatch(addCommentCountToPost(comments))
       })
-      .then(comments => dispatch(clearComments(comments)))
+    //  .then(comments => dispatch(clearComments(comments)))
       .then(comments => dispatch(commentsReturned(
         comments
         //posts.reduce((ret,cur,index, array) => {return ret.concat(cur)},[])

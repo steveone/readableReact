@@ -5,7 +5,7 @@ import Nav from './components/Nav';
 //import ShowAll from './components/ShowAll'
 import{ Button } from 'react-bootstrap';
 import { connect } from 'react-redux'
-import { setCategory, addPost, removePost } from './actions'
+import { addPost, setCategory, removePost } from './actions'
 import CreateEdit from './components/CreateEdit'
 import ShowPosts from './components/ShowPosts'
 

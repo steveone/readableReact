@@ -41,7 +41,10 @@ return (
   <div>
   {
   (comments && Object.keys(comments)
-  .filter((comment) => comments[comment] !== null && comments[comment].deleted !== true)
+  .filter((comment) =>
+      comments[comment] !== null &&
+      comments[comment].deleted !== true
+    )
   .reduce((total,comment) => {
     total = (comments[comment] !== null) ? total+=1 : total;
     return total
@@ -109,8 +112,12 @@ componentDidMount() {
   this.props.getCategories()
   if (this.props.id){
     console.log("id for posts getComments " + this.props.id)
-     this.props.getComments(this.props.id)
+    //this.props.getComments(this.props.id)
      }
+  else
+  {
+    console.log("no idea in comment component")
+  }
   loaded = true;
 
   }
@@ -118,6 +125,12 @@ componentDidMount() {
 componentDidUpdate(prevProps, prevState) {
     // One possible fix...
 //    console.log("Component did update Post")
+   //this.props.getComments(this.props.id)
+   /*console.log("we updated comments")
+   if (this.props.id){
+     console.log("id for posts getComments " + this.props.id)
+     //this.props.getComments(this.props.id)
+   }*/
   }
 
 
