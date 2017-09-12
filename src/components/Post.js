@@ -39,9 +39,6 @@ render(props) {
   let editingBody = ""
   let editingCategory = ""
   let editingAuthor = ""
-  if (this.props.posts){
-    posts = this.props.posts
-  }
   if (this.props.editing){
     currentlyEditing = this.props.editing.id
     editingTitle = this.props.editing.title
@@ -49,21 +46,19 @@ render(props) {
     editingCategory = this.props.editing.category
     editingAuthor = this.props.editing.author
   }
-
+  posts = (this.props.posts) ? this.props.posts : []
   let categories = []
   if (this.props.categories){
     categories = this.props.categories
     }
-
 return (
   <div key='postDisplay'>
   {
   (posts && Object.keys(posts)
     .filter(post => posts[post].id === this.props.id)
     .map((cur,val,arry) => {
-    const {id,title,body,author,category,voteScore,commentCount} = posts[cur]
-    console.log(posts[cur])
-    console.log("comment count is " + commentCount)
+    const {author,body,category,totalComments,id,title,voteScore} = posts[cur]
+  //  console.log(posts[cur])
     const link = `/${category}/${id}`
 
          return <div className='post' key={'e'+id}>
@@ -143,7 +138,7 @@ return (
                   {/*this.props.id && <Comments id = {this.props.id}/>*/}
                   {<Comments id = {id}/>} {id}
                   <br />
-                  There are {commentCount} comments
+                  There are {(totalComments) ? totalComments:0} comments
                 </div>
 
     })
@@ -207,7 +202,8 @@ componentDidMount() {
     console.log("id for posts getComments " + this.props.id)
      this.props.getComments(this.props.id)
      }
-*/  loaded = true;
+*/
+ loaded = true;
 
   }
 
@@ -215,11 +211,28 @@ componentDidUpdate(prevProps, prevState) {
     // One possible fix...
 //    console.log("Component did update Post")
 if (this.props.id){
-  console.log("id for posts getComments " + this.props.id)
+//  console.log("id for posts getComments " + this.props.id)
   //this.props.getComments(this.props.id)
+  console.log("component - post - did update")
+  console.log(this.props.posts)
+  //console.log(this.props.posts[0].totalComment)
    }
   }
+
+  shouldComponentUpdate(prevProps, prevState){
+  //  console.log("should component update")
+    console.log("in shouldcomponentupdate")
+    return true
+  }
+
+  componentWillReceiveProps(nextProps){
+    console.log("component will receive new props - in posts")
+    console.log({...nextProps.posts[0]})
+    }
+
 }
+
+
 
 
 const mapStateToProps = ((state,ownProps) => (

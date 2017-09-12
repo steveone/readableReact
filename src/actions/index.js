@@ -88,9 +88,10 @@ export function updatePost ({author, body, title, id,category}) {
   }
 }
 
-export function addPost ({ id, timestamp,title,body,author,category,voteScore,deleted }) {
+
+export function addPost ({ id, timestamp,title,body,author,category,voteScore,deleted,comments,totalComments }) {
   console.log("in add post function")
-  console.log(id)
+//  console.log(id)
   return {
     type: ADD_POST,
     id,
@@ -99,8 +100,10 @@ export function addPost ({ id, timestamp,title,body,author,category,voteScore,de
     body,
     author,
     category,
-    voteScore
-    ,deleted
+    voteScore,
+    deleted,
+    comments,
+    totalComments
   }
 }
 
@@ -147,10 +150,10 @@ export function clearComments(comments) {
 }
 
 export function postsReturned(posts) {
-  console.log("posts are next");
+  //console.log("in postsreturned posts are next");
   //console.log(posts)
   return {
-    type: 'ADD_POST',
+    type: ADD_POST,
     posts
   }
 }
@@ -211,6 +214,9 @@ export const deletePost = (id) => dispatch =>(
 
   export const getPosts = (posts) => dispatch =>(
     getPostsFromAPI(posts)
+    /*.then(posts => {
+         posts
+      })*/
     .then(posts => dispatch(postsReturned(
       posts
       //posts.reduce((ret,cur,index, array) => {return ret.concat(cur)},[])
@@ -219,24 +225,19 @@ export const deletePost = (id) => dispatch =>(
       )
     )
 
+    export const getCommentsForAllPosts = (comments) => dispatch =>(
+      getCommentsFromAPI(comments)
+    .then(comments =>
+        comments
+        //posts.reduce((ret,cur,index, array) => {return ret.concat(cur)},[])
+
+          
+        )
+      )
+
     export const getComments = (comments) => dispatch =>(
       getCommentsFromAPI(comments)
-      /*.then(comments => {
-        if (comments.length > 0) {
-        console.log(comments);
-        let parentId = null
-        //need to adjust in case comments are deleted
-        let count = comments.length
-        parentId = comments[0].parentId
-        console.log(parentId)
-        console.log(count)
-        dispatch(addCommentCountToPost(parentId,count))
-      }
-        //dispatch(addCommentCountToPost(comments))
-      })
-      */
-    //  .then(comments => dispatch(clearComments(comments)))
-      .then(comments => dispatch(commentsReturned(
+    .then(comments => dispatch(commentsReturned(
         comments
         //posts.reduce((ret,cur,index, array) => {return ret.concat(cur)},[])
             )

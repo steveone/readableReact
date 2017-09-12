@@ -14,7 +14,9 @@ import{
         //ControlID
       } from 'react-bootstrap';
 import { connect } from 'react-redux'
-import { updatePost, addPost, removePost, getCategories, getPosts } from '../actions'
+import { updatePost,
+//  addPost,
+  removePost, getCategories, getPosts } from '../actions'
 import uniqid from 'uniqid'
 
 let loaded=false;
@@ -152,7 +154,7 @@ function mapStateToProps(state,props){
 
 function mapDispatchToProps(dispatch) {
   return{
-    addPost: (data) => dispatch(addPost(data)),
+//    addPost: (data) => dispatch(addPost(data)),
     removePost: (data) => dispatch(removePost(data)),
     getCat: (data) => dispatch(getCategories(data)),
     updatePost: (data) => dispatch(updatePost(data)),

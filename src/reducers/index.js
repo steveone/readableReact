@@ -100,12 +100,16 @@ function categories (state = currentlyEditing, action) {
 }
 
 function post (state = {}, action) {
-  let retVal = null
+  let retVal = []
+  const posts = action.posts
+  console.log("in posts")
+  console.log(posts)
   switch (action.type) {
     case ADD_POST:
-    console.log("Adding post")
+  //  console.log("Adding post")
+  //  console.log(action.posts)
       return {
-      ...[state],...action.posts
+      ...[state],...posts
         /*[id] : { id,
             author,
             body,
@@ -115,8 +119,8 @@ function post (state = {}, action) {
         }*/
       }
     case UPDATE_POST_COMMENT_COUNT :
-    console.log ("update post comment count")
-    console.log(action)
+  //  console.log ("update post comment count")
+  //  console.log(action)
      retVal = Object.keys(state).map( (item, index) => {
          if(state[index].id === action.id) {
          // this one isn't changing so return it
@@ -151,6 +155,7 @@ function post (state = {}, action) {
 
 
     case CHANGE_VOTE :
+    console.log("change vote")
       const scoreChange = (action.vote === 'upVote') ? 1 : -1
         retVal = Object.keys(state).map( (item, index) => {
             if(state[index].id !== action.id) {
@@ -164,15 +169,18 @@ function post (state = {}, action) {
               return state[index]
         }
     });
+    console.log("retval")
+    console.log(retVal)
     return {...[state],...retVal}
     default :
+      console.log("Default")
       return state
   }
 }
 
 function comments (state = {}, action) {
   let retVal = state
-  console.log("in comments reducer")
+//  console.log("in comments reducer")
   //console.log(action)
   switch (action.type) {
     case ADD_COMMENT:

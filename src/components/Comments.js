@@ -3,7 +3,16 @@ import React, { Component } from 'react';
 import '../App.css';
 //import{ Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux'
-import {  getComments, saveEdit, cancelEdit, getCategories, getPosts, deletePost, changeVote, editPost, updateEditField } from '../actions'
+import {  getComments,
+          //saveEdit,
+          //cancelEdit,
+          //getCategories,
+          //getPosts,
+          //deletePost,
+          //changeVote,
+          //editPost, 
+          updateEditField
+          } from '../actions'
 //import uniqid from 'uniqid'
 //import { FaChevronUp, FaChevronDown, FaCut, FaPencil} from 'react-icons/lib/fa'
 import{
@@ -53,7 +62,7 @@ return (
   }
   <div>
 {/*TODO: returns 1 when no comments so needs fixing*/}
-  {this.props.posts.commentCount} comments
+  {this.props.posts.totalComments} comments
   </div>
   </div>
 
@@ -107,17 +116,10 @@ updateField(field, value,e){
 }
 
 componentDidMount() {
-  console.log("componentdidmount Posts")
-  this.props.getPosts()
-  this.props.getCategories()
-  if (this.props.id){
-    console.log("id for posts getComments " + this.props.id)
-    //this.props.getComments(this.props.id)
-     }
-  else
-  {
-    console.log("no idea in comment component")
-  }
+  console.log("componentdidmount comments")
+  //this.props.getPosts()
+  //this.props.getCategories()
+
   loaded = true;
 
   }
@@ -128,14 +130,14 @@ componentDidUpdate(prevProps, prevState) {
    //this.props.getComments(this.props.id)
    console.log("we updated comments")
    if (this.props.id){
-     console.log("id for posts getComments " + this.props.id)
+//     console.log("id for posts getComments " + this.props.id)
      //this.props.getComments(this.props.id)
    }
   }
 
   componentWillMount() {
     if (this.props.id){
-      console.log("id for posts getComments " + this.props.id)
+  //    console.log("id for posts getComments " + this.props.id)
   //    this.props.getComments(this.props.id)
     }
   }
@@ -157,14 +159,14 @@ const mapStateToProps = ((state,ownProps) => (
 
 function mapDispatchToProps(dispatch) {
   return{
-    removePost: (data) => dispatch(deletePost(data)),
-    changeVote: (data) => dispatch(changeVote(data)),
-    getPosts: (data) => dispatch(getPosts(data)),
-    getCategories: (data) => dispatch(getCategories(data)),
-    editPost: (data) => dispatch(editPost(data)),
+    //removePost: (data) => dispatch(deletePost(data)),
+    //changeVote: (data) => dispatch(changeVote(data)),
+    //getPosts: (data) => dispatch(getPosts(data)),
+    //getCategories: (data) => dispatch(getCategories(data)),
+    //editPost: (data) => dispatch(editPost(data)),
     updateEditField: (data) => dispatch(updateEditField(data)),
-    cancelEdit: (data) => dispatch(cancelEdit(data)),
-    saveEdit: (data) => dispatch(saveEdit(data)),
+    //cancelEdit: (data) => dispatch(cancelEdit(data)),
+    //saveEdit: (data) => dispatch(saveEdit(data)),
     getComments: (data) => dispatch(getComments(data)),
   }
 }

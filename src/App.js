@@ -5,7 +5,7 @@ import Nav from './components/Nav';
 //import ShowAll from './components/ShowAll'
 import{ Button } from 'react-bootstrap';
 import { connect } from 'react-redux'
-import { addPost, setCategory, removePost } from './actions'
+//import { addPost, setCategory, removePost } from './actions'
 import CreateEdit from './components/CreateEdit'
 import ShowPosts from './components/ShowPosts'
 
@@ -68,9 +68,9 @@ const mapStateToProps = ((state) => (
 
 function mapDispatchToProps(dispatch) {
   return{
-    addPost: (data) => dispatch(addPost(data)),
-    removePost: (data) => dispatch(removePost(data)),
-    setCategory: (data) => dispatch(setCategory(data))
+    //addPost: (data) => dispatch(addPost(data)),
+    //removePost: (data) => dispatch(removePost(data)),
+    //setCategory: (data) => dispatch(setCategory(data))
   }
 }
 
