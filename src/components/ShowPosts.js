@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import '../App.css';
 //import{ Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux'
-import { addPost, getPosts, getCategories, deletePost, changeVote } from '../actions'
+import { getPostsAndComments, addPost, getPosts, getCategories, deletePost, changeVote } from '../actions'
 import uniqid from 'uniqid'
 //import { FaChevronUp, FaChevronDown, FaCut} from 'react-icons/lib/fa'
 import Post from './Post'
@@ -77,7 +77,8 @@ shouldComponentUpdate(prevProps, prevState){
 componentWillMount() {
 //  console.log("componentdidmount Post")
   this.props.getCategories()
-  this.props.getPosts()
+  //this.props.getPosts()
+this.props.getPostsAndComments()
   }
 
 componentDidUpdate(prevProps, prevState) {
@@ -108,6 +109,7 @@ function mapDispatchToProps(dispatch) {
   return{
     addPost: (data) => dispatch(addPost(data)),
     getPosts: (data) => dispatch(getPosts(data)),
+    getPostsAndComments: (data) => dispatch(getPostsAndComments(data)),
     getCategories: (data) => dispatch(getCategories(data)),
     removePost: (data) => dispatch(deletePost(data)),
     changeVote: (data) => dispatch(changeVote(data))

@@ -5,7 +5,6 @@ import changeVoteFromAPI from '../utils/changeVote'
 import saveEditFromAPI from '../utils/saveEdit'
 import getCommentsFromAPI from '../utils/getComments'
 
-
 export const ADD_POST = 'ADD_POST'
 export const REMOVE_POST = 'REMOVE_POST'
 export const ADD_CATEGORY = 'ADD_CATEGORY'
@@ -158,6 +157,11 @@ export function postsReturned(posts) {
   }
 }
 
+export function postsandCommentsReturned(posts){
+
+
+}
+
 export function changeVotePost (data) {
   const [ id, vote ] = data
   return {
@@ -212,28 +216,27 @@ export const deletePost = (id) => dispatch =>(
     )
   )
 
+
+
+
   export const getPosts = (posts) => dispatch =>(
     getPostsFromAPI(posts)
     /*.then(posts => {
          posts
       })*/
-    .then(posts => dispatch(postsReturned(
+    .then(posts =>
+
+
+{      console.log("in then after getsPostsFromAPI")
+      dispatch(postsReturned(
       posts
       //posts.reduce((ret,cur,index, array) => {return ret.concat(cur)},[])
           )
         )
+      }
       )
     )
 
-    export const getCommentsForAllPosts = (comments) => dispatch =>(
-      getCommentsFromAPI(comments)
-    .then(comments =>
-        comments
-        //posts.reduce((ret,cur,index, array) => {return ret.concat(cur)},[])
-
-          
-        )
-      )
 
     export const getComments = (comments) => dispatch =>(
       getCommentsFromAPI(comments)
@@ -244,6 +247,27 @@ export const deletePost = (id) => dispatch =>(
           )
         )
       )
+
+      export const getPostsAndComments  = (posts) => dispatch =>(
+        getPostsFromAPI(posts)
+        .then(posts => dispatch => (
+          console.log("blah blah")
+        /*  posts.map((data,index,item) => (
+              dispatch => (getCommentsFromAPI(data.id)
+                .then(comments =>
+                {data.comments = (comments) ? comments : []
+                data.totalComments = (comments) ? comments.length : 0
+                console.log("got data back from getCommentsFromApi in getPostsandcomments")
+                return data
+              }
+        )
+      )
+    )
+  )*/
+  )
+)
+)
+
 
 //export const getCategories = () => getCategoriesFromAPI()
 
