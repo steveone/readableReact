@@ -3,7 +3,7 @@ import { Link} from 'react-router-dom'
 import '../App.css';
 //import{ Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux'
-import {  getComments, saveEdit, cancelEdit, getCategories, getPosts, deletePost, changeVote, editPost, updateEditField } from '../actions'
+import { saveEdit, cancelEdit, getCategories, getPosts, deletePost, changeVote, editPost, updateEditField } from '../actions'
 //import uniqid from 'uniqid'
 import { FaChevronUp, FaChevronDown, FaCut, FaPencil} from 'react-icons/lib/fa'
 import Comments from './Comments'
@@ -57,7 +57,7 @@ return (
   (posts && Object.keys(posts)
     .filter(post => posts[post].id === this.props.id)
     .map((cur,val,arry) => {
-    const {author,body,category,totalComments,id,title,voteScore} = posts[cur]
+    const {author,body,category,id,title,voteScore} = posts[cur]
   //  console.log(posts[cur])
     const link = `/${category}/${id}`
 
@@ -93,8 +93,8 @@ return (
                      //onChange={this.props.updatePost({author:'', title: '', category: ''})}
                      >
                      {categories && Object.keys(categories).map((cur,val,arry) => {
-                       console.log("in select cat")
-                       console.log(categories[cur])
+                       //console.log("in select cat")
+                       //console.log(categories[cur])
                        const {name} = categories[cur]
                        return <option value={name} key={cur}>{name}</option>
                      })}
@@ -136,9 +136,7 @@ return (
                      }
                   </div>
                   {/*this.props.id && <Comments id = {this.props.id}/>*/}
-                  {<Comments id = {id}/>} {id}
-                  <br />
-                  There are {(totalComments) ? totalComments:0} comments
+                  {<Comments id = {id}/>}
                 </div>
 
     })
@@ -213,21 +211,21 @@ componentDidUpdate(prevProps, prevState) {
 if (this.props.id){
 //  console.log("id for posts getComments " + this.props.id)
   //this.props.getComments(this.props.id)
-  console.log("component - post - did update")
-  console.log(this.props.posts)
+  //console.log("component - post - did update")
+  //console.log(this.props.posts)
   //console.log(this.props.posts[0].totalComment)
    }
   }
 
   shouldComponentUpdate(prevProps, prevState){
   //  console.log("should component update")
-    console.log("in shouldcomponentupdate")
+    //console.log("in shouldcomponentupdate")
     return true
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("component will receive new props - in posts")
-    console.log({...nextProps.posts[0]})
+    //console.log("component will receive new props - in posts")
+    //console.log({...nextProps.posts[0]})
     }
 
 }
@@ -254,7 +252,7 @@ function mapDispatchToProps(dispatch) {
     updateEditField: (data) => dispatch(updateEditField(data)),
     cancelEdit: (data) => dispatch(cancelEdit(data)),
     saveEdit: (data) => dispatch(saveEdit(data)),
-    getComments: (data) => dispatch(getComments(data)),
+    //getComments: (data) => dispatch(getComments(data)),
   }
 }
 

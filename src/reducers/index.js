@@ -102,8 +102,8 @@ function categories (state = currentlyEditing, action) {
 function post (state = {}, action) {
   let retVal = []
   const posts = action.posts
-  console.log("in posts")
-  console.log(posts)
+  //console.log("in posts")
+  //console.log(posts)
   switch (action.type) {
     case ADD_POST:
   //  console.log("Adding post")
@@ -173,7 +173,7 @@ function post (state = {}, action) {
     console.log(retVal)
     return {...[state],...retVal}
     default :
-      console.log("Default")
+      //console.log("Default")
       return state
   }
 }

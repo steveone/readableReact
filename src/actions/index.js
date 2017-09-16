@@ -221,52 +221,28 @@ export const deletePost = (id) => dispatch =>(
 
   export const getPosts = (posts) => dispatch =>(
     getPostsFromAPI(posts)
-    /*.then(posts => {
-         posts
-      })*/
-    .then(posts =>
-
-
-{      console.log("in then after getsPostsFromAPI")
-      dispatch(postsReturned(
-      posts
-      //posts.reduce((ret,cur,index, array) => {return ret.concat(cur)},[])
-          )
+    .then(posts => dispatch(postsReturned(posts)
         )
-      }
       )
     )
 
 
     export const getComments = (comments) => dispatch =>(
       getCommentsFromAPI(comments)
-    .then(comments => dispatch(commentsReturned(
+    .then(comments => {
+      console.log("in getcomments")
+      dispatch(commentsReturned(
         comments
         //posts.reduce((ret,cur,index, array) => {return ret.concat(cur)},[])
             )
-          )
+          )}
         )
       )
 
-      export const getPostsAndComments  = (posts) => dispatch =>(
-        getPostsFromAPI(posts)
-        .then(posts => dispatch => (
-          console.log("blah blah")
-        /*  posts.map((data,index,item) => (
-              dispatch => (getCommentsFromAPI(data.id)
-                .then(comments =>
-                {data.comments = (comments) ? comments : []
-                data.totalComments = (comments) ? comments.length : 0
-                console.log("got data back from getCommentsFromApi in getPostsandcomments")
-                return data
-              }
-        )
-      )
-    )
-  )*/
-  )
-)
-)
+      export const getPostsAndComments  = (posts) => dispatch =>
+          dispatch(getPosts(posts))
+
+
 
 
 //export const getCategories = () => getCategoriesFromAPI()

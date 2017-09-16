@@ -19,9 +19,11 @@ export const getCommentsFromAPI = (data) => //console.log("Asddddd")
 let url = 'http://localhost:5001/posts/' + id + '/comments'
  return fetch(url, init)
      .then(res => res.json())
-     .then (data =>
-        data
-        )
+     .then (comments =>{
+       let response = {[data]:comments}
+       console.log(response)
+       return response
+     })
      .catch(error => console.log("error in getcomments"))
 
 }

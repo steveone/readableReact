@@ -10,13 +10,15 @@ export const getPostsFromAPI = () => //console.log("Asddddd")
             }
  //let expecting = 0
  //let received = 0
+ //console.log("in getposts")
  return fetch('http://localhost:5001/posts', { headers })
      .then(res => res.json())
      .then(posts => {
-       console.log("about to return posts")
-       console.log(posts)
-       return posts
-     })
+//console.log("returning posts")
+//console.log(posts)
+       return posts})
+}
+
      //.then(posts => posts.map((data,index,item) => {
     //   console.log("in posts, thinking about getting comments for " + data.id)
     //   console.log(posts.length)
@@ -46,7 +48,7 @@ export const getPostsFromAPI = () => //console.log("Asddddd")
       //return data//
     //}
     //))
-}
+//}
 
 
 export default getPostsFromAPI

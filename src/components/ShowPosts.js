@@ -34,8 +34,8 @@ render(props) {
 
 //console.log(this.props.posts)
 //console.log(this.props.categories)
-console.log("this.props.posts is ")
-console.log(this.props.post)
+//console.log("this.props.posts is ")
+//console.log(this.props.post)
   return (
    <div className="showAll">
    Show Categories:
@@ -70,7 +70,7 @@ posts && Object.keys(posts)
 
 shouldComponentUpdate(prevProps, prevState){
 //  console.log("should component update")
-  console.log("in shouldcomponentupdate in showpost")
+  //console.log("in shouldcomponentupdate in showpost")
   return true
 }
 
@@ -78,21 +78,21 @@ componentWillMount() {
 //  console.log("componentdidmount Post")
   this.props.getCategories()
   //this.props.getPosts()
-this.props.getPostsAndComments()
+this.props.getPosts()
   }
 
 componentDidUpdate(prevProps, prevState) {
     // One possible fix...
 //    console.log("Component did update")
-console.log("prevstate")
-console.log(prevState)
-console.log("prevprops")
-console.log(prevProps)
+//console.log("prevstate")
+//console.log(prevState)
+//console.log("prevprops")
+//console.log(prevProps)
   }
 
 componentWillReceiveProps(nextProps){
-  console.log("component will receive new props")
-  console.log(nextProps)
+  //console.log("component will receive new props")
+  //console.log(nextProps)
   }
 }
 

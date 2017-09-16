@@ -10,7 +10,7 @@ import {  getComments,
           //getPosts,
           //deletePost,
           //changeVote,
-          //editPost, 
+          //editPost,
           updateEditField
           } from '../actions'
 //import uniqid from 'uniqid'
@@ -43,11 +43,12 @@ class Comments extends Component {
 render(Comments) {
   let comments = []
 if (this.props.comments){
-    comments = this.props.comments
+    comments = this.props.comments[this.props.id]
   }
 
 return (
   <div>
+  <span>
   {
   (comments && Object.keys(comments)
   .filter((comment) =>
@@ -60,10 +61,9 @@ return (
   },0)
 )
   }
-  <div>
 {/*TODO: returns 1 when no comments so needs fixing*/}
-  {this.props.posts.totalComments} comments
-  </div>
+    &nbsp;comments
+   </span>
   </div>
 
 )}
@@ -116,6 +116,7 @@ updateField(field, value,e){
 }
 
 componentDidMount() {
+  this.props.getComments(this.props.id)
   console.log("componentdidmount comments")
   //this.props.getPosts()
   //this.props.getCategories()
