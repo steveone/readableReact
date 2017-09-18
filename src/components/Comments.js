@@ -42,9 +42,12 @@ class Comments extends Component {
 
 render(Comments) {
   let comments = []
-if (this.props.comments){
+
+  if (this.props.comments){
     comments = this.props.comments[this.props.id]
   }
+  let showComments = false
+  showComments = (this.props.showComments) ? true: false
 
 return (
   <div>
@@ -64,8 +67,23 @@ return (
 {/*TODO: returns 1 when no comments so needs fixing*/}
     &nbsp;comments
    </span>
+{
+  (showComments && comments && Object.keys(comments)
+  .filter((comment) =>
+    comments[comment] !== null &&
+    comments[comment].deleted !== true
+  )
+  .map((cur,val,arry) => {
+  const {body,timestamp,autho,votescore,deleted,parentDeleted} = comments[cur]
+  return <div>
+  <li>{body}</li> <br />
   </div>
+//
+})
+)
+}
 
+  </div>
 )}
 
 updateField(field, value,e){
@@ -120,7 +138,6 @@ componentDidMount() {
   console.log("componentdidmount comments")
   //this.props.getPosts()
   //this.props.getCategories()
-
   loaded = true;
 
   }
@@ -156,6 +173,8 @@ const mapStateToProps = ((state,ownProps) => (
    editing: state.editing,
    categories: state.categories,
    comments: state.comments,
+   showComments: ownProps.showComments,
+
 }));
 
 function mapDispatchToProps(dispatch) {

@@ -18,6 +18,7 @@ class ShowPosts extends Component {
 render(props) {
   let posts = []
   let categories = []
+  let showComments = false
   //let postId = []
   let showCategory = []
   let showPosts = []
@@ -29,6 +30,7 @@ render(props) {
     }
 
   showPosts = (this.props.postId) ? this.props.postId : 'all'
+  showComments = (this.props.postId) ? true : false
   showCategory = (this.props.showCategory) ? this.props.showCategory : 'all'
 //  console.log(showPosts)
 
@@ -62,7 +64,7 @@ posts && Object.keys(posts)
 .sort((a,b)=> posts[a].voteScore < posts[b].voteScore)
 .map((cur,val,arry) => {
   const {id} = posts[cur];
-  return  <Post key={'p' + id} id={id}/>
+  return  <Post key={'p' + id} id={id} showComments={showComments}/>
    })
 }
 </div>

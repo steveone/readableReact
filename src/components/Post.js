@@ -136,7 +136,7 @@ return (
                      }
                   </div>
                   {/*this.props.id && <Comments id = {this.props.id}/>*/}
-                  {<Comments id = {id}/>}
+                  {<Comments id = {id} showComments={this.props.showComments}/>}
                 </div>
 
     })
