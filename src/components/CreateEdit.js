@@ -15,7 +15,7 @@ import{
       } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import { updatePost,
-//  addPost,
+  addPost,
   removePost, getCategories, getPosts } from '../actions'
 import uniqid from 'uniqid'
 
@@ -31,11 +31,11 @@ class CreateEdit extends Component {
        if (loaded) {
          //e.preventDefault()
          console.log("select changed " + field + " " + value)
-         const {category, text,author} = this.props.writingPost
+         const {category, body,author} = this.props.writingPost
         switch (field) {
           case 'select' : this.props.updatePost(
               {category: value,
-               text,
+               body,
                author
               })
               break
@@ -43,6 +43,12 @@ class CreateEdit extends Component {
               {category,
                body: value,
                author
+              })
+              break
+          case 'author': this.props.updatePost(
+              {category,
+               body,
+               author: value
               })
               break
           default: break;
@@ -70,9 +76,11 @@ render(props) {
    <FormGroup key={uniqid()}>
    <ControlLabel>Select Category</ControlLabel>
     <FormControl key={2} id="select1" componentClass="select"
+    value={this.props.writingPost.category}
     onChange={(e) => this.updateField('select',e.target.value)}
     //onChange={this.props.updatePost({author:'', title: '', category: ''})}
     >
+    <option value="" key={uniqid()}></option>
     {categories && Object.keys(categories).map((cur,val,arry) => {
       console.log("in select cat")
       console.log(categories[cur])
@@ -83,7 +91,7 @@ render(props) {
 
      </FormControl>
      </FormGroup>
-     <ControlLabel>Text</ControlLabel>
+     <ControlLabel>Body</ControlLabel>
         <FormControl type="text"
           key={3}
           value={this.props.writingPost.text}
@@ -95,10 +103,10 @@ render(props) {
       <FormGroup>
         <ControlLabel>Author</ControlLabel>
         <FormControl type="text"
-          value=""
           key={uniqid}
           placeholder="Authors Name"
-          onChange={console.log("changed author")}
+          value={this.props.writingPost.author}
+          onChange={(e) => this.updateField('author',e.target.value,e)}
         />
       </FormGroup>
       <Button bsSize="small" bsStyle="primary" key={uniqid()}
@@ -154,7 +162,7 @@ function mapStateToProps(state,props){
 
 function mapDispatchToProps(dispatch) {
   return{
-//    addPost: (data) => dispatch(addPost(data)),
+    addPost: (data) => dispatch(addPost(data)),
     removePost: (data) => dispatch(removePost(data)),
     getCat: (data) => dispatch(getCategories(data)),
     updatePost: (data) => dispatch(updatePost(data)),

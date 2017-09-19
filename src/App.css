@@ -80,3 +80,15 @@
   font-size: 1.1em;
   color:blue;
 }
+
+.comments{
+  margin-left:5em;
+  text-align:left;
+}
+
+
+.spacer{
+  margin-left:5em;
+  float:left;
+  padding-right:2em;
+}

@@ -28,13 +28,6 @@ componentDidUpdate(prevProps, prevState) {
    <div className="App">
     <Nav/>
     <Switch>
-    <Route path="/:category/:postId" component={Category}/>
-    <Route path="/:category" component={Category}/>
-    <Route path="/postDetail" render={() =>
-          <div>
-          PostDetail
-          </div>
-        } />
     <Route exact path="/createEdit" render={() =>
           <div>
           <CreateEdit/>
@@ -44,6 +37,14 @@ componentDidUpdate(prevProps, prevState) {
 
           </div>
           } />
+    <Route path="/:category/:postId" component={Category}/>
+    <Route path="/:category" component={Category}/>
+    <Route path="/postDetail" render={() =>
+          <div>
+          PostDetail
+          </div>
+        } />
+
     <Route exact path="/" render={() =>
       <ShowPosts/>
     		} />

@@ -13,8 +13,8 @@ import {  getComments,
           //editPost,
           updateEditField
           } from '../actions'
-//import uniqid from 'uniqid'
-//import { FaChevronUp, FaChevronDown, FaCut, FaPencil} from 'react-icons/lib/fa'
+import uniqid from 'uniqid'
+import { FaChevronUp, FaChevronDown, FaCut, FaPencil} from 'react-icons/lib/fa'
 import{
         //MenuItem,
         //FormGroup,
@@ -74,9 +74,20 @@ return (
     comments[comment].deleted !== true
   )
   .map((cur,val,arry) => {
-  const {body,timestamp,autho,votescore,deleted,parentDeleted} = comments[cur]
-  return <div>
-  <li>{body}</li> <br />
+  const {body,timestamp,author,voteScore,deleted} = comments[cur]
+  return <div key={uniqid()}>
+  <li className='comments'>
+  <FaPencil/>
+  {body}
+  {timestamp} {author}{deleted}
+  <FaCut/>
+
+  <span className='spacer'>
+    <FaChevronUp/>
+      {voteScore}
+    <FaChevronDown/>
+  </span>
+  </li>
   </div>
 //
 })
