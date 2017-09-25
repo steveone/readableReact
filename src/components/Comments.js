@@ -10,30 +10,43 @@ import {  getComments,
           //getPosts,
           //deletePost,
           //changeVote,
+          changeCommentVote,
           //editPost,
+          openModal,
+          closeModal,
           updateEditField
           } from '../actions'
 import uniqid from 'uniqid'
 import { FaChevronUp, FaChevronDown, FaCut, FaPencil} from 'react-icons/lib/fa'
 import{
         //MenuItem,
-        //FormGroup,
-        //FormControl,
+        FormGroup,
+        FormControl,
         //Form,
-        //ControlLabel,
+        ControlLabel,
         //SplitButton,
-        //Button,
+        Button,
         //ButtonToolbar,
         //ButtonGroup
         //ControlID
       } from 'react-bootstrap';
+import Modal from 'react-modal';
 
 let loaded=false;
 
 
 class Comments extends Component {
 
+  newComment() {
+    this.props.openModal(true)
+  }
 
+  closeNewComment() {
+    this.props.closeModal(false)
+  }
+  componentWillUnmount() {
+    if (this.props.modalIsOpen.status === true) this.closeNewComment()
+  }
 
   sendToConsole(e) {
     console.log(e)
@@ -41,6 +54,7 @@ class Comments extends Component {
 
 
 render(Comments) {
+
   let comments = []
 
   if (this.props.comments){
@@ -48,6 +62,8 @@ render(Comments) {
   }
   let showComments = false
   showComments = (this.props.showComments) ? true: false
+
+  let modalIsOpen = this.props.modalIsOpen.status
 
 return (
   <div>
@@ -74,7 +90,7 @@ return (
     comments[comment].deleted !== true
   )
   .map((cur,val,arry) => {
-  const {body,timestamp,author,voteScore,deleted} = comments[cur]
+  const {body,timestamp,author,voteScore,deleted,id} = comments[cur]
   return <div key={uniqid()}>
   <li className='comments'>
   <FaPencil/>
@@ -83,9 +99,9 @@ return (
   <FaCut/>
 
   <span className='spacer'>
-    <FaChevronUp/>
+  <a onClick={() => this.props.changeCommentVote([id,"upVote"])}><FaChevronUp/> </a>
       {voteScore}
-    <FaChevronDown/>
+      <a onClick={() => this.props.changeCommentVote([id,"downVote"])}><FaChevronDown/> </a>
   </span>
   </li>
   </div>
@@ -94,6 +110,33 @@ return (
 )
 }
 
+{showComments === true &&
+  <Button bsStyle="primary" onClick={(e)=>this.newComment()}>Add Comment</Button>
+}
+
+<Modal
+  isOpen={modalIsOpen}
+/*  onAfterOpen={aferOpenFn}
+  closeTimeoutMS={n}
+  style={customStyle}
+  */
+  //onRequestClose={this.closeNewComment()}
+  contentLabel="Modal">
+
+  <FormGroup>
+  <ControlLabel>Body</ControlLabel>
+     <FormControl type="text"
+       key={3}
+       value="test"
+       onChange={(e) => this.updateField('body',e.target.value,e)}
+       placeholder="Enter body"
+     //  onChange={updatePost({title: this.value})}
+     />
+   </FormGroup>
+  <br />
+  <Button bsStyle="primary" onClick={(e)=>this.closeNewComment()}>Close</Button>
+
+  </Modal>
   </div>
 )}
 
@@ -185,13 +228,13 @@ const mapStateToProps = ((state,ownProps) => (
    categories: state.categories,
    comments: state.comments,
    showComments: ownProps.showComments,
-
+   modalIsOpen: state.modalIsOpen,
 }));
 
 function mapDispatchToProps(dispatch) {
   return{
     //removePost: (data) => dispatch(deletePost(data)),
-    //changeVote: (data) => dispatch(changeVote(data)),
+    changeCommentVote: (data) => dispatch(changeCommentVote(data)),
     //getPosts: (data) => dispatch(getPosts(data)),
     //getCategories: (data) => dispatch(getCategories(data)),
     //editPost: (data) => dispatch(editPost(data)),
@@ -199,6 +242,8 @@ function mapDispatchToProps(dispatch) {
     //cancelEdit: (data) => dispatch(cancelEdit(data)),
     //saveEdit: (data) => dispatch(saveEdit(data)),
     getComments: (data) => dispatch(getComments(data)),
+    openModal: (data) =>dispatch(openModal(data)),
+    closeModal: (data) =>dispatch(closeModal(data)),
   }
 }
 

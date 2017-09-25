@@ -17,6 +17,8 @@ import {
   CHANGE_COMMENT_VOTE,
   CLEAR_COMMENTS,
   UPDATE_POST_COMMENT_COUNT,
+  MODAL_OPEN,
+  MODAL_CLOSE,
 //  SAVE_EDIT
 } from '../actions'
 
@@ -33,7 +35,23 @@ const blankPost = {
 }
 
 
-
+function modalIsOpen (state = {status: false}, action)
+{
+  switch(action.type){
+    case MODAL_OPEN:
+      return {
+      ...state,
+      ...{status:true}
+      }
+    case MODAL_CLOSE:
+      return {
+        ...state,
+        ...{status:false}
+      }
+    default:
+      return state
+  }
+}
 
 function writingPost (state = blankPost, action)
 {
@@ -178,26 +196,18 @@ function post (state = {}, action) {
   }
 }
 
+
+
 function comments (state = {}, action) {
   let retVal = state
-//  console.log("in comments reducer")
-  //console.log(action)
+  const {id,body,author} = action
   switch (action.type) {
     case ADD_COMMENT:
-    console.log("in add_comment")
-    console.log(action)
       return {
       ...state,...action.comments
-        /*[id] : { id,
-            author,
-            body,
-            title
-
-          //[comments]: comments,
-        }*/
       }
     case UPDATE_COMMENT:
-    const {id,body,author} = action
+    //const {id,body,author} = action
           return{
           ...state,
           id,
@@ -223,20 +233,32 @@ function comments (state = {}, action) {
 
 
     case CHANGE_COMMENT_VOTE :
-      const scoreChange = (action.vote === 'upVote') ? 1 : -1
-        retVal = Object.keys(state).map( (item, index) => {
-            if(state[index].id !== action.id) {
-            // this one isn't changing so return it
-              return state[index];
-        }
-        //vote Score changed on this one so update
-        else
-          {
-              state[index].voteScore += scoreChange
-              return state[index]
-        }
-    });
-    return {...[state],...retVal}
+    console.log("Aas")
+    let comments = action.comments
+    let {parentId, id} = comments
+    console.log(parentId + " "  + id )
+    const scoreChange = (action.vote === 'upVote') ? 1 : -1
+        retVal = Object.keys(state).map( (currentValue, index, arry) => {
+            console.log("ss " + currentValue + " " + parentId + " " + id)
+            if (currentValue === parentId) {
+                state[currentValue].map((currValue, index, arry) => {
+                  if (state[currentValue][index].id === id) {
+                    //state[currentValue][index].voteScore += scoreChange
+                    state[currentValue][index] = action.comments
+                    }
+                  console.log("about to show changed state[index]")
+                  console.log(state[currentValue][index])
+                  //return state[currentValue]
+                  //return action.comments[0]
+              })
+              }
+             //else return state[currentValue]
+          });
+      console.log("about to reeeeturn")
+//      retVal= retVal
+//      retVal = {[parentId]:retVal}
+//      console.log(...retVal)
+    return {...state,...retVal}
 
     case CLEAR_COMMENTS :
   //  console.log ("in clear comments, state is")
@@ -251,11 +273,11 @@ function comments (state = {}, action) {
 
 
 
-
 export default combineReducers({
   post,
   writingPost,
   categories,
   editing,
   comments,
+  modalIsOpen,
 })

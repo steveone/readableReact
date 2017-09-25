@@ -8,7 +8,6 @@ import { connect } from 'react-redux'
 //import { addPost, setCategory, removePost } from './actions'
 import CreateEdit from './components/CreateEdit'
 import ShowPosts from './components/ShowPosts'
-
 class App extends Component {
 
 
@@ -23,8 +22,13 @@ componentDidUpdate(prevProps, prevState) {
   }
 
   render(props) {
+
+
     return (
    <BrowserRouter>
+
+
+
    <div className="App">
     <Nav/>
     <Switch>
@@ -32,7 +36,10 @@ componentDidUpdate(prevProps, prevState) {
           <div>
           <CreateEdit/>
           <br />
-            <Button type="submit" onClick={() =>  {this.props.addPost({id:Date.now(),author:'steve',text:'whtever',category:'react'})}} bsSize="small" bsStyle="primary">Create Post</Button>
+            <Button type="submit modal" onClick={() =>  {
+              this.props.addPost({id:Date.now(),author:'steve',text:'whtever',category:'react'})}}>bsSize="small" bsStyle="primary">
+
+            create Post</Button>
             <Button type="submit" onClick={() =>  {this.props.addPost({id:Date.now(),author:'steve',text:'whtever',category:'redux'})}} bsSize="small" bsStyle="primary">Create Post</Button>
 
           </div>
@@ -50,6 +57,8 @@ componentDidUpdate(prevProps, prevState) {
     		} />
         </Switch>
         </div>
+
+
     </BrowserRouter>
    );
   }
@@ -64,6 +73,7 @@ const mapStateToProps = ((state) => (
   {
    posts: state.post,
    categories: state.categories,
+
 }));
 
 

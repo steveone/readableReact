@@ -2,6 +2,7 @@ import getCategoriesFromAPI from '../utils/getCategories'
 import getPostsFromAPI from '../utils/getPosts'
 import deletePostFromAPI from '../utils/deletePost'
 import changeVoteFromAPI from '../utils/changeVote'
+import changeCommentVoteFromAPI from '../utils/changeCommentVote'
 import saveEditFromAPI from '../utils/saveEdit'
 import getCommentsFromAPI from '../utils/getComments'
 
@@ -24,6 +25,8 @@ export const UPDATE_COMMENT = 'UPDATE_COMMENT'
 export const CHANGE_COMMENT_VOTE = 'CHANGE_COMMENT_VOTE'
 export const CLEAR_COMMENTS = 'CLEAR_COMMENTS'
 export const UPDATE_POST_COMMENT_COUNT = 'UPDATE_POST_COMMENT_COUNT'
+export const MODAL_OPEN = 'MODAL_OPEN'
+export const MODAL_CLOSE = 'MODAL_CLOSE'
 
 export function cancelEdit (id) {
     console.log("in canceled it")
@@ -34,12 +37,28 @@ export function cancelEdit (id) {
         }
 }
 
+
+
 //TODO: this needs to update the server and the reducer needs fixing
 export function saveEditReducer ({id}) {
       return {
         type: SAVE_EDIT,
         id
         }
+}
+
+export function openModal({modalIsOpen}){
+  return {
+    type:MODAL_OPEN,
+    modalIsOpen,
+  }
+}
+
+export function closeModal({modalIsOpen}){
+  return {
+    type:MODAL_CLOSE,
+    modalIsOpen,
+  }
 }
 
 export function updateEditField (id, title, body,category,author) {
@@ -162,6 +181,16 @@ export function postsandCommentsReturned(posts){
 
 }
 
+export function changeCommentVotePost(comments) {
+  //const [ id, vote ] = data
+  console.log("in changecomment vote")
+  console.log(comments.comments)
+  return {
+    type: CHANGE_COMMENT_VOTE,
+    comments:comments.comments,
+  }
+}
+
 export function changeVotePost (data) {
   const [ id, vote ] = data
   return {
@@ -195,6 +224,20 @@ export function changeVotePost (data) {
         )
       )
     )
+
+    export const changeCommentVote = (id) => dispatch =>(
+      changeCommentVoteFromAPI(id)
+      //need to finish update post in state
+      .then(comments =>
+        {
+        console.log("about to return")
+        console.log(comments)
+        dispatch(changeCommentVotePost(
+        comments
+      )
+    )}
+        )
+      )
 
     export const saveEdit = (state) => dispatch =>(
       //save state to server and get new state/posts
