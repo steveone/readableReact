@@ -55,17 +55,18 @@ export function saveEditReducer ({id}) {
         }
 }
 
-export function openModal({modalIsOpen}){
+export function openModal({modal}){
+  console.log("opening modal in action")
+  console.log(modal)
   return {
     type:MODAL_OPEN,
-    modalIsOpen,
+    modal,
   }
 }
 
-export function closeModal({modalIsOpen}){
+export function closeModal({modal}){
   return {
     type:MODAL_CLOSE,
-    modalIsOpen,
   }
 }
 

@@ -42,16 +42,17 @@ const blankPost = {
 
 function modalIsOpen (state = {status: false}, action)
 {
+  const {modal} = action
   switch(action.type){
     case MODAL_OPEN:
       return {
       ...state,
-      ...{status:true}
+      ...{status:true,modal}
       }
     case MODAL_CLOSE:
       return {
         ...state,
-        ...{status:false}
+        ...{status:false,modal:false}
       }
     default:
       return state
@@ -84,8 +85,7 @@ function writingPost (state = blankPost, action)
   }
 }
 
-const currentlyEditingComment = {
-  }
+
 
   function editingComment(state={},action){
     //const {id,title,body} = action
@@ -286,7 +286,7 @@ function comments (state = {}, action) {
     let comments = action.comments
     let {parentId, id} = comments
     console.log(parentId + " "  + id )
-    const scoreChange = (action.vote === 'upVote') ? 1 : -1
+  //  const scoreChange = (action.vote === 'upVote') ? 1 : -1
         retVal = Object.keys(state).map( (currentValue, index, arry) => {
             console.log("ss " + currentValue + " " + parentId + " " + id)
             if (currentValue === parentId) {
@@ -301,6 +301,7 @@ function comments (state = {}, action) {
                   //return action.comments[0]
               })
               }
+
              //else return state[currentValue]
           });
       console.log("about to reeeeturn")

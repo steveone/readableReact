@@ -41,7 +41,7 @@ let loaded=false;
 class Comments extends Component {
 
   newComment() {
-    this.props.openModal(true)
+    this.props.openModal({modal:'comment'})
   }
 
   saveNewComment() {
@@ -86,13 +86,14 @@ class Comments extends Component {
 
 render(Comments) {
 
+/*
   let editingBody = ""
   let editingAuthor = ""
 
   if (this.props.editingComment){
     editingBody = this.props.editingComment.body
     editingAuthor = this.props.editingComment.author
-  }
+  }*/
 
   let comments = []
 
@@ -102,7 +103,8 @@ render(Comments) {
   let showComments = false
   showComments = (this.props.showComments) ? true: false
 
-  let modalIsOpen = this.props.modalIsOpen.status
+    let modalIsOpen = this.props.modalIsOpen.status
+    let modal = (modalIsOpen) ? this.props.modalIsOpen.modal : null
 
 return (
   <div>
@@ -158,7 +160,7 @@ return (
 }
 
 <Modal
-  isOpen={modalIsOpen}
+  isOpen={modalIsOpen && modal === 'comment'}
 /*  onAfterOpen={aferOpenFn}
   closeTimeoutMS={n}
   style={customStyle}

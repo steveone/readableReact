@@ -4,7 +4,13 @@ import '../App.css';
 //import{ Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import uuid from 'uuid';
-import { getPostsAndComments, addPost, addPostToServer, getPosts, getCategories, deletePost, changeVote } from '../actions'
+import { getPostsAndComments,
+  //addPost,
+  addPostToServer,
+  getPosts,
+  getCategories,
+  deletePost,
+  changeVote } from '../actions'
 import uniqid from 'uniqid'
 //import { FaChevronUp, FaChevronDown, FaCut} from 'react-icons/lib/fa'
 import Post from './Post'
@@ -14,7 +20,7 @@ import Modal from 'react-modal';
 import { Link, withRouter} from 'react-router-dom'
 import {  //getComments,
           //saveEdit,
-          cancelEdit,
+          //cancelEdit,
           //getCategories,
           //getPosts,
           //deletePost,
@@ -30,10 +36,10 @@ import {  //getComments,
           } from '../actions'
 import{
         //MenuItem,
-        FormGroup,
-        FormControl,
+        //FormGroup,
+        //FormControl,
         //Form,
-        ControlLabel,
+        //ControlLabel,
         //SplitButton,
         Button,
         //ButtonToolbar,
@@ -43,7 +49,7 @@ import{
 class ShowPosts extends Component {
 
   newPost() {
-    this.props.openModal(true)
+    this.props.openModal({modal:'post'})
   }
 
   saveNewPost() {
@@ -90,7 +96,9 @@ render(props) {
   if (this.props.categories){
     categories = this.props.categories
     }
+
   let modalIsOpen = this.props.modalIsOpen.status
+  let modal = (modalIsOpen) ? this.props.modalIsOpen.modal : null
 
   showPosts = (this.props.postId) ? this.props.postId : 'all'
   showComments = (this.props.postId) ? true : false
@@ -132,7 +140,7 @@ posts && Object.keys(posts)
 }
 
 <Modal
-  isOpen={modalIsOpen}
+isOpen={modalIsOpen && modal === 'post'}
 /*  onAfterOpen={aferOpenFn}
   closeTimeoutMS={n}
   style={customStyle}
