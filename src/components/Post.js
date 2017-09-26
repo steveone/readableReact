@@ -57,8 +57,17 @@ return (
   (posts && Object.keys(posts)
     .filter(post => posts[post].id === this.props.id)
     .map((cur,val,arry) => {
-    const {author,body,category,id,title,voteScore} = posts[cur]
+    const {author,body,category,id,title,voteScore,timestamp} = posts[cur]
   //  console.log(posts[cur])
+
+//let timestamp = Math.floor(Date.now() / 1000)
+
+    let date = new Date(timestamp*1000)
+    let hours = date.getHours()
+    let minutes = date.getMinutes()
+    let seconds = 0 + date.getSeconds()
+    let formattedTime = hours + ':' + minutes + ':' + seconds
+    let formattedDate = date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear()
     const link = `/${category}/${id}`
 
          return <div className='post' key={'e'+id}>
@@ -135,8 +144,10 @@ return (
                        : <br />
                      }
                   </div>
+                  {formattedDate + ' - ' + formattedTime}
+
                   {/*this.props.id && <Comments id = {this.props.id}/>*/}
-                  {<Comments id = {id} showComments={this.props.showComments}/>}
+                  {<Comments id = {id} parentId = {this.props.id} showComments={this.props.showComments}/>}
                 </div>
 
     })
@@ -250,7 +261,7 @@ function mapDispatchToProps(dispatch) {
     getCategories: (data) => dispatch(getCategories(data)),
     editPost: (data) => dispatch(editPost(data)),
     updateEditField: (data) => dispatch(updateEditField(data)),
-    cancelEdit: (data) => dispatch(cancelEdit(data)),
+    cancelEditPost: () => dispatch(cancelEdit()),
     saveEdit: (data) => dispatch(saveEdit(data)),
     //getComments: (data) => dispatch(getComments(data)),
   }

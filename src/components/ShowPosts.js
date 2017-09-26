@@ -3,13 +3,75 @@ import React, { Component } from 'react';
 import '../App.css';
 //import{ Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux'
-import { getPostsAndComments, addPost, getPosts, getCategories, deletePost, changeVote } from '../actions'
+import uuid from 'uuid';
+import { getPostsAndComments, addPost, addPostToServer, getPosts, getCategories, deletePost, changeVote } from '../actions'
 import uniqid from 'uniqid'
 //import { FaChevronUp, FaChevronDown, FaCut} from 'react-icons/lib/fa'
 import Post from './Post'
-import { Link, withRouter} from 'react-router-dom'
+import CreateEdit from './CreateEdit'
+import Modal from 'react-modal';
 
+import { Link, withRouter} from 'react-router-dom'
+import {  //getComments,
+          //saveEdit,
+          cancelEdit,
+          //getCategories,
+          //getPosts,
+          //deletePost,
+          //changeVote,
+          //changeCommentVote,
+          //saveNewComment,
+          //editPost,
+          cancelNewPost,
+          openModal,
+          closeModal,
+          //updateEditCommentField,
+          //cancelEditCommentField
+          } from '../actions'
+import{
+        //MenuItem,
+        FormGroup,
+        FormControl,
+        //Form,
+        ControlLabel,
+        //SplitButton,
+        Button,
+        //ButtonToolbar,
+        //ButtonGroup
+        //ControlID
+      } from 'react-bootstrap';
 class ShowPosts extends Component {
+
+  newPost() {
+    this.props.openModal(true)
+  }
+
+  saveNewPost() {
+    let post = []
+    const myuuid = uuid()
+    console.log("in save new post")
+    post = post[myuuid] = {
+      id: myuuid,
+      timestamp: Math.floor(Date.now()),
+      body: this.props.writingPost.body,
+      author: this.props.writingPost.author,
+      title: this.props.writingPost.title,
+      category: this.props.writingPost.category,
+      voteScore: 1,
+      deleted: false,
+    }
+    console.log(post)
+    this.props.addPostToServer(post)
+    this.props.cancelNewPost()
+    this.props.getPosts()
+    this.props.closeModal(false)
+  }
+
+  closeNewPost() {
+    this.props.cancelNewPost()
+    this.props.closeModal(false)
+
+  }
 
   sendToConsole(e) {
     console.log(e)
@@ -28,6 +90,7 @@ render(props) {
   if (this.props.categories){
     categories = this.props.categories
     }
+  let modalIsOpen = this.props.modalIsOpen.status
 
   showPosts = (this.props.postId) ? this.props.postId : 'all'
   showComments = (this.props.postId) ? true : false
@@ -54,8 +117,8 @@ render(props) {
                 >{name}, </a>)*/
      }
    )}
-
-
+<br/>
+   <Button bsStyle="primary" onClick={(e)=>this.newPost()}>New Post</Button>
 {
 posts && Object.keys(posts)
 .filter(post => posts[post].deleted !== true)
@@ -67,6 +130,22 @@ posts && Object.keys(posts)
   return  <Post key={'p' + id} id={id} showComments={showComments}/>
    })
 }
+
+<Modal
+  isOpen={modalIsOpen}
+/*  onAfterOpen={aferOpenFn}
+  closeTimeoutMS={n}
+  style={customStyle}
+  */
+  //onRequestClose={this.closeNewComment()}
+  contentLabel="Modal">
+  <CreateEdit />
+
+  <Button bsStyle="primary" onClick={(e)=>this.saveNewPost()}>Save</Button>
+  <Button bsStyle="primary" onClick={(e)=>this.closeNewPost()}>Close</Button>
+
+  </Modal>
+
 </div>
 )}
 
@@ -104,17 +183,22 @@ const mapStateToProps = ((state,ownProps) => (
    posts: state.post,
    categories: state.categories,
    showCategory: ownProps.match.params.category,
-   postId: ownProps.match.params.postId
+   postId: ownProps.match.params.postId,
+   modalIsOpen: state.modalIsOpen,
+   writingPost: state.writingPost
 }));
 
 function mapDispatchToProps(dispatch) {
   return{
-    addPost: (data) => dispatch(addPost(data)),
+    addPostToServer: (data) => dispatch(addPostToServer(data)),
     getPosts: (data) => dispatch(getPosts(data)),
     getPostsAndComments: (data) => dispatch(getPostsAndComments(data)),
     getCategories: (data) => dispatch(getCategories(data)),
     removePost: (data) => dispatch(deletePost(data)),
-    changeVote: (data) => dispatch(changeVote(data))
+    changeVote: (data) => dispatch(changeVote(data)),
+    openModal: (data) =>dispatch(openModal(data)),
+    closeModal: (data) =>dispatch(closeModal(data)),
+    cancelNewPost: () => dispatch(cancelNewPost()),
   }
 }
 

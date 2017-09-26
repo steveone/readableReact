@@ -19,6 +19,11 @@ import {
   UPDATE_POST_COMMENT_COUNT,
   MODAL_OPEN,
   MODAL_CLOSE,
+  UPDATE_EDIT_COMMENT,
+  START_EDIT_COMMENT,
+  CANCEL_EDIT_COMMENT,
+  END_EDIT_COMMENT,
+  CANCEL_NEW_POST,
 //  SAVE_EDIT
 } from '../actions'
 
@@ -55,22 +60,66 @@ function modalIsOpen (state = {status: false}, action)
 
 function writingPost (state = blankPost, action)
 {
-  const {author, category,body } = action
+  const {author, category,body,title } = action
   switch(action.type){
     case UPDATE_POST:
         return{
         ...state,
         category,
         author,
-        body
+        body,
+        title
         }
     case SUBMIT_POST: return state;
+    case CANCEL_NEW_POST:
+      return {
+        ...state,
+        id:null,
+        body:null,
+        author:null,
+        category:null,
+        title:null
+      }
     default: return state;
   }
 }
 
-const currentlyEditing = {
+const currentlyEditingComment = {
   }
+
+  function editingComment(state={},action){
+    //const {id,title,body} = action
+    console.log("in editing reducer")
+    console.log(action)
+  //  console.log(state)
+    switch (action.type) {
+      case START_EDIT_COMMENT:
+         return {
+          ...state,
+          ...action.body
+          }
+      case UPDATE_EDIT_COMMENT:
+            return {
+          ...state,
+          ...action.body
+          }
+      case CANCEL_EDIT_COMMENT:
+                return {
+              ...state,
+              body:null,
+              author:null,
+              }
+      case END_EDIT_COMMENT:
+        return {
+          ...[state],
+          editingComment: ""
+        }
+      default: return state
+    }
+  }
+
+  const currentlyEditing = {
+    }
 
 function editing(state={},action){
   //const {id,title,body} = action
@@ -103,7 +152,7 @@ function editing(state={},action){
         editing:""
       }
     default: return state
-}
+  }
 }
 
 function categories (state = currentlyEditing, action) {
@@ -280,4 +329,5 @@ export default combineReducers({
   editing,
   comments,
   modalIsOpen,
+  editingComment,
 })

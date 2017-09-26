@@ -10,7 +10,7 @@ export const saveEditFromAPI = (data) => //console.log("Asddddd")
   const init = {
                   headers,
                   method:'put',
-                  body: JSON.stringify(output)
+                  body: JSON.stringify({output})
               }
               console.log(init)
 let url = 'http://localhost:5001/posts/' + id

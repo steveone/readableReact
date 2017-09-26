@@ -31,24 +31,34 @@ class CreateEdit extends Component {
        if (loaded) {
          //e.preventDefault()
          console.log("select changed " + field + " " + value)
-         const {category, body,author} = this.props.writingPost
+         const {category, body,author,title} = this.props.writingPost
         switch (field) {
           case 'select' : this.props.updatePost(
               {category: value,
                body,
-               author
+               author,
+               title
               })
               break
           case 'body': this.props.updatePost(
               {category,
                body: value,
-               author
+               author,
+               title
               })
               break
           case 'author': this.props.updatePost(
               {category,
                body,
-               author: value
+               author: value,
+               title
+              })
+              break
+          case 'title': this.props.updatePost(
+              {category,
+               body,
+               author,
+               title: value
               })
               break
           default: break;
@@ -63,16 +73,13 @@ render(props) {
   if (this.props.categories) {
       categories = this.props.categories
     }
-  let posts = []
-  if (this.props.posts){
-    posts = this.props.posts
-    }
+
 //console.log(posts)
   return (
    <div className="showAll">
    <Form>
    <FormGroup key={1}>
-   <ControlLabel key={uniqid()}>Data Entry Form</ControlLabel>
+   <ControlLabel key={uniqid()}>New Post</ControlLabel>
    <FormGroup key={uniqid()}>
    <ControlLabel>Select Category</ControlLabel>
     <FormControl key={2} id="select1" componentClass="select"
@@ -91,6 +98,14 @@ render(props) {
 
      </FormControl>
      </FormGroup>
+     <ControlLabel>Title</ControlLabel>
+        <FormControl type="text"
+          key={2}
+          value={this.props.writingPost.title}
+          onChange={(e) => this.updateField('title',e.target.value,e)}
+          placeholder="Enter Title"
+        //  onChange={updatePost({title: this.value})}
+        />
      <ControlLabel>Body</ControlLabel>
         <FormControl type="text"
           key={3}
@@ -109,25 +124,14 @@ render(props) {
           onChange={(e) => this.updateField('author',e.target.value,e)}
         />
       </FormGroup>
+      {/*
       <Button bsSize="small" bsStyle="primary" key={uniqid()}
         onClick={() => console.log("submit button hit")}//this.props.removePost(stateKey)}
       >Submit Post</Button>
+      */
+    }
      </Form>
-     {
-Object.keys(posts).map((cur,val,arry) => {
-        console.log(val);
-        const stateKey = cur;
-        console.log("stateKey " + stateKey)
-        const {id,text,author,category} = posts[cur]
-        console.log(id + text + author + category)
-         return <div key={'d'+id}>
-                {text} <br/> {author} <br/> {category} <br/>
-                <Button bsSize="small" bsStyle="primary" key={uniqid()}
-                id = {id}
-                  onClick={() => this.props.removePost(stateKey)}
-                >Delete {id}</Button>
-              </div>
-     })}
+
    </div>
    );}
 

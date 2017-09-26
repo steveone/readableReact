@@ -5,6 +5,8 @@ import changeVoteFromAPI from '../utils/changeVote'
 import changeCommentVoteFromAPI from '../utils/changeCommentVote'
 import saveEditFromAPI from '../utils/saveEdit'
 import getCommentsFromAPI from '../utils/getComments'
+import saveNewCommentAPI from '../utils/saveNewComment'
+import saveNewPostAPI from '../utils/saveNewPost'
 
 export const ADD_POST = 'ADD_POST'
 export const REMOVE_POST = 'REMOVE_POST'
@@ -27,6 +29,12 @@ export const CLEAR_COMMENTS = 'CLEAR_COMMENTS'
 export const UPDATE_POST_COMMENT_COUNT = 'UPDATE_POST_COMMENT_COUNT'
 export const MODAL_OPEN = 'MODAL_OPEN'
 export const MODAL_CLOSE = 'MODAL_CLOSE'
+export const UPDATE_EDIT_COMMENT = 'UPDATE_EDIT_COMMENT'
+export const START_EDIT_COMMENT = 'START_EDIT_COMMENT'
+export const CANCEL_EDIT_COMMENT = 'CANCEL_EDIT_COMMENT'
+export const END_EDIT_COMMENT = 'END_EDIT_COMMENT'
+export const CANCEL_NEW_POST = 'CANCEL_NEW_POST'
+
 
 export function cancelEdit (id) {
     console.log("in canceled it")
@@ -71,6 +79,30 @@ export function updateEditField (id, title, body,category,author) {
         body,
         category,
         author
+        }
+}
+
+export function updateEditCommentField (body,author) {
+    console.log("in updateditfield")
+    console.log(body + " " + author)
+      return {
+        type: UPDATE_EDIT_COMMENT,
+        body,
+        author
+        }
+}
+
+export function cancelEditCommentField (body,author) {
+      return {
+        type: CANCEL_EDIT_COMMENT,
+        body,
+        author
+        }
+}
+
+export function cancelNewPost () {
+      return {
+        type: CANCEL_NEW_POST,
         }
 }
 
@@ -124,6 +156,8 @@ export function addPost ({ id, timestamp,title,body,author,category,voteScore,de
     totalComments
   }
 }
+
+
 
 
 export function removePost ( id ) {
@@ -215,6 +249,13 @@ export function changeVotePost (data) {
     return setDisplayCategory(category)
   }
 
+ export const addPostToServer = (post) => dispatch =>(
+  saveNewPostAPI(post)
+  .then(post => dispatch(addPost(post)
+      )
+    )
+  )
+
   export const changeVote = (id) => dispatch =>(
     changeVoteFromAPI(id)
     //need to finish update post in state
@@ -259,7 +300,12 @@ export const deletePost = (id) => dispatch =>(
     )
   )
 
-
+  export const saveNewComment = (comment) => dispatch =>(
+    saveNewCommentAPI(comment)
+    .then(comment => dispatch(commentsReturned(comment)
+        )
+      )
+    )
 
 
   export const getPosts = (posts) => dispatch =>(
