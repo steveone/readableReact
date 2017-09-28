@@ -31,6 +31,7 @@ import {  //getComments,
           cancelNewPost,
           openModal,
           closeModal,
+          changeSort,
           //updateEditCommentField,
           //cancelEditCommentField
           } from '../actions'
@@ -47,6 +48,11 @@ import{
         //ControlID
       } from 'react-bootstrap';
 class ShowPosts extends Component {
+
+  changeSort(){
+    let sort = (this.props.sortMethod === 'voteScore') ? 'timestamp' : 'voteScore'
+    this.props.changeSort({sortMethod:sort})
+  }
 
   newPost() {
     this.props.openModal({modal:'post'})
@@ -127,12 +133,20 @@ render(props) {
    )}
 <br/>
    <Button bsStyle="primary" onClick={(e)=>this.newPost()}>New Post</Button>
+   <Button bsStyle="primary" onClick={(e)=>this.changeSort()}>
+    {(this.props.sortMethod === 'voteScore') ? "Sort By TimeStamp" : "Sort by voteScore"}
+    </Button>
+
 {
 posts && Object.keys(posts)
 .filter(post => posts[post].deleted !== true)
 .filter(post => {return ((posts[post].category === showCategory) || (showCategory === 'all'))})
 .filter(post => {return ((posts[post].id === showPosts) || (showPosts === 'all'))})
-.sort((a,b)=> posts[a].voteScore < posts[b].voteScore)
+.sort((a,b)=> {
+  if (this.props.sortMethod === 'voteScore')
+    return posts[a].voteScore < posts[b].voteScore
+  else return posts[a].timestamp < posts[b].timestamp
+})
 .map((cur,val,arry) => {
   const {id} = posts[cur];
   return  <Post key={'p' + id} id={id} showComments={showComments}/>
@@ -193,7 +207,8 @@ const mapStateToProps = ((state,ownProps) => (
    showCategory: ownProps.match.params.category,
    postId: ownProps.match.params.postId,
    modalIsOpen: state.modalIsOpen,
-   writingPost: state.writingPost
+   writingPost: state.writingPost,
+   sortMethod: state.sortMethod.sortMethod,
 }));
 
 function mapDispatchToProps(dispatch) {
@@ -207,6 +222,7 @@ function mapDispatchToProps(dispatch) {
     openModal: (data) =>dispatch(openModal(data)),
     closeModal: (data) =>dispatch(closeModal(data)),
     cancelNewPost: () => dispatch(cancelNewPost()),
+    changeSort: (data) => dispatch(changeSort(data)),
   }
 }
 

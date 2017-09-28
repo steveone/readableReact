@@ -24,6 +24,7 @@ import {
   CANCEL_EDIT_COMMENT,
   END_EDIT_COMMENT,
   CANCEL_NEW_POST,
+  CHANGE_SORT,
 //  SAVE_EDIT
 } from '../actions'
 
@@ -39,6 +40,20 @@ const blankPost = {
   'category': "",
 }
 
+
+function sortMethod (state = {sortMethod: 'voteScore'}, action)
+{
+  const {sortMethod} = action
+  switch(action.type){
+    case CHANGE_SORT:
+      return {
+        ...state,
+        ...{sortMethod}
+      }
+      default:
+        return state
+    }
+  }
 
 function modalIsOpen (state = {status: false}, action)
 {
@@ -331,4 +346,5 @@ export default combineReducers({
   comments,
   modalIsOpen,
   editingComment,
+  sortMethod,
 })

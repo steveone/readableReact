@@ -34,7 +34,7 @@ export const START_EDIT_COMMENT = 'START_EDIT_COMMENT'
 export const CANCEL_EDIT_COMMENT = 'CANCEL_EDIT_COMMENT'
 export const END_EDIT_COMMENT = 'END_EDIT_COMMENT'
 export const CANCEL_NEW_POST = 'CANCEL_NEW_POST'
-
+export const CHANGE_SORT = 'CHANGE_SORT'
 
 export function cancelEdit (id) {
     console.log("in canceled it")
@@ -55,9 +55,15 @@ export function saveEditReducer ({id}) {
         }
 }
 
+export function changeSort({sortMethod}){
+  return {
+    type:CHANGE_SORT,
+    sortMethod,
+  }
+}
+
+
 export function openModal({modal}){
-  console.log("opening modal in action")
-  console.log(modal)
   return {
     type:MODAL_OPEN,
     modal,
