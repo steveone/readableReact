@@ -134,7 +134,10 @@ export function endEditPost ({id,saveCancel}) {
 }
 
 
-export function updatePost ({author, body, title, id,category}) {
+export function updatePost (data) {
+  const {author, body, title, id,category} = data
+  console.log("adsfasf")
+  console.log(data)
   return {
     type: UPDATE_POST,
     author,
@@ -291,10 +294,12 @@ export function changeVotePost (data) {
       //save state to server and get new state/posts
       saveEditFromAPI(state)
       //cancel edit now that we have saved to server
-      .then(posts => dispatch(cancelEdit({id: "dd"})))
       //store new posts with updates in state
+      .then(posts => dispatch(cancelEdit({id: "dd"})))
+      .then(posts => {console.log("in savedit"); console.log(state)})
       .then(posts => dispatch(updatePost(state)))
       .then(posts => dispatch(getPosts(state)))
+
       )
 
 

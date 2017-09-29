@@ -200,6 +200,18 @@ function post (state = {}, action) {
           //[comments]: comments,
         }*/
       }
+    case UPDATE_POST:
+       console.log("in update post")
+       console.log(action)
+       const {category,author,body,title} = action
+       //TODO: need to fix update_post so it works
+       return{
+       ...state,
+       category,
+       author,
+       body,
+       title
+       }
     case UPDATE_POST_COMMENT_COUNT :
   //  console.log ("update post comment count")
   //  console.log(action)
