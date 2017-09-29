@@ -26,24 +26,8 @@ componentDidUpdate(prevProps, prevState) {
 
     return (
    <BrowserRouter>
-
-
-
    <div className="App">
-    <Nav/>
     <Switch>
-    <Route exact path="/createEdit" render={() =>
-          <div>
-          <CreateEdit/>
-          <br />
-            <Button type="submit modal" onClick={() =>  {
-              this.props.addPost({id:Date.now(),author:'steve',text:'whtever',category:'react'})}}>bsSize="small" bsStyle="primary">
-
-            create Post</Button>
-            <Button type="submit" onClick={() =>  {this.props.addPost({id:Date.now(),author:'steve',text:'whtever',category:'redux'})}} bsSize="small" bsStyle="primary">Create Post</Button>
-
-          </div>
-          } />
     <Route path="/:category/:postId" component={Category}/>
     <Route path="/:category" component={Category}/>
     <Route path="/postDetail" render={() =>

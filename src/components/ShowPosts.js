@@ -132,10 +132,12 @@ render(props) {
      }
    )}
 <br/>
-   <Button bsStyle="primary" onClick={(e)=>this.newPost()}>New Post</Button>
-   <Button bsStyle="primary" onClick={(e)=>this.changeSort()}>
-    {(this.props.sortMethod === 'voteScore') ? "Sort By TimeStamp" : "Sort by voteScore"}
-    </Button>
+Sorted by: {(this.props.sortMethod !== 'voteScore') ? "TimeStamp" : "voteScore"}
+&nbsp; change to: <a onClick={(e)=>this.changeSort()}>
+{(this.props.sortMethod === 'voteScore') ? "TimeStamp" : "voteScore"}
+</a>
+<br/>
+<a onClick={(e)=>this.newPost()}>Create New Post</a>
 
 {
 posts && Object.keys(posts)

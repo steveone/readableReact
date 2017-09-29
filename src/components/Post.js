@@ -139,7 +139,7 @@ return (
                       {(id === currentlyEditing) ?
                         <ButtonToolbar>
                          <Button bsStyle="primary" onClick={(e)=>this.props.saveEdit({id,title:editingTitle,body:editingBody,category:editingCategory,author:editingAuthor})}>Save</Button>
-                         <Button bsStyle="primary" onClick={(e)=>this.props.cancelEdit({id})}>Revert</Button>
+                         <Button bsStyle="primary" onClick={(e)=>this.props.cancelEditPost({id})}>Revert</Button>
                         </ButtonToolbar>
                        : <br />
                      }
