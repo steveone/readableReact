@@ -183,7 +183,7 @@ componentWillMount() {
 //  console.log("componentdidmount Post")
   this.props.getCategories()
   //this.props.getPosts()
-this.props.getPosts()
+  this.props.getPosts()
   }
 
 componentDidUpdate(prevProps, prevState) {

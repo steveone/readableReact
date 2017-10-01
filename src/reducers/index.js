@@ -184,50 +184,34 @@ function categories (state = currentlyEditing, action) {
 function post (state = {}, action) {
   let retVal = []
   const posts = action.posts
-  //console.log("in posts")
-  //console.log(posts)
   switch (action.type) {
     case ADD_POST:
-  //  console.log("Adding post")
-  //  console.log(action.posts)
       return {
       ...[state],...posts
-        /*[id] : { id,
-            author,
-            body,
-            title
-
-          //[comments]: comments,
-        }*/
       }
     case UPDATE_POST:
        console.log("in update post")
        console.log(action)
-       const {category,author,body,title} = action
+       const {category,author,body,title,id} = action
        //TODO: need to fix update_post so it works
-       return{
-       ...state,
-       category,
-       author,
-       body,
-       title
+       retVal = Object.keys(state).map( (item, index) => {
+           if(state[index].id !== action.id) {
+           // this one isn't changing so return it
+             return state[index];
        }
-    case UPDATE_POST_COMMENT_COUNT :
-  //  console.log ("update post comment count")
-  //  console.log(action)
-     retVal = Object.keys(state).map( (item, index) => {
-         if(state[index].id === action.id) {
-         // this one isn't changing so return it
-           state[index].commentCount = action.count
-           console.log(state)
-           return state[index]
-     }
-     //we want to mark this one deleted = true
-     else
-       {
-           return state[index]
-     }
- });
+       //we want to mark this one deleted = true
+       else
+         {
+           state[index].category = category
+           state[index].author = author
+           state[index].body = body
+           state[index].title = title
+
+             return state[index]
+       }
+       });
+       return {...[state],...retVal}
+
    return {...[state],...retVal}
 
     case REMOVE_POST :
@@ -263,8 +247,6 @@ function post (state = {}, action) {
               return state[index]
         }
     });
-    console.log("retval")
-    console.log(retVal)
     return {...[state],...retVal}
     default :
       //console.log("Default")

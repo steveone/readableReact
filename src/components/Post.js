@@ -31,6 +31,22 @@ class Post extends Component {
     console.log(e)
   }
 
+  saveEditPost(){
+    let post = []
+    post = {
+    //post[this.props.id] = {
+      id:this.props.id,
+      title:this.props.editing.title,
+      body:this.props.editing.body,
+      category:this.props.editing.category,
+      author:this.props.editing.author,
+      voteScore: 1,
+      deleted: false,
+    }
+    this.props.saveEdit(post)
+    this.props.getPosts()
+
+  }
 
 render(props) {
   let posts = []
@@ -138,7 +154,12 @@ return (
                         }
                       {(id === currentlyEditing) ?
                         <ButtonToolbar>
-                         <Button bsStyle="primary" onClick={(e)=>this.props.saveEdit({id,title:editingTitle,body:editingBody,category:editingCategory,author:editingAuthor})}>Save</Button>
+                         <Button bsStyle="primary" onClick={(e)=>this.saveEditPost()}>  Save</Button>
+                           {
+
+                           /*{id,title:editingTitle,body:editingBody,category:editingCategory,author:editingAuthor})}>
+                          */}
+
                          <Button bsStyle="primary" onClick={(e)=>this.props.cancelEditPost({id})}>Revert</Button>
                         </ButtonToolbar>
                        : <br />
@@ -155,6 +176,8 @@ return (
   }
   </div>
 )}
+
+
 
 updateField(field, value,e){
    if (loaded) {

@@ -12,7 +12,7 @@ export const ADD_POST = 'ADD_POST'
 export const REMOVE_POST = 'REMOVE_POST'
 export const ADD_CATEGORY = 'ADD_CATEGORY'
 export const ADD_CATEGORIES = 'ADD_CATEGORIES'
-export const CHANGE_VOTE = 'UPDATE_POST'
+export const CHANGE_VOTE = 'CHANGE_VOTE'
 export const UPDATE_POST = 'UPDATE_POST'
 export const SUBMIT_POST = 'SUBMIT_POST'
 export const START_EDIT = 'START_EDIT'
@@ -135,16 +135,16 @@ export function endEditPost ({id,saveCancel}) {
 
 
 export function updatePost (data) {
-  const {author, body, title, id,category} = data
-  console.log("adsfasf")
-  console.log(data)
+  const {author, body, title, id,category,deleted, voteScore} = data
   return {
     type: UPDATE_POST,
     author,
     body,
     title,
     id,
-    category
+    category,
+    deleted,
+    voteScore,
   }
 }
 
@@ -238,7 +238,7 @@ export function changeCommentVotePost(comments) {
 export function changeVotePost (data) {
   const [ id, vote ] = data
   return {
-    type: UPDATE_POST,
+    type: CHANGE_VOTE,
     id,
     vote,
   }
@@ -291,15 +291,9 @@ export function changeVotePost (data) {
       )
 
     export const saveEdit = (state) => dispatch =>(
-      //save state to server and get new state/posts
       saveEditFromAPI(state)
-      //cancel edit now that we have saved to server
-      //store new posts with updates in state
       .then(posts => dispatch(cancelEdit({id: "dd"})))
-      .then(posts => {console.log("in savedit"); console.log(state)})
       .then(posts => dispatch(updatePost(state)))
-      .then(posts => dispatch(getPosts(state)))
-
       )
 
 
