@@ -11,6 +11,7 @@ import {  getComments,
           //getPosts,
           //deletePost,
           //changeVote,
+          deleteComment,
           changeCommentVote,
           saveNewComment,
           //editPost,
@@ -141,7 +142,7 @@ return (
   <FaPencil/>
   {body}
   {timestamp} {author}{deleted}
-  <FaCut/>
+  <a onClick={() => this.props.removeComment(id)}><FaCut /></a>
 
   <span className='spacer'>
   <a onClick={() => this.props.changeCommentVote([id,"upVote"])}><FaChevronUp/> </a>
@@ -270,7 +271,7 @@ const mapStateToProps = ((state,ownProps) => (
 
 function mapDispatchToProps(dispatch) {
   return{
-    //removePost: (data) => dispatch(deletePost(data)),
+    removeComment: (data) => dispatch(deleteComment(data)),
     changeCommentVote: (data) => dispatch(changeCommentVote(data)),
     //getPosts: (data) => dispatch(getPosts(data)),
     //getCategories: (data) => dispatch(getCategories(data)),

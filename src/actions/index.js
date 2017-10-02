@@ -7,6 +7,7 @@ import saveEditFromAPI from '../utils/saveEdit'
 import getCommentsFromAPI from '../utils/getComments'
 import saveNewCommentAPI from '../utils/saveNewComment'
 import saveNewPostAPI from '../utils/saveNewPost'
+import deleteCommentFromAPI from '../utils/deleteComment'
 
 export const ADD_POST = 'ADD_POST'
 export const REMOVE_POST = 'REMOVE_POST'
@@ -167,11 +168,19 @@ export function addPost ({ id, timestamp,title,body,author,category,voteScore,de
   }
 }
 
+export function removeComment (comment ) {
+//  console.log("Remove_Post " + id)
+  return {
+    type: REMOVE_COMMENT,
+    comment,
+    parentId:comment.parentId,
+    id:comment.id
+  }
+}
 
 
-
-export function removePost ( id ) {
-  //console.log("Remove_Post " + id)
+export function removePost (id ) {
+//  console.log("Remove_Post " + id)
   return {
     type: REMOVE_POST,
     id,
@@ -191,7 +200,7 @@ export function categoriesReturned(categories) {
   //console.log("in categories returned")
   //console.log(categories)
     return {
-    type: 'ADD_CATEGORIES',
+    type: ADD_CATEGORIES,
     categories
   }
 }
@@ -199,14 +208,14 @@ export function categoriesReturned(categories) {
 
 export function commentsReturned(comments) {
   return {
-    type: 'ADD_COMMENT',
+    type: ADD_COMMENT,
     comments
   }
 }
 
 export function clearComments(comments) {
   return {
-    type: 'CLEAR_COMMENTS',
+    type: CLEAR_COMMENTS,
     comments
   }
 }
@@ -305,6 +314,16 @@ export const deletePost = (id) => dispatch =>(
       )
     )
   )
+
+  export const deleteComment = (id) => dispatch =>(
+    deleteCommentFromAPI(id)
+    .then(comment => dispatch(removeComment(
+      comment
+          )
+        )
+      )
+    )
+
 
   export const saveNewComment = (comment) => dispatch =>(
     saveNewCommentAPI(comment)

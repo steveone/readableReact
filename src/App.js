@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch} from 'react-router-dom'
 import './App.css';
-import Nav from './components/Nav';
+//import Nav from './components/Nav';
 //import ShowAll from './components/ShowAll'
-import{ Button } from 'react-bootstrap';
+//import{ Button } from 'react-bootstrap';
 import { connect } from 'react-redux'
 //import { addPost, setCategory, removePost } from './actions'
-import CreateEdit from './components/CreateEdit'
+//import CreateEdit from './components/CreateEdit'
 import ShowPosts from './components/ShowPosts'
 class App extends Component {
 

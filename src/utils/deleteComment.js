@@ -1,7 +1,7 @@
-export const deletePostFromAPI = (id) => //console.log("Asddddd")
+export const deleteCommentFromAPI = (id) => //console.log("Asddddd")
 
 {
-  console.log("deleting post")
+  console.log("deleting comment")
   const headers = {
             Authorization: 'Bearer hello',
         //    Access-Control-Allow-Methods
@@ -9,10 +9,10 @@ export const deletePostFromAPI = (id) => //console.log("Asddddd")
   const init = {  method: 'delete',
                   headers
               }
-let url = 'http://localhost:5001/posts/' + id
+let url = 'http://localhost:5001/comments/' + id
  return fetch(url, init)
-  //   .then(res => res.json())
-     .then (id => id)
+     .then(res => res.json())
+     .then (comment => comment)
 /*     .then(( posts) => posts.reduce((ret, elem) =>  (
 //       console.log(elem[index].name +  elem[index].path)
 //        console.log(data)
@@ -24,4 +24,4 @@ let url = 'http://localhost:5001/posts/' + id
 }
 
 
-export default deletePostFromAPI
+export default deleteCommentFromAPI

@@ -16,7 +16,6 @@ import {
   UPDATE_COMMENT,
   CHANGE_COMMENT_VOTE,
   CLEAR_COMMENTS,
-  UPDATE_POST_COMMENT_COUNT,
   MODAL_OPEN,
   MODAL_CLOSE,
   UPDATE_EDIT_COMMENT,
@@ -182,7 +181,7 @@ function categories (state = currentlyEditing, action) {
 }
 
 function post (state = {}, action) {
-  let retVal = []
+  let retVal = {}
   const posts = action.posts
   switch (action.type) {
     case ADD_POST:
@@ -192,65 +191,65 @@ function post (state = {}, action) {
     case UPDATE_POST:
        console.log("in update post")
        console.log(action)
-       const {category,author,body,title,id} = action
+       const {category,author,body,title} = action
        //TODO: need to fix update_post so it works
-       retVal = Object.keys(state).map( (item, index) => {
-           if(state[index].id !== action.id) {
+       retVal = Object.assign({},state)
+       Object.keys(retVal).forEach( (index) => {
+           if(retVal[index].id !== action.id) {
            // this one isn't changing so return it
-             return state[index];
+             return retVal[index];
        }
        //we want to mark this one deleted = true
        else
          {
-           state[index].category = category
-           state[index].author = author
-           state[index].body = body
-           state[index].title = title
-
-             return state[index]
+            return Object.assign({},retVal[index],{
+              category,
+              author,
+              body,
+              title,
+         })
        }
        });
        return {...[state],...retVal}
 
-   return {...[state],...retVal}
+//   return {...[state],...retVal}
 
     case REMOVE_POST :
-       console.log("remove post")
-       console.log (state)
-        retVal = Object.keys(state).map( (item, index) => {
-            if(state[index].id !== action.id) {
+       retVal = Object.assign({},state)
+       Object.keys(retVal).forEach( (index) => {
+            if(retVal[index].id !== action.id) {
             // this one isn't changing so return it
               return state[index];
         }
         //we want to mark this one deleted = true
         else
           {
-            state[index].deleted = true
-              return state[index]
+            retVal[index].deleted = true
         }
     });
-      return {...[state],...retVal}
+    return {...state,...retVal}
 
 
-    case CHANGE_VOTE :
+    case CHANGE_VOTE:
     console.log("change vote")
       const scoreChange = (action.vote === 'upVote') ? 1 : -1
-        retVal = Object.keys(state).map( (item, index) => {
-            if(state[index].id !== action.id) {
+      retVal = Object.assign({},state)
+        Object.keys(retVal).map( (item, index) => {
+            if(retVal[index].id !== action.id) {
             // this one isn't changing so return it
-              return state[index];
+              return retVal[index];
         }
         //vote Score changed on this one so update
         else
           {
-              state[index].voteScore += scoreChange
-              return state[index]
+              retVal[index].voteScore += scoreChange
+              return retVal[index]
         }
     });
     return {...[state],...retVal}
     default :
       //console.log("Default")
-      return state
+      return {...state}
   }
 }
 
@@ -258,33 +257,37 @@ function post (state = {}, action) {
 
 function comments (state = {}, action) {
   let retVal = state
-  const {id,body,author} = action
+//  const {body,author} = action
   switch (action.type) {
     case ADD_COMMENT:
-      return {
+    return {
       ...state,...action.comments
-      }
+    }
     case UPDATE_COMMENT:
-    //const {id,body,author} = action
+    const {body,author} = action
           return{
           ...state,
-          id,
+          id:action.id,
           body,
           author,
           }
     case REMOVE_COMMENT :
     //   console.log("remove comment")
     //   console.log (state)
-        retVal = Object.keys(state).map( (item, index) => {
-            if(state[index].id !== action.id) {
+        retVal = Object.assign({},state)
+        console.log("in remove_comment")
+        console.log(action)
+        console.log(retVal)
+        Object.keys(retVal).map( (item, index) => {
+            if(retVal[index].parentId !== action.parentId) {
             // this one isn't changing so return it
-              return state[index];
+              return retVal[index];
         }
         //we want to mark this one deleted = true
         else
           {
-            state[index].deleted = true
-              return state[index]
+            retVal[index].deleted = true
+              return retVal[index]
         }
     });
       return {...[state],...retVal}
@@ -292,36 +295,24 @@ function comments (state = {}, action) {
 
     case CHANGE_COMMENT_VOTE :
     console.log("Aas")
-    let comments = action.comments
-    let {parentId, id} = comments
+    let {parentId, id} = action
     console.log(parentId + " "  + id )
-  //  const scoreChange = (action.vote === 'upVote') ? 1 : -1
-        retVal = Object.keys(state).map( (currentValue, index, arry) => {
-            console.log("ss " + currentValue + " " + parentId + " " + id)
+      retVal = Object.assign({},state)
+        Object.keys(retVal).map( (currentValue, index, arry) => {
             if (currentValue === parentId) {
-                state[currentValue].map((currValue, index, arry) => {
-                  if (state[currentValue][index].id === id) {
-                    //state[currentValue][index].voteScore += scoreChange
-                    state[currentValue][index] = action.comments
+                retVal[currentValue].map((currValue, index, arry) => {
+                  if (retVal[currentValue][index].id === id) {
+                    retVal[currentValue][index] = action.comments
                     }
-                  console.log("about to show changed state[index]")
-                  console.log(state[currentValue][index])
-                  //return state[currentValue]
-                  //return action.comments[0]
+                    return retVal[currentValue]
               })
               }
-
-             //else return state[currentValue]
+              return retVal[index];
           });
       console.log("about to reeeeturn")
-//      retVal= retVal
-//      retVal = {[parentId]:retVal}
-//      console.log(...retVal)
     return {...state,...retVal}
 
     case CLEAR_COMMENTS :
-  //  console.log ("in clear comments, state is")
-  //  console.log(state)
         return {
           ...[state],...[null]
         }
