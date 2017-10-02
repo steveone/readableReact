@@ -295,12 +295,15 @@ function comments (state = {}, action) {
 
     case CHANGE_COMMENT_VOTE :
     console.log("Aas")
-    let {parentId, id} = action
+    let {parentId, id} = action.comments
+    console.log(action)
     console.log(parentId + " "  + id )
       retVal = Object.assign({},state)
         Object.keys(retVal).map( (currentValue, index, arry) => {
             if (currentValue === parentId) {
+              console.log("found parentid, now find child")
                 retVal[currentValue].map((currValue, index, arry) => {
+                  console.log("searching through " + retVal[currentValue[index].id])
                   if (retVal[currentValue][index].id === id) {
                     retVal[currentValue][index] = action.comments
                     }

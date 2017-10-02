@@ -64,6 +64,7 @@ class Comments extends Component {
     this.props.cancelEditCommentField()
     this.props.getComments(this.props.id)
     this.props.closeModal(false)
+    this.props.getComments(this.props.id)
   }
 
   closeNewComment() {
@@ -242,6 +243,7 @@ componentDidUpdate(prevProps, prevState) {
 //     console.log("id for posts getComments " + this.props.id)
      //this.props.getComments(this.props.id)
    }
+   return true
   }
 
   componentWillMount() {
