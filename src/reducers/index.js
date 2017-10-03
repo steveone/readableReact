@@ -4,8 +4,9 @@ import {
   ADD_POST,
   REMOVE_POST,
   ADD_CATEGORIES,
+  UPDATE_NEW_POST,
+  SUBMIT_NEW_POST,
   UPDATE_POST,
-  SUBMIT_POST,
   CHANGE_VOTE,
   START_EDIT,
   END_EDIT,
@@ -77,7 +78,7 @@ function writingPost (state = blankPost, action)
 {
   const {author, category,body,title } = action
   switch(action.type){
-    case UPDATE_POST:
+    case UPDATE_NEW_POST:
         return{
         ...state,
         category,
@@ -85,7 +86,7 @@ function writingPost (state = blankPost, action)
         body,
         title
         }
-    case SUBMIT_POST: return state;
+    case SUBMIT_NEW_POST: return state;
     case CANCEL_NEW_POST:
       return {
         ...state,

@@ -16,6 +16,7 @@ export const ADD_CATEGORIES = 'ADD_CATEGORIES'
 export const CHANGE_VOTE = 'CHANGE_VOTE'
 export const UPDATE_POST = 'UPDATE_POST'
 export const SUBMIT_POST = 'SUBMIT_POST'
+export const SUBMIT_NEW_POST = 'SUBMIT_NEW_POST'
 export const START_EDIT = 'START_EDIT'
 export const END_EDIT = 'END_EDIT'
 export const UPDATE_EDIT = 'UPDATE_EDIT'
@@ -36,6 +37,7 @@ export const CANCEL_NEW_COMMENT = 'CANCEL_NEW_COMMENT'
 export const END_NEW_COMMENT = 'END_NEW_COMMENT'
 export const CANCEL_NEW_POST = 'CANCEL_NEW_POST'
 export const CHANGE_SORT = 'CHANGE_SORT'
+export const UPDATE_NEW_POST = 'UPDATE_NEW_POST'
 
 export function cancelEdit (id) {
     console.log("in canceled it")
@@ -139,6 +141,20 @@ export function updatePost (data) {
   const {author, body, title, id,category,deleted, voteScore} = data
   return {
     type: UPDATE_POST,
+    author,
+    body,
+    title,
+    id,
+    category,
+    deleted,
+    voteScore,
+  }
+}
+
+export function updateNewPost (data) {
+  const {author, body, title, id,category,deleted, voteScore} = data
+  return {
+    type: UPDATE_NEW_POST,
     author,
     body,
     title,
