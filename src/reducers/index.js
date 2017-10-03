@@ -18,10 +18,10 @@ import {
   CLEAR_COMMENTS,
   MODAL_OPEN,
   MODAL_CLOSE,
-  UPDATE_EDIT_COMMENT,
-  START_EDIT_COMMENT,
-  CANCEL_EDIT_COMMENT,
-  END_EDIT_COMMENT,
+  UPDATE_NEW_COMMENT,
+  START_NEW_COMMENT,
+  CANCEL_NEW_COMMENT,
+  END_NEW_COMMENT,
   CANCEL_NEW_POST,
   CHANGE_SORT,
 //  SAVE_EDIT
@@ -101,32 +101,32 @@ function writingPost (state = blankPost, action)
 
 
 
-  function editingComment(state={},action){
+  function writingComment(state={},action){
     //const {id,title,body} = action
     console.log("in editing reducer")
     console.log(action)
   //  console.log(state)
     switch (action.type) {
-      case START_EDIT_COMMENT:
+      case START_NEW_COMMENT:
          return {
           ...state,
           ...action.body
           }
-      case UPDATE_EDIT_COMMENT:
+      case UPDATE_NEW_COMMENT:
             return {
           ...state,
           ...action.body
           }
-      case CANCEL_EDIT_COMMENT:
+      case CANCEL_NEW_COMMENT:
                 return {
               ...state,
               body:null,
               author:null,
               }
-      case END_EDIT_COMMENT:
+      case END_NEW_COMMENT:
         return {
           ...[state],
-          editingComment: ""
+          writingComment: ""
         }
       default: return state
     }
@@ -257,6 +257,9 @@ function post (state = {}, action) {
 
 function comments (state = {}, action) {
   let retVal = state
+  let parentId = null
+  let id = null
+
 //  const {body,author} = action
   switch (action.type) {
     case ADD_COMMENT:
@@ -274,36 +277,38 @@ function comments (state = {}, action) {
     case REMOVE_COMMENT :
     //   console.log("remove comment")
     //   console.log (state)
-        retVal = Object.assign({},state)
-        console.log("in remove_comment")
+        //retVal = Object.assign({},state)
         console.log(action)
-        console.log(retVal)
-        Object.keys(retVal).map( (item, index) => {
-            if(retVal[index].parentId !== action.parentId) {
-            // this one isn't changing so return it
-              return retVal[index];
-        }
-        //we want to mark this one deleted = true
-        else
-          {
-            retVal[index].deleted = true
-              return retVal[index]
-        }
-    });
-      return {...[state],...retVal}
+    parentId = action.parentId
+    id = action.id
+    retVal = Object.assign({},state)
+      Object.keys(retVal).map( (currentValue, index, arry) => {
+          if (currentValue === parentId) {
+              retVal[currentValue].map((currValue, index, arry) => {
+                if (retVal[currentValue][index].id === id) {
+                  console.log("dleted with id " + id)
+                  retVal[currentValue][index].deleted = true
+                  }
+                  return retVal[currentValue][index]
+            })
+            }
+            return retVal[index];
+        });
+        console.log("returned after deleted")
+      return {...state,...retVal}
 
 
     case CHANGE_COMMENT_VOTE :
     console.log("Aas")
-    let {parentId, id} = action.comments
+    //let {parentId, id} = action.comments
+    parentId = action.comments.parentId
+    id = action.comments.id
     console.log(action)
     console.log(parentId + " "  + id )
       retVal = Object.assign({},state)
         Object.keys(retVal).map( (currentValue, index, arry) => {
             if (currentValue === parentId) {
-              console.log("found parentid, now find child")
                 retVal[currentValue].map((currValue, index, arry) => {
-                  console.log("searching through " + retVal[currentValue[index].id])
                   if (retVal[currentValue][index].id === id) {
                     retVal[currentValue][index] = action.comments
                     }
@@ -320,7 +325,7 @@ function comments (state = {}, action) {
           ...[state],...[null]
         }
     default :
-      return state
+      return {...state}
   }
 }
 
@@ -333,6 +338,6 @@ export default combineReducers({
   editing,
   comments,
   modalIsOpen,
-  editingComment,
+  writingComment,
   sortMethod,
 })

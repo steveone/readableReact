@@ -17,8 +17,8 @@ import {  getComments,
           //editPost,
           openModal,
           closeModal,
-          updateEditCommentField,
-          cancelEditCommentField
+          updateWritingCommentField,
+          cancelWritingCommentField
           } from '../actions'
 import uniqid from 'uniqid'
 import { FaChevronUp, FaChevronDown, FaCut, FaPencil} from 'react-icons/lib/fa'
@@ -52,8 +52,8 @@ class Comments extends Component {
     comments = comments[myuuid] = {
       id: myuuid,
       timestamp: Math.floor(Date.now()),
-      body: this.props.editingComment.body,
-      author: this.props.editingComment.author,
+      body: this.props.writingComment.body,
+      author: this.props.writingComment.author,
       parentId: this.props.parentId,
       voteScore: 1,
       deleted: false,
@@ -61,20 +61,20 @@ class Comments extends Component {
     }
     console.log(comments)
     this.props.saveNewComment(comments)
-    this.props.cancelEditCommentField()
+    this.props.cancelWritingCommentField()
     this.props.getComments(this.props.id)
     this.props.closeModal(false)
     this.props.getComments(this.props.id)
   }
 
   closeNewComment() {
-    this.props.cancelEditCommentField()
+    this.props.cancelWritingCommentField()
     this.props.closeModal(false)
 
   }
   componentWillUnmount() {
     if (this.props.modalIsOpen.status === true) {
-      this.props.cancelEditCommentField()
+      this.props.cancelWritingCommentField()
       this.closeNewComment()
       }
   }
@@ -92,13 +92,12 @@ render(Comments) {
   let editingBody = ""
   let editingAuthor = ""
 
-  if (this.props.editingComment){
-    editingBody = this.props.editingComment.body
-    editingAuthor = this.props.editingComment.author
+  if (this.props.writingComment){
+    editingBody = this.props.writingComment.body
+    editingAuthor = this.props.writingComment.author
   }*/
 
   let comments = []
-
   if (this.props.comments){
     comments = this.props.comments[this.props.id]
   }
@@ -163,11 +162,6 @@ return (
 
 <Modal
   isOpen={modalIsOpen && modal === 'comment'}
-/*  onAfterOpen={aferOpenFn}
-  closeTimeoutMS={n}
-  style={customStyle}
-  */
-  //onRequestClose={this.closeNewComment()}
   contentLabel="Modal">
 
   <FormGroup>
@@ -200,18 +194,18 @@ updateCommentField(field, value,e){
   //uuid() to get new uuid for save
   //to get timestamp - Math.floor(Date.now()/1000)
    if (loaded) {
-     if (this.props.editingComment) {
+     if (this.props.writingComment) {
       // e.preventDefault()
        console.log("select changed " + field + " " + value)
-       const {body,author} = this.props.editingComment
+       const {body,author} = this.props.writingComment
       switch (field) {
-        case 'body' : this.props.updateEditCommentField(
+        case 'body' : this.props.updateWritingCommentField(
             {
              body : value,
              author
             })
             break
-        case 'author': this.props.updateEditCommentField(
+        case 'author': this.props.updateWritingCommentField(
             {
              body,
              author: value
@@ -256,14 +250,11 @@ componentDidUpdate(prevProps, prevState) {
 
 }
 
-
-
-
 const mapStateToProps = ((state,ownProps) => (
   {
    posts: state.post,
    id: ownProps.id,
-   editingComment: state.editingComment,
+   writingComment: state.writingComment,
    categories: state.categories,
    comments: state.comments,
    showComments: ownProps.showComments,
@@ -278,8 +269,8 @@ function mapDispatchToProps(dispatch) {
     //getPosts: (data) => dispatch(getPosts(data)),
     //getCategories: (data) => dispatch(getCategories(data)),
     //editPost: (data) => dispatch(editPost(data)),
-    updateEditCommentField: (data) => dispatch(updateEditCommentField(data)),
-    cancelEditCommentField: (data) => dispatch(cancelEditCommentField(data)),
+    updateWritingCommentField: (data) => dispatch(updateWritingCommentField(data)),
+    cancelWritingCommentField: (data) => dispatch(cancelWritingCommentField(data)),
     //cancelEdit: (data) => dispatch(cancelEdit(data)),
     //saveEdit: (data) => dispatch(saveEdit(data)),
     saveNewComment: (data) => dispatch(saveNewComment(data)),

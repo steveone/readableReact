@@ -30,10 +30,10 @@ export const CLEAR_COMMENTS = 'CLEAR_COMMENTS'
 export const UPDATE_POST_COMMENT_COUNT = 'UPDATE_POST_COMMENT_COUNT'
 export const MODAL_OPEN = 'MODAL_OPEN'
 export const MODAL_CLOSE = 'MODAL_CLOSE'
-export const UPDATE_EDIT_COMMENT = 'UPDATE_EDIT_COMMENT'
-export const START_EDIT_COMMENT = 'START_EDIT_COMMENT'
-export const CANCEL_EDIT_COMMENT = 'CANCEL_EDIT_COMMENT'
-export const END_EDIT_COMMENT = 'END_EDIT_COMMENT'
+export const UPDATE_NEW_COMMENT = 'UPDATE_NEW_COMMENT'
+export const START_NEW_COMMENT = 'START_NEW_COMMENT'
+export const CANCEL_NEW_COMMENT = 'CANCEL_NEW_COMMENT'
+export const END_NEW_COMMENT = 'END_NEW_COMMENT'
 export const CANCEL_NEW_POST = 'CANCEL_NEW_POST'
 export const CHANGE_SORT = 'CHANGE_SORT'
 
@@ -90,19 +90,19 @@ export function updateEditField (id, title, body,category,author) {
         }
 }
 
-export function updateEditCommentField (body,author) {
+export function updateWritingCommentField (body,author) {
     console.log("in updateditfield")
     console.log(body + " " + author)
       return {
-        type: UPDATE_EDIT_COMMENT,
+        type: UPDATE_NEW_COMMENT,
         body,
         author
         }
 }
 
-export function cancelEditCommentField (body,author) {
+export function cancelWritingCommentField (body,author) {
       return {
-        type: CANCEL_EDIT_COMMENT,
+        type: CANCEL_NEW_COMMENT,
         body,
         author
         }
