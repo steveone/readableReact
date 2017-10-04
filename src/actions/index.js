@@ -23,7 +23,8 @@ export const UPDATE_EDIT = 'UPDATE_EDIT'
 export const CANCEL_EDIT = 'CANCEL_EDIT'
 export const SAVE_EDIT = 'SAVE_EDIT'
 export const SET_CATEGORY = 'SET_CATEGORY'
-export const ADD_COMMENT = 'ADD_COMMENT'
+export const ADD_COMMENTS = 'ADD_COMMENTS'
+export const ADD_NEW_COMMENT = 'ADD_NEW_COMMENT'
 export const REMOVE_COMMENT = 'REMOVE_COMMENT'
 export const UPDATE_COMMENT = 'UPDATE_COMMENT'
 export const CHANGE_COMMENT_VOTE = 'CHANGE_COMMENT_VOTE'
@@ -224,7 +225,14 @@ export function categoriesReturned(categories) {
 
 export function commentsReturned(comments) {
   return {
-    type: ADD_COMMENT,
+    type: ADD_COMMENTS,
+    comments
+  }
+}
+
+export function addNewComment(comments) {
+  return {
+    type: ADD_NEW_COMMENT,
     comments
   }
 }
@@ -343,7 +351,7 @@ export const deletePost = (id) => dispatch =>(
 
   export const saveNewComment = (comment) => dispatch =>(
     saveNewCommentAPI(comment)
-    .then(comment => dispatch(commentsReturned(comment)
+    .then(comment => dispatch(addNewComment(comment)
         )
       )
     )

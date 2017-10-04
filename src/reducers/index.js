@@ -12,7 +12,8 @@ import {
   END_EDIT,
   UPDATE_EDIT,
   CANCEL_EDIT,
-  ADD_COMMENT,
+  ADD_COMMENTS,
+  ADD_NEW_COMMENT,
   REMOVE_COMMENT,
   UPDATE_COMMENT,
   CHANGE_COMMENT_VOTE,
@@ -263,7 +264,7 @@ function comments (state = {}, action) {
 
 //  const {body,author} = action
   switch (action.type) {
-    case ADD_COMMENT:
+    case ADD_COMMENTS:
     return {
       ...state,...action.comments
     }
@@ -274,12 +275,25 @@ function comments (state = {}, action) {
           id:action.id,
           body,
           author,
-          }
+        }
+  case ADD_NEW_COMMENT :
+  console.log("in add new comment reducer")
+  console.log(action.comments.parentId);
+      parentId = action.comments.parentId
+      console.log("new comment parentid")
+      console.log(action.parentId)
+      id = action.id
+      retVal = Object.assign({},state)
+        Object.keys(retVal).map( (currentValue, index, arry) => {
+            if (currentValue === parentId) {
+                retVal[currentValue].concat(action.comments);
+              }
+              return retVal[index];
+          });
+          console.log("returned after deleted")
+        return {...state,...retVal}
+
     case REMOVE_COMMENT :
-    //   console.log("remove comment")
-    //   console.log (state)
-        //retVal = Object.assign({},state)
-        console.log(action)
     parentId = action.parentId
     id = action.id
     retVal = Object.assign({},state)
