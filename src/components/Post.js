@@ -53,13 +53,13 @@ render(props) {
   let currentlyEditing = []
   let editingTitle = ""
   let editingBody = ""
-//  let editingCategory = ""
+  let editingCategory = ""
   let editingAuthor = ""
   if (this.props.editing){
     currentlyEditing = this.props.editing.id
     editingTitle = this.props.editing.title
     editingBody = this.props.editing.body
-//    editingCategory = this.props.editing.category
+    editingCategory = this.props.editing.category
     editingAuthor = this.props.editing.author
   }
   posts = (this.props.posts) ? this.props.posts : []
@@ -114,6 +114,7 @@ return (
                       <FormGroup>
                     <ControlLabel>Select Category</ControlLabel>
                      <FormControl key={2} id="select1" componentClass="select"
+                     defaultValue={editingCategory}
                      onChange={(e) => this.updateField('category',e.target.value)}
                      //onChange={this.props.updatePost({author:'', title: '', category: ''})}
                      >
@@ -121,7 +122,7 @@ return (
                        //console.log("in select cat")
                        //console.log(categories[cur])
                        const {name} = categories[cur]
-                       return <option value={name} key={cur}>{name}</option>
+                       return <option value={name} key={cur} >{name}</option>
                      })}
 
                           </FormControl>

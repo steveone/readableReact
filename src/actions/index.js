@@ -39,6 +39,10 @@ export const END_NEW_COMMENT = 'END_NEW_COMMENT'
 export const CANCEL_NEW_POST = 'CANCEL_NEW_POST'
 export const CHANGE_SORT = 'CHANGE_SORT'
 export const UPDATE_NEW_POST = 'UPDATE_NEW_POST'
+export const START_EDIT_COMMENT = 'START_EDIT_COMMENT'
+export const END_EDIT_COMMENT = 'END_EDIT_COMMENT'
+export const CANCEL_EDIT_COMMENT = 'CANCEL_EDIT_COMMENT'
+export const UPDATE_EDIT_COMMENT = 'UPDATE_EDIT_COMMENT'
 
 export function cancelEdit (id) {
     console.log("in canceled it")

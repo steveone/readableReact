@@ -26,6 +26,10 @@ import {
   END_NEW_COMMENT,
   CANCEL_NEW_POST,
   CHANGE_SORT,
+  START_EDIT_COMMENT,
+  END_EDIT_COMMENT,
+  CANCEL_EDIT_COMMENT,
+  UPDATE_EDIT_COMMENT,
 //  SAVE_EDIT
 } from '../actions'
 
@@ -135,6 +139,39 @@ function writingPost (state = blankPost, action)
   }
 
   const currentlyEditing = {
+    }
+
+    function editingComment(state={},action){
+      //const {id,title,body} = action
+    //  console.log("in editing reducer")
+    //  console.log(state)
+      switch (action.type) {
+        case START_EDIT_COMMENT:
+           return {
+            ...state,
+            ...action.id
+            }
+        case UPDATE_EDIT_COMMENT:
+              return {
+            ...state,
+            ...action.id
+            }
+        case CANCEL_EDIT_COMMENT:
+                  return {
+                ...state,
+                id:null,
+                parentId:null,
+                body:null,
+                author:null,
+                }
+
+        case END_EDIT_COMMENT:
+          return {
+            ...[state],
+            editingComment:""
+          }
+        default: return state
+      }
     }
 
 function editing(state={},action){
@@ -256,7 +293,6 @@ function post (state = {}, action) {
 }
 
 
-
 function comments (state = {}, action) {
   let retVal = state
   let parentId = null
@@ -348,6 +384,7 @@ function comments (state = {}, action) {
 
 export default combineReducers({
   post,
+  editingComment,
   writingPost,
   categories,
   editing,
