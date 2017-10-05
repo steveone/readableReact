@@ -109,7 +109,7 @@ function writingPost (state = blankPost, action)
 
   function writingComment(state={},action){
     //const {id,title,body} = action
-    console.log("in editing reducer")
+    console.log("in writing comment reducer")
     console.log(action)
   //  console.log(state)
     switch (action.type) {
@@ -145,16 +145,22 @@ function writingPost (state = blankPost, action)
       //const {id,title,body} = action
     //  console.log("in editing reducer")
     //  console.log(state)
+    console.log("in editing comment reducer")
+    console.log(action)
+      const {id,parentId,author,body} = action
       switch (action.type) {
         case START_EDIT_COMMENT:
            return {
             ...state,
-            ...action.id
+            id,
+            parentId,
+            body,
+            author
             }
         case UPDATE_EDIT_COMMENT:
               return {
             ...state,
-            ...action.id
+            ...action.comments
             }
         case CANCEL_EDIT_COMMENT:
                   return {

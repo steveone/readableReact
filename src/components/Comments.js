@@ -14,13 +14,17 @@ import {  getComments,
           deleteComment,
           changeCommentVote,
           saveNewComment,
+          saveEditComment,
+          cancelEditComment,
           //editPost,
+          editComment,
           openModal,
           closeModal,
+          updateEditingCommentField,
           updateWritingCommentField,
           cancelWritingCommentField
           } from '../actions'
-import uniqid from 'uniqid'
+//import uniqid from 'uniqid'
 import { FaChevronUp, FaChevronDown, FaCut, FaPencil} from 'react-icons/lib/fa'
 import{
         //MenuItem,
@@ -30,7 +34,7 @@ import{
         ControlLabel,
         //SplitButton,
         Button,
-        //ButtonToolbar,
+        ButtonToolbar,
         //ButtonGroup
         //ControlID
       } from 'react-bootstrap';
@@ -43,6 +47,23 @@ class Comments extends Component {
 
   newComment() {
     this.props.openModal({modal:'comment'})
+  }
+
+  saveEditComment() {
+    let comments = []
+    comments = comments[this.props.editingComment.id] = {
+      id: this.props.editingComment.id,
+      body: this.props.editingComment.body,
+      author: this.props.editingComment.author,
+      parentId: this.props.parentId,
+      voteScore: 1,
+      deleted: false,
+      parentDeleted: false
+    }
+    console.log(comments)
+    this.props.saveEditComment(comments)
+    this.props.cancelEditComment()
+    this.props.getComments(this.props.id)
   }
 
   saveNewComment() {
@@ -79,8 +100,6 @@ class Comments extends Component {
       }
   }
 
-
-
   sendToConsole(e) {
     console.log(e)
   }
@@ -88,14 +107,19 @@ class Comments extends Component {
 
 render(Comments) {
 
-/*
+  let currentlyEditing = ""
+  //let editingId = ""
+  //let editingParentId = ""
   let editingBody = ""
   let editingAuthor = ""
 
-  if (this.props.writingComment){
-    editingBody = this.props.writingComment.body
-    editingAuthor = this.props.writingComment.author
-  }*/
+  if (this.props.editingComment){
+    currentlyEditing = this.props.editingComment.id
+    //editingParentId = this.props.editingComment.parentId
+    //editingId = this.props.editingComment.id
+    editingBody = this.props.editingComment.body
+    editingAuthor = this.props.editingComment.author
+  }
 
   let comments = []
   if (this.props.comments){
@@ -135,14 +159,52 @@ return (
     comments[comment] !== null &&
     comments[comment].deleted !== true
   )
+  .sort((a,b)=> {
+      return comments[a].voteScore < comments[b].voteScore
+  })
   .map((cur,val,arry) => {
-  const {body,timestamp,author,voteScore,deleted,id} = comments[cur]
-  return <div key={uniqid()}>
+  const {body,timestamp,author,voteScore,deleted,id,parentId} = comments[cur]
+  return <div key={id}>
   <li className='comments'>
-  <FaPencil/>
-  {body}
-  {timestamp} {author}{deleted}
+  {(id !== currentlyEditing) ?
+  <a onClick={() => this.props.editComment({id,parentId,body,author})}><FaPencil /></a>
+ : ""}
+  {(id === currentlyEditing) ?
+    <div key="editbody">
+    <ControlLabel>Body</ControlLabel>
+    <FormControl type="text"
+      key='renderBody'
+      value={editingBody}
+      onChange={(e) => this.updateEditCommentField('body',e.target.value)}
+      placeholder="Enter body"
+    />
+    </div>
+    : body
+  }   {timestamp}
+
+{(id === currentlyEditing) ?
+  <div key="editcomment">
+  <ControlLabel>Author</ControlLabel>
+  <FormControl type="text"
+    key='renderAuthor'
+    value={editingAuthor}
+    onChange={(e) => this.updateEditCommentField('author',e.target.value)}
+    placeholder="Enter Author"
+  /></div>
+:
+    author}
+
+  {deleted}
+  {(id !== currentlyEditing) ?
   <a onClick={() => this.props.removeComment(id)}><FaCut /></a>
+  : ""}
+  {(id === currentlyEditing) ?
+    <ButtonToolbar>
+     <Button bsStyle="primary" onClick={(e)=>this.saveEditComment()}>  Save</Button>
+     <Button bsStyle="primary" onClick={(e)=>this.props.cancelEditComment({id})}>Revert</Button>
+    </ButtonToolbar>
+   : ""
+  }
 
   <span className='spacer'>
   <a onClick={() => this.props.changeCommentVote([id,"upVote"])}><FaChevronUp/> </a>
@@ -155,7 +217,7 @@ return (
 })
 )
 }
-
+<br/>
 {showComments === true &&
   <Button bsStyle="primary" onClick={(e)=>this.newComment()}>Add Comment</Button>
 }
@@ -190,6 +252,38 @@ return (
   </div>
 )}
 
+updateEditCommentField(field, value,e){
+  //uuid() to get new uuid for save
+  //to get timestamp - Math.floor(Date.now()/1000)
+     if (this.props.editingComment) {
+      // e.preventDefault()
+      console.log("select changed " + field + " " + value)
+       const {body,author,id,parentId} = this.props.editingComment
+      switch (field) {
+        case 'body' : this.props.updateEditingCommentField(
+            {
+             body : value,
+             author,
+             id,
+             parentId
+            })
+            break
+        case 'author': this.props.updateEditingCommentField(
+            {
+             body,
+             author: value,
+             id,
+             parentId
+
+            })
+            break
+        default: break;
+      }
+    }
+     else console.log("not changed")
+
+}
+
 updateCommentField(field, value,e){
   //uuid() to get new uuid for save
   //to get timestamp - Math.floor(Date.now()/1000)
@@ -218,6 +312,8 @@ updateCommentField(field, value,e){
      else console.log("not changed")
 
 }
+
+
 
 componentDidMount() {
   this.props.getComments(this.props.id)
@@ -254,6 +350,7 @@ const mapStateToProps = ((state,ownProps) => (
   {
    posts: state.post,
    id: ownProps.id,
+   editingComment: state.editingComment,
    writingComment: state.writingComment,
    categories: state.categories,
    comments: state.comments,
@@ -269,6 +366,10 @@ function mapDispatchToProps(dispatch) {
     //getPosts: (data) => dispatch(getPosts(data)),
     //getCategories: (data) => dispatch(getCategories(data)),
     //editPost: (data) => dispatch(editPost(data)),
+    cancelEditComment: (data) => dispatch(cancelEditComment(data)),
+    saveEditComment: (data) => dispatch(saveEditComment(data)),
+    editComment: (data) => dispatch(editComment(data)),
+    updateEditingCommentField: (data) => dispatch(updateEditingCommentField(data)),
     updateWritingCommentField: (data) => dispatch(updateWritingCommentField(data)),
     cancelWritingCommentField: (data) => dispatch(cancelWritingCommentField(data)),
     //cancelEdit: (data) => dispatch(cancelEdit(data)),

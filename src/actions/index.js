@@ -8,6 +8,7 @@ import getCommentsFromAPI from '../utils/getComments'
 import saveNewCommentAPI from '../utils/saveNewComment'
 import saveNewPostAPI from '../utils/saveNewPost'
 import deleteCommentFromAPI from '../utils/deleteComment'
+import saveEditCommentFromAPI from '../utils/saveEditComment'
 
 export const ADD_POST = 'ADD_POST'
 export const REMOVE_POST = 'REMOVE_POST'
@@ -52,8 +53,6 @@ export function cancelEdit (id) {
         id
         }
 }
-
-
 
 //TODO: this needs to update the server and the reducer needs fixing
 export function saveEditReducer ({id}) {
@@ -120,6 +119,37 @@ export function cancelNewPost () {
         type: CANCEL_NEW_POST,
         }
 }
+
+
+export function setEditComment (id,parentId,body,author) {
+  return {
+    type: START_EDIT_COMMENT,
+    id,
+    parentId,
+    body,
+    author,
+    }
+}
+
+export function cancelEditComment (id,parentId,body,author) {
+  return {
+    type: CANCEL_EDIT_COMMENT,
+    id,
+    parentId,
+    body,
+    author,
+    }
+}
+export function updateEditComment (id,parentId,body,author) {
+  return {
+    type: UPDATE_EDIT_COMMENT,
+    id,
+    parentId,
+    body,
+    author,
+    }
+}
+
 
 export function setEditPost (id,title,body,category,author) {
   return {
@@ -226,6 +256,12 @@ export function categoriesReturned(categories) {
   }
 }
 
+export function updateEditingCommentField(comments){
+  return {
+    type: UPDATE_EDIT_COMMENT,
+    comments
+  }
+}
 
 export function commentsReturned(comments) {
   return {
@@ -257,10 +293,10 @@ export function postsReturned(posts) {
   }
 }
 
+/*
 export function postsandCommentsReturned(posts){
-
-
 }
+*/
 
 export function changeCommentVotePost(comments) {
   //const [ id, vote ] = data
@@ -279,6 +315,11 @@ export function changeVotePost (data) {
     id,
     vote,
   }
+}
+
+export const editComment = (comment) => {
+  const {id,parentId,author,body} = comment
+  return setEditComment(id,parentId,author,body)
 }
 
   export const editPost = (id,title,body,category) => {
@@ -326,6 +367,12 @@ export function changeVotePost (data) {
     )}
         )
       )
+
+      export const saveEditComment = (state) => dispatch =>(
+        saveEditCommentFromAPI(state)
+        .then(posts => dispatch(cancelEditComment({id: "dd"})))
+        .then(posts => dispatch(updateEditComment(state)))
+        )
 
     export const saveEdit = (state) => dispatch =>(
       saveEditFromAPI(state)
