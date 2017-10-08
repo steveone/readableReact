@@ -133,7 +133,7 @@ render(Comments) {
 
 return (
   <div>
-{  (showComments === false &&
+{
   <span>
   {
 
@@ -149,10 +149,9 @@ return (
   },0)
 )
   }
-{/*TODO: returns 1 when no comments so needs fixing*/}
     &nbsp;comments
    </span>
- )}
+ }
 {
   (showComments && comments && Object.keys(comments)
   .filter((comment) =>

@@ -44,6 +44,7 @@ export const START_EDIT_COMMENT = 'START_EDIT_COMMENT'
 export const END_EDIT_COMMENT = 'END_EDIT_COMMENT'
 export const CANCEL_EDIT_COMMENT = 'CANCEL_EDIT_COMMENT'
 export const UPDATE_EDIT_COMMENT = 'UPDATE_EDIT_COMMENT'
+export const ADD_NEW_POST = 'ADD_NEW_POST'
 
 export function cancelEdit (id) {
     console.log("in canceled it")
@@ -205,7 +206,7 @@ export function addPost ({ id, timestamp,title,body,author,category,voteScore,de
   console.log("in add post function")
 //  console.log(id)
   return {
-    type: ADD_POST,
+    type: ADD_NEW_POST,
     id,
     timestamp,
     title,

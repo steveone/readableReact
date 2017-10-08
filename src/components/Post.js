@@ -21,11 +21,7 @@ import{
       } from 'react-bootstrap';
 
 let loaded=false;
-
-
 class Post extends Component {
-
-
 
   sendToConsole(e) {
     console.log(e)
@@ -78,7 +74,7 @@ return (
 
 //let timestamp = Math.floor(Date.now() / 1000)
 
-    let date = new Date(timestamp*1000)
+    let date = new Date(timestamp)
     let hours = date.getHours()
     let minutes = date.getMinutes()
     let seconds = 0 + date.getSeconds()
