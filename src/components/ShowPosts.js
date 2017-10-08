@@ -179,7 +179,7 @@ shouldComponentUpdate(prevProps, prevState){
   return true
 }
 
-componentWillMount() {
+componentDidMount() {
 //  console.log("componentdidmount Post")
   this.props.getCategories()
   //this.props.getPosts()

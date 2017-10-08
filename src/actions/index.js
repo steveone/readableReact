@@ -10,7 +10,7 @@ import saveNewPostAPI from '../utils/saveNewPost'
 import deleteCommentFromAPI from '../utils/deleteComment'
 import saveEditCommentFromAPI from '../utils/saveEditComment'
 
-export const ADD_POST = 'ADD_POST'
+export const ADD_ALL_POSTS = 'ADD_ALL_POSTS'
 export const REMOVE_POST = 'REMOVE_POST'
 export const ADD_CATEGORY = 'ADD_CATEGORY'
 export const ADD_CATEGORIES = 'ADD_CATEGORIES'
@@ -289,7 +289,7 @@ export function postsReturned(posts) {
   //console.log("in postsreturned posts are next");
   //console.log(posts)
   return {
-    type: ADD_POST,
+    type: ADD_ALL_POSTS,
     posts
   }
 }

@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 
 import {
-  ADD_POST,
-  REMOVE_POST,
   ADD_NEW_POST,
+  REMOVE_POST,
+  ADD_ALL_POSTS,
   ADD_CATEGORIES,
   UPDATE_NEW_POST,
   SUBMIT_NEW_POST,
@@ -230,7 +230,7 @@ function post (state = {}, action) {
   let retVal = {}
   const posts = action.posts
   switch (action.type) {
-    case ADD_POST:
+    case ADD_ALL_POSTS:
       return {
       ...[state],...posts
       }
