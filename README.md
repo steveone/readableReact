@@ -4,11 +4,14 @@ Readable react-redux project for Udacity Nanodegree
 Installation
 
 CD to readable directory and run "npm install" on the command line
-CD to readable-server and run "npm install" on the command line
+
+Download the Readable server located at: https://github.com/udacity/reactnd-project-readable-starter
+
+Install the server files (npm install or yarn install)
 
 Howto Run
 
-Start required server in readable-server directory:  Change to diretory server and run "npm start" or "yarn start" depending on your system
+Start the required Readable server with "npm start" or "yarn start"
 
 Start readable project in readable directory:  Change to diretory server and run "npm start" or "yarn start" depending on your system
 
