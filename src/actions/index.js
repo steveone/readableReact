@@ -10,41 +10,35 @@ import saveNewPostAPI from '../utils/saveNewPost'
 import deleteCommentFromAPI from '../utils/deleteComment'
 import saveEditCommentFromAPI from '../utils/saveEditComment'
 
-export const ADD_ALL_POSTS = 'ADD_ALL_POSTS'
-export const REMOVE_POST = 'REMOVE_POST'
-export const ADD_CATEGORY = 'ADD_CATEGORY'
-export const ADD_CATEGORIES = 'ADD_CATEGORIES'
-export const CHANGE_VOTE = 'CHANGE_VOTE'
-export const UPDATE_POST = 'UPDATE_POST'
-export const SUBMIT_POST = 'SUBMIT_POST'
-export const SUBMIT_NEW_POST = 'SUBMIT_NEW_POST'
-export const START_EDIT = 'START_EDIT'
-export const END_EDIT = 'END_EDIT'
-export const UPDATE_EDIT = 'UPDATE_EDIT'
-export const CANCEL_EDIT = 'CANCEL_EDIT'
-export const SAVE_EDIT = 'SAVE_EDIT'
-export const SET_CATEGORY = 'SET_CATEGORY'
-export const ADD_COMMENTS = 'ADD_COMMENTS'
-export const ADD_NEW_COMMENT = 'ADD_NEW_COMMENT'
-export const REMOVE_COMMENT = 'REMOVE_COMMENT'
-export const UPDATE_COMMENT = 'UPDATE_COMMENT'
-export const CHANGE_COMMENT_VOTE = 'CHANGE_COMMENT_VOTE'
-export const CLEAR_COMMENTS = 'CLEAR_COMMENTS'
-export const UPDATE_POST_COMMENT_COUNT = 'UPDATE_POST_COMMENT_COUNT'
-export const MODAL_OPEN = 'MODAL_OPEN'
-export const MODAL_CLOSE = 'MODAL_CLOSE'
-export const UPDATE_NEW_COMMENT = 'UPDATE_NEW_COMMENT'
-export const START_NEW_COMMENT = 'START_NEW_COMMENT'
-export const CANCEL_NEW_COMMENT = 'CANCEL_NEW_COMMENT'
-export const END_NEW_COMMENT = 'END_NEW_COMMENT'
-export const CANCEL_NEW_POST = 'CANCEL_NEW_POST'
-export const CHANGE_SORT = 'CHANGE_SORT'
-export const UPDATE_NEW_POST = 'UPDATE_NEW_POST'
-export const START_EDIT_COMMENT = 'START_EDIT_COMMENT'
-export const END_EDIT_COMMENT = 'END_EDIT_COMMENT'
-export const CANCEL_EDIT_COMMENT = 'CANCEL_EDIT_COMMENT'
-export const UPDATE_EDIT_COMMENT = 'UPDATE_EDIT_COMMENT'
-export const ADD_NEW_POST = 'ADD_NEW_POST'
+import {
+  ADD_ALL_POSTS ,
+  REMOVE_POST ,
+  ADD_CATEGORIES ,
+  CHANGE_VOTE ,
+  UPDATE_POST ,
+  START_EDIT ,
+  UPDATE_EDIT ,
+  CANCEL_EDIT ,
+  SAVE_EDIT ,
+  SET_CATEGORY ,
+  ADD_COMMENTS ,
+  ADD_NEW_COMMENT ,
+  REMOVE_COMMENT ,
+  CHANGE_COMMENT_VOTE ,
+  CLEAR_COMMENTS ,
+  UPDATE_POST_COMMENT_COUNT ,
+  MODAL_OPEN ,
+  MODAL_CLOSE ,
+  UPDATE_NEW_COMMENT ,
+  CANCEL_NEW_COMMENT ,
+  CANCEL_NEW_POST,
+  CHANGE_SORT,
+  UPDATE_NEW_POST ,
+  START_EDIT_COMMENT ,
+  CANCEL_EDIT_COMMENT ,
+  UPDATE_EDIT_COMMENT ,
+  ADD_NEW_POST,
+} from './types';
 
 export function cancelEdit (id) {
     console.log("in canceled it")
@@ -318,7 +312,7 @@ export function changeVotePost (data) {
   }
 }
 
-export const editComment = (comment) => {
+ export const editComment = (comment) => {
   const {id,parentId,author,body} = comment
   return setEditComment(id,parentId,author,body)
 }
@@ -371,14 +365,14 @@ export const editComment = (comment) => {
 
       export const saveEditComment = (state) => dispatch =>(
         saveEditCommentFromAPI(state)
-        .then(posts => dispatch(cancelEditComment({id: "dd"})))
         .then(posts => dispatch(updateEditComment(state)))
-        )
+        .then(posts => dispatch(cancelEditComment({id: "dd"})))
+      )
 
     export const saveEdit = (state) => dispatch =>(
       saveEditFromAPI(state)
-      .then(posts => dispatch(cancelEdit({id: "dd"})))
       .then(posts => dispatch(updatePost(state)))
+      .then(posts => dispatch(cancelEdit({id: "dd"})))
       )
 
 

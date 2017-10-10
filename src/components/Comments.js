@@ -131,6 +131,7 @@ render(Comments) {
     let modalIsOpen = this.props.modalIsOpen.status
     let modal = (modalIsOpen) ? this.props.modalIsOpen.modal : null
 
+
 return (
   <div>
 {
@@ -163,6 +164,13 @@ return (
   })
   .map((cur,val,arry) => {
   const {body,timestamp,author,voteScore,deleted,id,parentId} = comments[cur]
+  let date = new Date(timestamp)
+  let hours = date.getHours()
+  let minutes = date.getMinutes()
+  let seconds = 0 + date.getSeconds()
+  let formattedTime = hours + ':' + minutes + ':' + seconds
+  let formattedDate = date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear()
+
   return <div key={id}>
   <li className='comments'>
   {(id !== currentlyEditing) ?
@@ -179,8 +187,12 @@ return (
     />
     </div>
     : body
-  }   {timestamp}
+  }
+  &nbsp;&nbsp;&nbsp;&nbsp;
+   Created on: {formattedDate} - {formattedTime}
+   &nbsp;&nbsp;&nbsp;&nbsp;
 
+<ControlLabel>Author:&nbsp;&nbsp;</ControlLabel>
 {(id === currentlyEditing) ?
   <div key="editcomment">
   <ControlLabel>Author</ControlLabel>
@@ -195,7 +207,8 @@ return (
 
   {deleted}
   {(id !== currentlyEditing) ?
-  <a onClick={() => this.props.removeComment(id)}><FaCut /></a>
+  <a onClick={() => this.props.removeComment(id)}>   &nbsp;&nbsp;&nbsp;&nbsp;
+<FaCut /></a>
   : ""}
   {(id === currentlyEditing) ?
     <ButtonToolbar>

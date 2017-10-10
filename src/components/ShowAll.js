@@ -87,7 +87,7 @@ function mapStateToProps(state,props){
 
 
 
-function mapDispatchToProps(dispatch) {
+/*function mapDispatchToProps(dispatch) {
   return{
     addPost: (data) => dispatch(addPost(data)),
     removePost: (data) => dispatch(deletePost(data)),
@@ -95,11 +95,10 @@ function mapDispatchToProps(dispatch) {
     getCategories: (data) => dispatch(getCategories(data)),
 
   }
-}
+}*/
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps)(ShowAll)
+  mapStateToProps, {addPost,removePost,getPosts,getCategories})(ShowAll)
 
 
 //export default showAll

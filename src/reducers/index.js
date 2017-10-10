@@ -32,7 +32,7 @@ import {
   CANCEL_EDIT_COMMENT,
   UPDATE_EDIT_COMMENT,
 //  SAVE_EDIT
-} from '../actions'
+} from '../actions/types'
 
 /*const initialCategory = {
   category: null
@@ -333,9 +333,9 @@ function comments (state = {}, action) {
       retVal = Object.assign({},state)
         Object.keys(retVal).map( (currentValue, index, arry) => {
             if (currentValue === parentId) {
-                retVal[currentValue].concat(action.comments);
+                return retVal[currentValue].concat(action.comments);
               }
-              return retVal[index];
+              else { return retVal[index]}
           });
           console.log("returned after deleted")
         return {...state,...retVal}

@@ -116,7 +116,7 @@ render(props) {
 //console.log("this.props.posts is ")
 //console.log(this.props.post)
   return (
-   <div className="showAll">
+   <div className="showAll" key='showPostKey'>
    Show Categories:
     <Link to="/"> All, </Link>
     {categories && Object.keys(categories).map((cur,val,arry) => {
@@ -155,7 +155,7 @@ posts && Object.keys(posts)
    })
 }
 
-<Modal
+<Modal key='ShowPostModal'
 isOpen={modalIsOpen && modal === 'post'}
 /*  onAfterOpen={aferOpenFn}
   closeTimeoutMS={n}
@@ -174,30 +174,18 @@ isOpen={modalIsOpen && modal === 'post'}
 )}
 
 shouldComponentUpdate(prevProps, prevState){
-//  console.log("should component update")
-  //console.log("in shouldcomponentupdate in showpost")
   return true
 }
 
 componentDidMount() {
-//  console.log("componentdidmount Post")
   this.props.getCategories()
-  //this.props.getPosts()
   this.props.getPosts()
   }
 
-componentDidUpdate(prevProps, prevState) {
-    // One possible fix...
-//    console.log("Component did update")
-//console.log("prevstate")
-//console.log(prevState)
-//console.log("prevprops")
-//console.log(prevProps)
-  }
+
+
 
 componentWillReceiveProps(nextProps){
-  //console.log("component will receive new props")
-  //console.log(nextProps)
   }
 }
 
@@ -231,6 +219,3 @@ function mapDispatchToProps(dispatch) {
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps)(ShowPosts))
-
-
-//export default showAll

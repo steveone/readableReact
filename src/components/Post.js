@@ -109,7 +109,7 @@ return (
                     {(id === currentlyEditing) ?
                       <FormGroup>
                     <ControlLabel>Select Category</ControlLabel>
-                     <FormControl key={2} id="select1" componentClass="select"
+                     <FormControl key={'selectingCategory'} id="select1" componentClass="select"
                      defaultValue={editingCategory}
                      onChange={(e) => this.updateField('category',e.target.value)}
                      //onChange={this.props.updatePost({author:'', title: '', category: ''})}
@@ -151,13 +151,13 @@ return (
                         }
                       {(id === currentlyEditing) ?
                         <ButtonToolbar>
-                         <Button bsStyle="primary" onClick={(e)=>this.saveEditPost()}>  Save</Button>
+                         <Button bsStyle="primary" key='savepostbtn' onClick={(e)=>this.saveEditPost()}>Save Post</Button>
                            {
 
                            /*{id,title:editingTitle,body:editingBody,category:editingCategory,author:editingAuthor})}>
                           */}
 
-                         <Button bsStyle="primary" onClick={(e)=>this.props.cancelEditPost({id})}>Revert</Button>
+                         <Button bsStyle="primary" key='revertpostbutton' onClick={(e)=>this.props.cancelEditPost({id})}>Revert Post</Button>
                         </ButtonToolbar>
                        : <br />
                      }
@@ -165,7 +165,7 @@ return (
                   {formattedDate + ' - ' + formattedTime}
 
                   {/*this.props.id && <Comments id = {this.props.id}/>*/}
-                  {<Comments id = {id} parentId = {this.props.id} showComments={this.props.showComments}/>}
+                  {<Comments key={id} id = {id} parentId = {this.props.id} showComments={this.props.showComments}/>}
                 </div>
 
     })
@@ -223,54 +223,29 @@ updateField(field, value,e){
 
 }
 
-componentDidMount() {
-//  console.log("componentdidmount Posts")
-/*  this.props.getPosts()
-  this.props.getCategories()
-  if (this.props.id){
-    console.log("id for posts getComments " + this.props.id)
-     this.props.getComments(this.props.id)
-     }
-*/
+componentWillMount() {
  loaded = true;
-
   }
 
 componentDidUpdate(prevProps, prevState) {
-    // One possible fix...
-//    console.log("Component did update Post")
-if (this.props.id){
-//  console.log("id for posts getComments " + this.props.id)
-  //this.props.getComments(this.props.id)
-  //console.log("component - post - did update")
-  //console.log(this.props.posts)
-  //console.log(this.props.posts[0].totalComment)
-   }
-  }
+ }
 
   shouldComponentUpdate(prevProps, prevState){
-  //  console.log("should component update")
-    //console.log("in shouldcomponentupdate")
     return true
   }
 
   componentWillReceiveProps(nextProps){
-    //console.log("component will receive new props - in posts")
-    //console.log({...nextProps.posts[0]})
-    }
-
+  }
 }
 
 
 
-
 const mapStateToProps = ((state,ownProps) => (
-  {
-   posts: state.post,
-   id: ownProps.id,
-   editing: state.editing,
-   categories: state.categories,
-   //comments: state.comments,
+{
+ posts: state.post,
+ id: ownProps.id,
+ editing: state.editing,
+ categories: state.categories,
 }));
 
 function mapDispatchToProps(dispatch) {
