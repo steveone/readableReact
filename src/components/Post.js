@@ -1,25 +1,17 @@
 import React, { Component } from 'react';
 import { Link} from 'react-router-dom'
 import '../App.css';
-//import{ Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import { saveEdit, cancelEdit, getCategories, getPosts, deletePost, changeVote, editPost, updateEditField } from '../actions'
-//import uniqid from 'uniqid'
 import { FaChevronUp, FaChevronDown, FaCut, FaPencil} from 'react-icons/lib/fa'
 import Comments from './Comments'
 import{
-        //MenuItem,
         FormGroup,
         FormControl,
-        //Form,
         ControlLabel,
-        //SplitButton,
         Button,
         ButtonToolbar,
-        //ButtonGroup
-        //ControlID
       } from 'react-bootstrap';
-
 let loaded=false;
 class Post extends Component {
 

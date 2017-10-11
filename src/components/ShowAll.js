@@ -71,7 +71,6 @@ componentDidMount() {
 
 componentDidUpdate(prevProps, prevState) {
     // One possible fix...
-    console.log("Component did update")
   }
 
 }

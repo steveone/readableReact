@@ -38,6 +38,7 @@ import {
   CANCEL_EDIT_COMMENT ,
   UPDATE_EDIT_COMMENT ,
   ADD_NEW_POST,
+  UPDATE_COMMENT,
 } from './types';
 
 export function cancelEdit (id) {
@@ -137,7 +138,7 @@ export function cancelEditComment (id,parentId,body,author) {
 }
 export function updateEditComment (id,parentId,body,author) {
   return {
-    type: UPDATE_EDIT_COMMENT,
+    type: UPDATE_COMMENT,
     id,
     parentId,
     body,
@@ -157,7 +158,6 @@ export function setEditPost (id,title,body,category,author) {
     }
 }
 
-//TODO: need to add save to server and update data
 export function endEditPost ({id,saveCancel}) {
   return {
     type: START_EDIT,
@@ -288,10 +288,6 @@ export function postsReturned(posts) {
   }
 }
 
-/*
-export function postsandCommentsReturned(posts){
-}
-*/
 
 export function changeCommentVotePost(comments) {
   //const [ id, vote ] = data
